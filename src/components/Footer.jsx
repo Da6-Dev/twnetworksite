@@ -1,32 +1,43 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Footer.css';
+import McIcon from './McIcon';
 
 export default function Footer() {
   return (
     <footer className="footer-container">
       <div className="footer-top">
         <div className="footer-brand">
-          <h3><span className="roxo">TW</span> Network</h3>
-          <p>O servidor definitivo de RankUP com economia competitiva e minijogos exclusivos.</p>
-          <span className="footer-ip">IP: <code>TWNetwork.com.br</code></span>
+          <div className="footer-logo">
+            <McIcon name="Grass_Block" size={24} />
+            <h3><span className="destaque-logo">TW</span> Network</h3>
+          </div>
+          <p>O servidor definitivo de RankUP com economia competitiva, minijogos e premiações reais em Pix.</p>
+          <span className="footer-ip">
+            IP de Conexão: <code>TWNetwork.com.br</code>
+          </span>
         </div>
 
         <div className="footer-links-group">
           <div className="footer-col">
             <h4>Navegação</h4>
             <ul>
-              <li><a href="#inicio">Início</a></li>
-              <li><a href="#guia">Guia & Recursos</a></li>
-              <li><a href="#loja">Loja VIP</a></li>
+              <li><Link to="/">Início</Link></li>
+              <li><Link to="/atividades">Hub de Atividades & Pix</Link></li>
+              <li><Link to="/loja">Loja Oficial & VIPs</Link></li>
+              <li><Link to="/guia">Guia do Servidor</Link></li>
+              <li><Link to="/perfil">Meu Perfil & Configurações</Link></li>
+              <li><Link to="/carrinho">Meu Carrinho</Link></li>
             </ul>
           </div>
 
           <div className="footer-col">
-            <h4>Comunidade</h4>
+            <h4>Manual & Comunidade</h4>
             <ul>
-              <li><a href="#discord">Discord (Em breve)</a></li>
-              <li><a href="#regras">Regras do Servidor</a></li>
-              <li><a href="#suporte">Suporte</a></li>
+              <li><Link to="/guia">Comandos In-Game</Link></li>
+              <li><Link to="/guia">Diretrizes & Regras</Link></li>
+              <li><Link to="/guia">Suporte & FAQ</Link></li>
+              <li><Link to="/guia">Equipe & Recrutamento</Link></li>
             </ul>
           </div>
         </div>

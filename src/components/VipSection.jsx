@@ -1,5 +1,6 @@
 import React from 'react';
 import './VipSection.css';
+import McIcon from './McIcon';
 
 export default function VipSection({ onAdicionarAoCarrinho }) {
   const planosVip = [
@@ -8,6 +9,7 @@ export default function VipSection({ onAdicionarAoCarrinho }) {
       nome: "VIP Ouro",
       preco: "R$ 19,90",
       destaque: false,
+      mcIcon: "Gold_Ingot",
       beneficios: [
         "Tag Exclusiva [Ouro]",
         "Kit Semanal VIP",
@@ -21,6 +23,7 @@ export default function VipSection({ onAdicionarAoCarrinho }) {
       nome: "VIP Esmeralda",
       preco: "R$ 39,90",
       destaque: true,
+      mcIcon: "Emerald",
       beneficios: [
         "Tag Exclusiva [Esmeralda]",
         "Kit Diário e Semanal VIP+",
@@ -35,6 +38,7 @@ export default function VipSection({ onAdicionarAoCarrinho }) {
       nome: "VIP Supremo",
       preco: "R$ 69,90",
       destaque: false,
+      mcIcon: "Nether_Star",
       beneficios: [
         "Tag Exclusiva [Supremo]",
         "Todos os Kits Liberados",
@@ -58,6 +62,10 @@ export default function VipSection({ onAdicionarAoCarrinho }) {
           <div key={vip.id} className={`vip-card ${vip.destaque ? 'destaque' : ''}`}>
             {vip.destaque && <div className="badge-recomendado">Mais Popular</div>}
             
+            <div style={{ display: 'flex', justifyContent: 'center', margin: '0.5rem 0 1rem' }}>
+              <McIcon name={vip.mcIcon} size={48} />
+            </div>
+
             <h3 className="vip-nome">{vip.nome}</h3>
             <div className="vip-preco">
               <span className="moeda"></span> {vip.preco} <span className="periodo">/mês</span>
@@ -65,7 +73,10 @@ export default function VipSection({ onAdicionarAoCarrinho }) {
             
             <ul className="vip-beneficios">
               {vip.beneficios.map((beneficio, index) => (
-                <li key={index}>✔️ {beneficio}</li>
+                <li key={index}>
+                  <McIcon name="Emerald" size={14} style={{ marginRight: '6px', verticalAlign: '-1px' }} />
+                  {beneficio}
+                </li>
               ))}
             </ul>
 
@@ -73,7 +84,8 @@ export default function VipSection({ onAdicionarAoCarrinho }) {
               className="btn-comprar"
               onClick={() => onAdicionarAoCarrinho(vip)}
             >
-              Adicionar ao Carrinho 🛒
+              Adicionar ao Carrinho
+              <McIcon name="Chest" size={18} style={{ marginLeft: '8px' }} />
             </button>
           </div>
         ))}

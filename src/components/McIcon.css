@@ -1,0 +1,25 @@
+.mc-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.mc-icon-img {
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.mc-icon-wrapper:hover .mc-icon-img {
+  transform: scale(1.08);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6)) brightness(1.1);
+}

@@ -1,25 +1,30 @@
+/* ==========================================================================
+   BOTÃO VOLTAR AO TOPO — TW NETWORK (MÉTRICA 60-30-10)
+   ========================================================================== */
+
 .btn-back-to-top {
   position: fixed;
   bottom: 30px;
   right: 30px;
-  width: 48px;
-  height: 48px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  background-color: #7c3aed;
+  background: linear-gradient(135deg, var(--mc-emerald) 0%, var(--mc-emerald-hover) 100%);
   color: #ffffff;
-  border: 1px solid #8b5cf6;
-  font-size: 1.1rem;
+  border: 1px solid var(--border-subtle);
+  font-size: 1.2rem;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.45);
+  box-shadow: 0 4px 18px var(--mc-emerald-glow);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 900;
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  transition: transform 0.22s ease, filter 0.22s ease;
 }
 
 .btn-back-to-top:hover {
-  background-color: #6d28d9;
+  filter: brightness(1.1);
   transform: translateY(-4px);
+  box-shadow: 0 6px 24px var(--mc-emerald-glow);
 }

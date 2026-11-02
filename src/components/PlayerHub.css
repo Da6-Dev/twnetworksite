@@ -1,0 +1,479 @@
+/* ==========================================================================
+   HUB DO JOGADOR — TW NETWORK (MÉTRICA 60-30-10)
+   ========================================================================== */
+
+.player-hub-section {
+  padding: 85px 5%;
+  background-color: var(--bg-canvas);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 0.25s ease;
+}
+
+.hub-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 40px auto;
+}
+
+.badge-secao-hub {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--mc-emerald);
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 14px;
+}
+
+.hub-header h2 {
+  font-size: 2.3rem;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  letter-spacing: -0.015em;
+}
+
+.hub-header p {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* Abas de Navegação */
+.hub-tabs-container {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 35px;
+  flex-wrap: wrap;
+}
+
+.hub-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 13px 26px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  box-shadow: var(--card-shadow);
+}
+
+.hub-tab-btn:hover {
+  background-color: var(--bg-surface-hover);
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+  transform: translateY(-2px);
+}
+
+.hub-tab-btn.ativo {
+  background: linear-gradient(135deg, var(--mc-emerald) 0%, var(--mc-emerald-hover) 100%);
+  color: #ffffff;
+  border-color: var(--mc-emerald);
+  box-shadow: 0 4px 18px var(--mc-emerald-glow);
+}
+
+/* Card Principal */
+.hub-card-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Banner de Aviso: Recompensas e Passe no Perfil */
+.hub-perfil-aviso-banner {
+  max-width: 1100px;
+  margin: 0 auto 30px auto;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 18px;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: var(--card-shadow);
+  transition: all 0.22s ease;
+}
+
+.hub-perfil-aviso-banner:hover {
+  border-color: var(--mc-gold);
+  background-color: var(--bg-surface-hover);
+}
+
+.aviso-banner-icone {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.aviso-banner-texto {
+  flex: 1;
+}
+
+.aviso-banner-texto strong {
+  display: block;
+  font-size: 1.05rem;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+
+.aviso-banner-texto p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.btn-ir-perfil-hub {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--mc-gold) 0%, #d97706 100%);
+  color: #1a1a1a;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 11px 20px;
+  border-radius: 12px;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.25);
+  transition: all 0.2s ease;
+}
+
+.btn-ir-perfil-hub:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+@media (max-width: 768px) {
+  .hub-perfil-aviso-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+  .aviso-banner-icone {
+    margin: 0 auto;
+  }
+  .btn-ir-perfil-hub {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ========================================================
+   ABA 2: RANKING
+   ======================================================== */
+.hub-ranking-box {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: var(--card-shadow);
+}
+
+.hub-ranking-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 14px 20px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.hub-ranking-alerta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+}
+
+.hub-ranking-alerta strong {
+  color: var(--text-primary);
+}
+
+.hub-ranking-total {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  color: var(--mc-emerald);
+  font-weight: 700;
+}
+
+.hub-tabela-overflow {
+  overflow-x: auto;
+}
+
+.hub-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  min-width: 680px;
+}
+
+.hub-tabela th {
+  background-color: var(--bg-surface-elevated);
+  padding: 14px 18px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 800;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.hub-tabela td {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.hub-pos-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.hub-jogador-col {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hub-jogador-col strong {
+  color: var(--text-primary);
+}
+
+.hub-avatar-mini {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  image-rendering: pixelated;
+  border: 1px solid var(--border-subtle);
+}
+
+.hub-rank-tag {
+  background-color: var(--bg-surface-elevated);
+  color: var(--mc-frost-ice);
+  border: 1px solid var(--border-subtle);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.hub-saldo-texto {
+  font-family: monospace;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+}
+
+.hub-premio-tag {
+  color: var(--mc-emerald);
+  font-weight: 800;
+  background-color: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  padding: 4px 12px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+/* ========================================================
+   ABA 3: STATUS
+   ======================================================== */
+.hub-status-box {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.hub-status-bar {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 18px;
+  padding: 20px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  box-shadow: var(--card-shadow);
+}
+
+.hub-bar-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hub-bar-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 800;
+}
+
+.hub-bar-valor {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.destaque-ip {
+  color: var(--mc-frost-ice);
+}
+
+.destaque-online {
+  color: var(--mc-emerald);
+}
+
+.btn-sync-ping {
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-sync-ping:hover {
+  border-color: var(--mc-emerald);
+}
+
+.hub-modos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.hub-modo-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 18px;
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--card-shadow);
+  transition: all 0.22s ease;
+}
+
+.hub-modo-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-hover);
+}
+
+.hub-modo-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.hub-modo-tipo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background-color: var(--bg-surface-elevated);
+  padding: 4px 10px;
+  border-radius: 9999px;
+}
+
+.hub-modo-pill {
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 9999px;
+}
+
+.hub-modo-pill.online {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: var(--mc-emerald);
+}
+
+.hub-modo-pill.offline {
+  background-color: rgba(225, 29, 72, 0.15);
+  color: var(--mc-redstone);
+}
+
+.hub-modo-card h4 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.hub-modo-card p {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 24px;
+  flex: 1;
+}
+
+.hub-modo-capacidade {
+  margin-top: auto;
+}
+
+.hub-capacidade-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.hub-capacidade-info strong {
+  color: var(--text-primary);
+}
+
+.hub-progresso-fundo {
+  width: 100%;
+  height: 8px;
+  background-color: var(--bg-surface-elevated);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.hub-progresso-barra {
+  height: 100%;
+  background: linear-gradient(90deg, var(--mc-emerald-hover), var(--mc-emerald));
+  border-radius: 10px;
+  transition: width 0.4s ease;
+}

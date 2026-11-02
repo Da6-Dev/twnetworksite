@@ -1,0 +1,51 @@
+/* ==========================================================================
+   PÁGINA HUB DE ATIVIDADES — TW NETWORK (MÉTRICA 60-30-10)
+   ========================================================================== */
+
+.hub-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px 20px 80px;
+}
+
+.hub-page-banner {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: 45px 35px;
+  text-align: center;
+  margin-bottom: 25px;
+  box-shadow: var(--card-shadow);
+}
+
+.hub-page-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--mc-star-gold);
+  padding: 6px 16px;
+  border-radius: 9999px;
+  font-size: 0.825rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+}
+
+.hub-page-banner h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.hub-page-banner p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  max-width: 720px;
+  margin: 0 auto;
+  line-height: 1.65;
+}

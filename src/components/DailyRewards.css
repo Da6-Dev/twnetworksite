@@ -1,7 +1,8 @@
 .rewards-section {
   padding: 80px 5%;
-  background-color: #0c0c0e;
-  border-bottom: 1px solid #1f1f23;
+  background-color: var(--bg-canvas);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 0.3s ease;
 }
 
 .rewards-header {
@@ -12,18 +13,19 @@
 
 .rewards-header h2 {
   font-size: 2.3rem;
-  color: #ffffff;
+  color: var(--text-snow);
   margin-bottom: 12px;
+  letter-spacing: -0.01em;
 }
 
 .rewards-header p {
-  color: #a1a1aa;
+  color: var(--text-muted);
   font-size: 1.05rem;
 }
 
 .rewards-container {
   display: flex;
-  gap: 40px;
+  gap: 35px;
   max-width: 1200px;
   margin: 0 auto;
   align-items: flex-start;
@@ -33,23 +35,26 @@
 .perfil-card {
   flex: 1;
   min-width: 300px;
-  background-color: #141417;
-  border: 1px solid #27272a;
-  border-radius: 14px;
+  background: var(--bg-surface);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 18px;
   padding: 30px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-shadow: var(--card-shadow);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .avatar-wrapper {
   width: 90px;
   height: 90px;
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
-  border: 2px solid #8b5cf6;
-  background-color: #1f1f23;
+  border: 2px solid var(--mc-emerald);
+  background-color: var(--bg-surface-elevated);
   margin-bottom: 15px;
   display: flex;
   align-items: center;
@@ -64,13 +69,14 @@
 
 .perfil-nome {
   font-size: 1.4rem;
-  color: #ffffff;
+  font-weight: 700;
+  color: var(--text-snow);
   margin-bottom: 4px;
 }
 
 .perfil-status {
   font-size: 0.85rem;
-  color: #a1a1aa;
+  color: var(--text-muted);
   margin-bottom: 20px;
 }
 
@@ -83,130 +89,144 @@
 
 .input-nick {
   flex: 1;
-  background-color: #18181b;
-  border: 1px solid #27272a;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
   padding: 10px 14px;
-  border-radius: 8px;
-  color: #ffffff;
+  border-radius: 10px;
+  color: var(--text-snow);
   font-size: 0.95rem;
   outline: none;
+  transition: border-color 0.2s;
 }
 
 .input-nick:focus {
-  border-color: #8b5cf6;
+  border-color: var(--mc-emerald);
 }
 
 .btn-sincronizar {
-  background-color: #27272a;
-  border: 1px solid #3f3f46;
-  color: #ffffff;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-snow);
   padding: 10px 16px;
-  border-radius: 8px;
-  font-weight: 600;
+  border-radius: 10px;
+  font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .btn-sincronizar:hover {
-  background-color: #3f3f46;
+  border-color: var(--border-hover);
 }
 
 .btn-resgatar {
   width: 100%;
-  padding: 14px;
-  background-color: #7c3aed;
+  padding: 13px;
+  background: linear-gradient(135deg, var(--mc-emerald) 0%, var(--mc-spruce-green) 100%);
   color: #ffffff;
   border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  font-size: 1rem;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.95rem;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px var(--mc-emerald-glow);
   transition: all 0.2s ease;
 }
 
 .btn-resgatar:hover {
-  background-color: #6d28d9;
   transform: translateY(-2px);
+  filter: brightness(1.1);
 }
 
 .btn-resgatar.desativado {
-  background-color: #166534;
-  color: #86efac;
+  background: rgba(5, 150, 105, 0.2);
+  color: var(--mc-emerald);
   cursor: default;
   transform: none;
+  box-shadow: none;
 }
 
 .aviso-entrega {
   margin-top: 15px;
   font-size: 0.85rem;
-  color: #4ade80;
+  color: var(--mc-emerald);
   line-height: 1.4;
 }
 
 .aviso-entrega code {
-  background-color: #18181b;
+  background-color: var(--bg-surface-elevated);
   padding: 3px 6px;
   border-radius: 4px;
-  color: #c4b5fd;
+  color: var(--mc-frost-ice);
+  font-weight: 700;
 }
 
 .trilha-semanal {
   flex: 2;
   min-width: 320px;
-  background-color: #141417;
-  border: 1px solid #27272a;
-  border-radius: 14px;
+  background: var(--bg-surface);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 18px;
   padding: 30px;
+  box-shadow: var(--card-shadow);
 }
 
 .trilha-semanal h4 {
   font-size: 1.2rem;
-  color: #ffffff;
+  font-weight: 700;
+  color: var(--text-snow);
   margin-bottom: 20px;
 }
 
 .cards-trilha {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+  gap: 14px;
 }
 
 .card-premio {
-  background-color: #18181b;
-  border: 1px solid #27272a;
-  border-radius: 10px;
-  padding: 15px 10px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 16px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  transition: border-color 0.2s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
 .card-premio:hover {
-  border-color: #8b5cf6;
+  transform: translateY(-3px);
+  border-color: var(--mc-emerald);
 }
 
 .card-premio.coletado {
-  border-color: #22c55e;
-  background-color: rgba(34, 197, 94, 0.08);
+  border-color: var(--mc-emerald);
+  background-color: rgba(16, 185, 129, 0.12);
 }
 
 .card-dia {
   font-size: 0.75rem;
-  color: #71717a;
+  color: var(--text-subtle);
   text-transform: uppercase;
   margin-bottom: 6px;
+  font-weight: 700;
 }
 
 .card-icone {
-  font-size: 1.8rem;
   margin-bottom: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .card-titulo {
   font-size: 0.8rem;
-  color: #e4e4e7;
+  color: var(--text-snow);
   font-weight: 600;
   line-height: 1.3;
 }

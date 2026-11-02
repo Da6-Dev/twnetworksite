@@ -1,0 +1,265 @@
+/* ==========================================================================
+   PÁGINA DE CONCLUSÃO DE PEDIDO — TW NETWORK (MÉTRICA 60-30-10)
+   ========================================================================== */
+
+.conclusao-page-container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 110px 20px 80px;
+}
+
+.conclusao-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px;
+  padding: 45px 35px;
+  box-shadow: var(--card-shadow);
+  text-align: center;
+}
+
+.conclusao-icone-topo {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 20px;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--mc-emerald);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 24px var(--mc-emerald-glow);
+}
+
+.conclusao-card h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  letter-spacing: -0.015em;
+}
+
+.conclusao-id-tag {
+  display: inline-block;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--mc-frost-ice);
+  font-family: monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 8px;
+  margin-bottom: 26px;
+}
+
+/* Conta do Jogador */
+.conclusao-conta-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  padding: 10px 20px;
+  border-radius: 14px;
+  margin-bottom: 35px;
+  text-align: left;
+}
+
+.conclusao-avatar-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid var(--mc-emerald);
+  flex-shrink: 0;
+}
+
+.conclusao-conta-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.conclusao-conta-texto span {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.conclusao-conta-texto strong {
+  font-size: 1.05rem;
+  color: var(--text-primary);
+}
+
+/* Bloco Pix */
+.pix-pagamento-bloco {
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 18px;
+  padding: 30px;
+  margin-bottom: 35px;
+}
+
+.pix-qr-visual {
+  width: 190px;
+  height: 190px;
+  margin: 0 auto 24px;
+  background-color: #ffffff;
+  padding: 12px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.pix-copia-cola-box {
+  display: flex;
+  max-width: 580px;
+  margin: 0 auto 20px;
+  gap: 8px;
+}
+
+.input-pix-codigo {
+  flex: 1;
+  background-color: var(--bg-canvas);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-family: monospace;
+  font-size: 0.88rem;
+  outline: none;
+}
+
+.btn-copiar-pix {
+  background: linear-gradient(135deg, var(--mc-emerald) 0%, var(--mc-emerald-hover) 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px var(--mc-emerald-glow);
+}
+
+.btn-copiar-pix:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+.btn-copiar-pix.copiado {
+  background: var(--mc-emerald);
+}
+
+.pix-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background-color: var(--bg-canvas);
+  border: 1px solid var(--border-subtle);
+  padding: 6px 14px;
+  border-radius: 8px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--mc-emerald);
+  border-radius: 50%;
+  animation: pulse-emerald 2s infinite;
+}
+
+/* Instruções de Ativação */
+.instrucoes-ativacao {
+  text-align: left;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 26px;
+  margin-bottom: 35px;
+}
+
+.instrucoes-ativacao h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.passos-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.passos-lista li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.numero-passo {
+  width: 26px;
+  height: 26px;
+  background-color: var(--mc-emerald);
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.82rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.passos-lista code {
+  background-color: var(--bg-canvas);
+  color: var(--mc-frost-ice);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.88rem;
+  border: 1px solid var(--border-subtle);
+  font-weight: 700;
+}
+
+/* Ações */
+.conclusao-botoes-acao {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-voltar-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-voltar-home:hover {
+  background-color: var(--bg-surface-hover);
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+}

@@ -1,34 +1,46 @@
 import React, { useState } from 'react';
 import './FaqSection.css';
+import McIcon from './McIcon';
 
 export default function FaqSection() {
-  const [perguntaAberta, setPerguntaAberta] = useState(null);
+  const [perguntaAberta, setPerguntaAberta] = useState(1);
 
   const faqs = [
     {
       id: 1,
-      pergunta: 'Quanto tempo demora para receber o meu VIP ou Cash após a compra?',
-      resposta: 'Os pagamentos via Pix são aprovados instantaneamente e os benefícios são ativados na sua conta do jogo em menos de 2 minutos. Compras efetuadas via cartão de crédito costumam demorar entre 2 a 5 minutos após a confirmação pela operadora.'
+      mcIcon: 'Clock',
+      pergunta: 'Quanto tempo demora para receber meu VIP ou Cash após a compra?',
+      resposta: 'Os pagamentos via Pix são aprovados de forma instantânea e os benefícios são ativados na sua conta do jogo em menos de 1 minuto por entrega automatizada. Para pagamentos em Cartão de Crédito, a liberação ocorre imediatamente após a confirmação pela operadora (geralmente de 1 a 3 minutos).'
     },
     {
       id: 2,
-      pergunta: 'Como funcionam os pagamentos dos prémios em dinheiro real?',
-      resposta: 'No encerramento de cada temporada (todos os domingos às 23:59h), a nossa equipa recolhe a lista oficial dos primeiros classificados no RankUP e contacta os jogadores in-game ou pelo Discord para efetuar a transferência direta via chave Pix.'
+      mcIcon: 'Gold_Ingot',
+      pergunta: 'Como funcionam os pagamentos dos prêmios em dinheiro real (Pix)?',
+      resposta: 'No encerramento de cada temporada (todos os domingos às 23h59), nossa equipe valida o ranking oficial dos primeiros colocados no RankUP e no Top Mineração. Entramos em contato com os vencedores no Discord e efetuamos a transferência bancária direta via chave Pix em até 24 horas.'
     },
     {
       id: 3,
+      mcIcon: 'Compass',
       pergunta: 'Quais versões do Minecraft são compatíveis com a TW Network?',
-      resposta: 'O servidor aceita conexões desde a versão 1.8 até à versão 1.20+. No entanto, recomendamos a utilização da versão 1.8.9 ou 1.20 com OptiFine ou mods de desempenho para uma experiência mais fluida.'
+      resposta: 'O servidor aceita conexões desde a versão 1.8 até a versão 1.20+ mais recente. No entanto, para o RankUP competitivo e combates de alta performance, recomendamos utilizar a versão 1.8.9 ou 1.20 com Lunar Client, Badlion ou OptiFine para obter a máxima taxa de FPS.'
     },
     {
       id: 4,
+      mcIcon: 'Book',
       pergunta: 'Comprei para o Nick errado por engano. O que devo fazer?',
-      resposta: 'Entre de imediato no nosso canal de suporte com o comprovativo de pagamento e o nome da conta correto antes de os artigos serem utilizados no jogo para efetuarmos a transferência manual da licença.'
+      resposta: 'Não se preocupe! Basta abrir um ticket no nosso Discord Oficial com o comprovante do pagamento e informar o Nick correto antes dos itens serem resgatados no jogo. Nossa equipe de suporte realiza a transferência manual da licença para você.'
     },
     {
       id: 5,
-      pergunta: 'O servidor suporta contas originais e não-originais (piratas)?',
-      resposta: 'Sim! A rede TW Network conta com autenticação mista, permitindo a entrada com segurança de qualquer cliente oficial ou de terceiros.'
+      mcIcon: 'Emerald',
+      pergunta: 'O servidor aceita contas originais e não-originais (piratas)?',
+      resposta: 'Sim! A TW Network possui sistema de autenticação híbrida inteligente. Usuários de Minecraft original contam com auto-login seguro via Mojang/Microsoft, enquanto jogadores com clientes não-originais utilizam o comando /register e /login com criptografia de senha.'
+    },
+    {
+      id: 6,
+      mcIcon: 'Redstone',
+      pergunta: 'Como ativo os benefícios de um cupom ou pacote no jogo?',
+      resposta: 'Após a confirmação de pagamento na nossa loja, você recebe um código único de ativação. Dentro do servidor, basta digitar o comando /ativar <código> ou aguardar o despacho automático no seu correio in-game (/correio).'
     }
   ];
 
@@ -39,29 +51,41 @@ export default function FaqSection() {
   return (
     <section id="suporte" className="faq-section">
       <div className="faq-header">
+        <span className="badge-secao-faq">
+          <McIcon name="Book" size={16} />
+          Central de Dúvidas
+        </span>
         <h2>Perguntas <span className="highlight">Frequentes</span></h2>
-        <p>Tire as suas dúvidas sobre pagamentos, prazos de entrega e mecânicas da TW Network.</p>
+        <p>Tire todas as suas dúvidas sobre prazos de entrega, métodos de pagamento e funcionamento da TW Network.</p>
       </div>
 
       <div className="faq-lista">
-        {faqs.map((faq) => (
-          <div 
-            key={faq.id} 
-            className={`faq-item ${perguntaAberta === faq.id ? 'aberto' : ''}`}
-            onClick={() => alternarPergunta(faq.id)}
-          >
-            <div className="faq-pergunta">
-              <h3>{faq.pergunta}</h3>
-              <span className="faq-seta">{perguntaAberta === faq.id ? '−' : '+'}</span>
-            </div>
-            
-            {perguntaAberta === faq.id && (
-              <div className="faq-resposta">
-                <p>{faq.resposta}</p>
+        {faqs.map((faq) => {
+          const isAberta = perguntaAberta === faq.id;
+          return (
+            <div 
+              key={faq.id} 
+              className={`faq-item ${isAberta ? 'aberto' : ''}`}
+              onClick={() => alternarPergunta(faq.id)}
+            >
+              <div className="faq-pergunta">
+                <div className="faq-titulo-box">
+                  <div className="faq-icon-circulo">
+                    <McIcon name={faq.mcIcon} size={20} />
+                  </div>
+                  <h3>{faq.pergunta}</h3>
+                </div>
+                <span className="faq-seta">{isAberta ? '−' : '+'}</span>
               </div>
-            )}
-          </div>
-        ))}
+              
+              {isAberta && (
+                <div className="faq-resposta">
+                  <p>{faq.resposta}</p>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </section>
   );

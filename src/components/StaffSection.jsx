@@ -1,39 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './StaffSection.css';
+import McIcon from './McIcon';
 
 export default function StaffSection() {
+  const [avisoCandidatura, setAvisoCandidatura] = useState(false);
+
   const membros = [
     {
       nick: 'TeDabliukkkkk',
       cargo: 'Fundador & Desenvolvedor',
       classe: 'fundador',
-      responsabilidade: 'Gestão geral da infraestrutura, programação de plugins e economia da rede.'
+      mcIcon: 'Nether_Star',
+      responsabilidade: 'Gestão geral da infraestrutura, arquitetura de plugins exclusivos e balanceamento econômico da rede.'
     },
     {
       nick: 'AdminTW',
       cargo: 'Administrador Geral',
       classe: 'admin',
-      responsabilidade: 'Supervisão de eventos sazonais, suporte à loja e coordenação da equipa.'
+      mcIcon: 'Diamond_Sword',
+      responsabilidade: 'Supervisão de eventos sazonais, suporte direto à loja e coordenação dos processos da equipe.'
     },
     {
       nick: 'ModCraft',
-      cargo: 'Moderador Sénior',
+      cargo: 'Moderador Sênior',
       classe: 'mod',
-      responsabilidade: 'Fiscalização de denúncias, aplicação das diretrizes e combate a modificações ilícitas.'
+      mcIcon: 'Iron_Sword',
+      responsabilidade: 'Fiscalização ativa de denúncias, aplicação rigorosa das diretrizes e combate a modificações ilícitas.'
     },
     {
       nick: 'AjudanteTW',
-      cargo: 'Ajudante / Suporte',
+      cargo: 'Ajudante & Suporte',
       classe: 'ajudante',
-      responsabilidade: 'Acolhimento a novos jogadores, esclarecimento de dúvidas no chat e tickets.'
+      mcIcon: 'Golden_Apple',
+      responsabilidade: 'Boas-vindas a novos jogadores, esclarecimento de dúvidas no chat e atendimento de tickets in-game.'
     }
   ];
 
   return (
-    <section className="staff-section">
+    <section id="equipe" className="staff-section">
       <div className="staff-header">
-        <h2>Equipa da <span className="highlight">TW Network</span></h2>
-        <p>Conheça os responsáveis pela administração, suporte técnico e integridade das partidas.</p>
+        <span className="badge-secao-staff">
+          <McIcon name="Nether_Star" size={16} />
+          Administração & Moderação
+        </span>
+        <h2>Equipe da <span className="highlight">TW Network</span></h2>
+        <p>Conheça os responsáveis pela administração, suporte técnico e integridade das partidas no servidor.</p>
       </div>
 
       <div className="staff-grid">
@@ -48,7 +59,12 @@ export default function StaffSection() {
             </div>
 
             <h3 className="staff-nick">{membro.nick}</h3>
-            <span className={`staff-badge ${membro.classe}`}>{membro.cargo}</span>
+            
+            <div className={`staff-badge ${membro.classe}`}>
+              <McIcon name={membro.mcIcon} size={15} />
+              <span>{membro.cargo}</span>
+            </div>
+
             <p className="staff-desc">{membro.responsabilidade}</p>
           </div>
         ))}
@@ -56,18 +72,34 @@ export default function StaffSection() {
 
       <div className="recrutamento-banner">
         <div className="recrutamento-info">
-          <h3>Quer fazer parte da equipa da TW Network?</h3>
+          <div className="recrutamento-titulo-box">
+            <McIcon name="Chest" size={24} />
+            <h3>Quer fazer parte da equipe da TW Network?</h3>
+          </div>
           <p>
-            Estamos à procura de jogadores dedicados e prestáveis para os cargos de Ajudante e Suporte.
+            Buscamos constantemente jogadores dedicados, maduros e prestativos para as funções de Suporte e Ajudante.
           </p>
+          {avisoCandidatura && (
+            <div className="aviso-candidatura-card">
+              <div className="aviso-candidatura-linha">
+                <McIcon name="Emerald" size={16} />
+                <strong>Requisitos Básicos:</strong> Idade mínima de 15 anos, microfone funcional, tempo diário disponível e bom histórico na rede.
+              </div>
+              <div className="aviso-candidatura-linha">
+                <McIcon name="Compass" size={16} />
+                <strong>Como se candidatar:</strong> As fichas de inscrição são divulgadas na sala <code>#formularios</code> do nosso Discord oficial antes da abertura de cada temporada!
+              </div>
+            </div>
+          )}
         </div>
-        <a
-          href="#discord"
+        <button
+          type="button"
           className="btn-candidatura"
-          onClick={() => alert('As candidaturas oficiais abrem no nosso Discord antes do início da temporada!')}
+          onClick={() => setAvisoCandidatura(!avisoCandidatura)}
         >
-          Enviar Candidatura 📋
-        </a>
+          <McIcon name={avisoCandidatura ? 'Barrier' : 'Paper'} size={18} />
+          {avisoCandidatura ? 'Ocultar Requisitos' : 'Ver Requisitos de Inscrição'}
+        </button>
       </div>
     </section>
   );

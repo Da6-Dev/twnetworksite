@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import './CupomDesconto.css';
+import McIcon from './McIcon';
 
 export default function CupomDesconto({ onAplicarCupom, cupomAtivo }) {
   const [codigo, setCodigo] = useState('');
   const [mensagemErro, setMensagemErro] = useState('');
 
-  // Lista de cupões configurados
-  const cupoesValidos = {
+  // Lista de cupons configurados
+  const cuponsValidos = {
     TWSTUDIOS: 0.15, // 15% de desconto
     BEMVINDO: 0.10,  // 10% de desconto
-    TEDABLIU: 0.20   // 20% de desconto de abertura
+    TEDABLIU: 0.20,  // 20% de desconto de abertura
+    NATAL20: 0.20    // 20% de desconto natalino
   };
 
   const aplicarCodigo = (e) => {
@@ -18,15 +20,15 @@ export default function CupomDesconto({ onAplicarCupom, cupomAtivo }) {
 
     if (!codigoFormatado) return;
 
-    if (cupoesValidos[codigoFormatado]) {
+    if (cuponsValidos[codigoFormatado]) {
       onAplicarCupom({
         codigo: codigoFormatado,
-        desconto: cupoesValidos[codigoFormatado]
+        desconto: cuponsValidos[codigoFormatado]
       });
       setMensagemErro('');
       setCodigo('');
     } else {
-      setMensagemErro('Cupão inválido ou expirado.');
+      setMensagemErro('Cupom inválido ou expirado.');
     }
   };
 
@@ -36,7 +38,7 @@ export default function CupomDesconto({ onAplicarCupom, cupomAtivo }) {
         <form onSubmit={aplicarCodigo} className="cupom-form">
           <input
             type="text"
-            placeholder="Possui cupão de desconto?"
+            placeholder="Possui cupom de desconto?"
             value={codigo}
             onChange={(e) => {
               setCodigo(e.target.value);
@@ -45,12 +47,15 @@ export default function CupomDesconto({ onAplicarCupom, cupomAtivo }) {
             className="input-cupom"
           />
           <button type="submit" className="btn-aplicar-cupom">
+            <McIcon name="Paper" size={14} />
             Aplicar
           </button>
         </form>
       ) : (
         <div className="cupom-ativo-box">
-          <span>Cupão <strong>{cupomAtivo.codigo}</strong> aplicado ({cupomAtivo.desconto * 100}% OFF)</span>
+          <span>
+            Cupom <strong>{cupomAtivo.codigo}</strong> aplicado ({cupomAtivo.desconto * 100}% OFF)
+          </span>
           <button 
             type="button" 
             className="btn-remover-cupom" 

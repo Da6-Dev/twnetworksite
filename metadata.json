@@ -1,0 +1,6 @@
+{
+  "name": "TW Network",
+  "description": "TW Network - Servidor de Minecraft focado em RankUP com economia exclusiva, minijogos e recompensas em dinheiro real.",
+  "permissions": [],
+  "capabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

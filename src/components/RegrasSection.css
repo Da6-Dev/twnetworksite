@@ -1,24 +1,50 @@
+/* ==========================================================================
+   SEÇÃO DIRETRIZES & REGRAS — TW NETWORK (MÉTRICA 60-30-10)
+   - 60% Fundo: var(--bg-canvas-subtle)
+   - 30% Estrutura: var(--bg-surface), var(--border-subtle), var(--text-primary)
+   - 10% Acentos: var(--mc-emerald), var(--mc-redstone), var(--mc-star-gold)
+   ========================================================================== */
+
 .regras-section {
-  padding: 80px 5%;
-  background-color: #0c0c0e;
-  border-bottom: 1px solid #1f1f23;
+  padding: 85px 5%;
+  background-color: var(--bg-canvas-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 0.25s ease;
 }
 
 .regras-header {
   text-align: center;
   max-width: 720px;
-  margin: 0 auto 40px auto;
+  margin: 0 auto 45px auto;
+}
+
+.badge-secao-regras {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--mc-emerald);
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 14px;
 }
 
 .regras-header h2 {
   font-size: 2.3rem;
-  color: #ffffff;
+  color: var(--text-primary);
   margin-bottom: 12px;
+  letter-spacing: -0.015em;
 }
 
 .regras-header p {
-  color: #a1a1aa;
+  color: var(--text-secondary);
   font-size: 1.05rem;
+  line-height: 1.6;
 }
 
 .regras-tabs {
@@ -30,27 +56,33 @@
 }
 
 .tab-regra-btn {
-  background-color: #18181b;
-  border: 1px solid #27272a;
-  color: #a1a1aa;
-  padding: 10px 22px;
-  border-radius: 8px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 11px 22px;
+  border-radius: 12px;
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   transition: all 0.2s ease;
+  box-shadow: var(--card-shadow);
 }
 
 .tab-regra-btn:hover {
-  background-color: #27272a;
-  color: #ffffff;
+  background-color: var(--bg-surface-hover);
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+  transform: translateY(-2px);
 }
 
 .tab-regra-btn.ativa {
-  background-color: #7c3aed;
-  border-color: #8b5cf6;
+  background: linear-gradient(135deg, var(--mc-emerald) 0%, var(--mc-emerald-hover) 100%);
+  border-color: var(--mc-emerald);
   color: #ffffff;
-  box-shadow: 0 0 16px rgba(124, 58, 237, 0.35);
+  box-shadow: 0 4px 18px var(--mc-emerald-glow);
 }
 
 .regras-grid {
@@ -62,61 +94,69 @@
 }
 
 .regra-card {
-  background-color: #141417;
-  border: 1px solid #27272a;
-  border-radius: 12px;
-  padding: 22px 25px;
-  transition: border-color 0.2s ease;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 22px 26px;
+  transition: all 0.22s ease;
+  box-shadow: var(--card-shadow);
 }
 
 .regra-card:hover {
-  border-color: #3f3f46;
+  border-color: var(--border-hover);
+  background-color: var(--bg-surface-hover);
+  transform: translateY(-2px);
 }
 
 .regra-topo {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 15px;
-  margin-bottom: 10px;
+  gap: 16px;
+  margin-bottom: 12px;
   flex-wrap: wrap;
 }
 
 .regra-titulo {
   font-size: 1.15rem;
-  color: #ffffff;
+  color: var(--text-primary);
   font-weight: 700;
+  line-height: 1.4;
+  margin: 0;
 }
 
+/* Badges de Punição com Alto Contraste */
 .badge-punicao {
   font-size: 0.8rem;
-  font-weight: 700;
-  padding: 4px 12px;
-  border-radius: 20px;
+  font-weight: 800;
+  padding: 5px 14px;
+  border-radius: 9999px;
   text-transform: uppercase;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
 .badge-punicao.leve {
-  background-color: rgba(234, 179, 8, 0.15);
-  color: #facc15;
-  border: 1px solid rgba(234, 179, 8, 0.3);
+  background-color: rgba(245, 158, 11, 0.15);
+  color: var(--mc-star-gold);
+  border: 1px solid rgba(245, 158, 11, 0.35);
 }
 
 .badge-punicao.medio {
   background-color: rgba(249, 115, 22, 0.15);
-  color: #fb923c;
-  border: 1px solid rgba(249, 115, 22, 0.3);
+  color: #ea580c;
+  border: 1px solid rgba(249, 115, 22, 0.35);
 }
 
 .badge-punicao.critico {
-  background-color: rgba(239, 68, 68, 0.15);
-  color: #f87171;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background-color: rgba(225, 29, 72, 0.15);
+  color: var(--mc-redstone);
+  border: 1px solid rgba(225, 29, 72, 0.35);
 }
 
 .regra-detalhe {
-  color: #a1a1aa;
-  font-size: 0.95rem;
-  line-height: 1.6;
+  color: var(--text-secondary);
+  font-size: 0.98rem;
+  line-height: 1.65;
+  margin: 0;
 }

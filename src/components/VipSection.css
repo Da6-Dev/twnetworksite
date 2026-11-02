@@ -1,32 +1,38 @@
+/* ==========================================================================
+   SEÇÃO PLANOS VIP — TW NETWORK (MÉTRICA 60-30-10)
+   ========================================================================== */
+
 .vip-container {
-  padding: 80px 5%;
-  background-color: #09090b; /* Fundo escuro igual ao restante do site */
+  padding: 85px 5%;
+  background-color: var(--bg-canvas);
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: background-color 0.25s ease;
 }
 
 .vip-header {
   text-align: center;
-  margin-bottom: 60px;
-  max-width: 600px;
+  margin-bottom: 50px;
+  max-width: 720px;
 }
 
 .vip-header h2 {
   font-size: 2.5rem;
-  color: #ffffff;
-  margin-bottom: 15px;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  letter-spacing: -0.015em;
 }
 
 .vip-header p {
-  color: #a1a1aa;
-  font-size: 1.1rem;
-  line-height: 1.5;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.6;
 }
 
 .vip-cards-wrapper {
   display: flex;
-  gap: 30px;
+  gap: 28px;
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;
@@ -34,108 +40,117 @@
 }
 
 .vip-card {
-  background-color: #18181b;
-  border: 1px solid #27272a;
-  border-radius: 12px;
-  padding: 40px 30px;
-  width: 320px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: 38px 28px;
+  width: 340px;
   display: flex;
   flex-direction: column;
   position: relative;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.22s ease;
+  box-shadow: var(--card-shadow);
 }
 
 .vip-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.1);
-  border-color: #3f3f46;
+  transform: translateY(-6px);
+  box-shadow: var(--card-shadow-hover);
+  border-color: var(--border-hover);
 }
 
 .vip-card.destaque {
-  border-color: #8b5cf6;
-  box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
-  transform: scale(1.05);
-}
-
-.vip-card.destaque:hover {
-  transform: scale(1.05) translateY(-10px);
+  border-color: var(--mc-emerald);
+  box-shadow: 0 10px 32px var(--mc-emerald-glow);
 }
 
 .badge-recomendado {
   position: absolute;
-  top: -15px;
+  top: -12px;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(90deg, #8b5cf6, #7c3aed);
-  color: white;
-  padding: 6px 15px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: bold;
-  letter-spacing: 1px;
+  background: linear-gradient(135deg, var(--mc-emerald) 0%, var(--mc-emerald-hover) 100%);
+  color: #ffffff;
+  padding: 5px 18px;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
+  box-shadow: 0 4px 14px var(--mc-emerald-glow);
 }
 
 .vip-nome {
-  font-size: 1.5rem;
-  color: #ffffff;
+  font-size: 1.65rem;
+  color: var(--text-primary);
   text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 8px;
+  font-weight: 800;
 }
 
 .vip-preco {
   text-align: center;
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: 800;
-  color: #ffffff;
-  margin-bottom: 30px;
-  border-bottom: 1px solid #27272a;
-  padding-bottom: 20px;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 18px;
 }
 
 .periodo {
-  font-size: 1rem;
-  color: #a1a1aa;
+  font-size: 0.95rem;
+  color: var(--text-muted);
   font-weight: normal;
 }
 
 .vip-beneficios {
   list-style: none;
-  flex: 1; /* Faz a lista crescer para empurrar o botão pro fundo */
+  flex: 1;
   margin-bottom: 30px;
+  padding: 0;
 }
 
 .vip-beneficios li {
-  color: #e4e4e7;
-  margin-bottom: 15px;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
   font-size: 0.95rem;
   display: flex;
   align-items: center;
   gap: 10px;
+  line-height: 1.45;
 }
 
 .btn-comprar {
   width: 100%;
-  padding: 15px;
-  background-color: #27272a;
-  color: #ffffff;
-  border: 1px solid #3f3f46;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: bold;
+  padding: 14px;
+  background-color: var(--bg-surface-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
 }
 
 .btn-comprar:hover {
-  background-color: #3f3f46;
+  background-color: var(--bg-surface-hover);
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
 }
 
 .vip-card.destaque .btn-comprar {
-  background-color: #7c3aed;
+  background: linear-gradient(135deg, var(--mc-emerald) 0%, var(--mc-emerald-hover) 100%);
+  color: #ffffff;
   border: none;
+  box-shadow: 0 4px 16px var(--mc-emerald-glow);
 }
 
 .vip-card.destaque .btn-comprar:hover {
-  background-color: #6d28d9;
+  filter: brightness(1.1);
+  box-shadow: 0 6px 22px var(--mc-emerald-glow);
 }

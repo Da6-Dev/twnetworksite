@@ -1,0 +1,220 @@
+/* ==========================================================================
+   PÁGINA DO GUIA OFICIAL — TW NETWORK
+   MÉTRICA 60-30-10:
+   - 60% Fundo: var(--bg-canvas)
+   - 30% Estrutura: var(--bg-surface), var(--border-subtle), var(--text-primary)
+   - 10% Destaque: var(--mc-emerald), var(--mc-gold), var(--mc-diamond)
+   ========================================================================== */
+
+.guia-page-container {
+  min-height: calc(100vh - 80px);
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  padding-bottom: 70px;
+}
+
+.guia-hero-banner {
+  background: linear-gradient(180deg, var(--bg-canvas-subtle) 0%, var(--bg-canvas) 100%);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 50px 20px 35px;
+  text-align: center;
+}
+
+.guia-hero-content {
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.guia-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--badge-bg);
+  border: 1px solid var(--border-subtle);
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--mc-emerald);
+  margin-bottom: 16px;
+}
+
+.guia-hero-title {
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+}
+
+.guia-hero-title .highlight {
+  color: var(--mc-emerald);
+}
+
+.guia-hero-subtitle {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 760px;
+  margin: 0 auto 35px;
+}
+
+/* Abas de Navegação do Guia */
+.guia-nav-tabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.guia-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.guia-nav-btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-focus);
+}
+
+.guia-nav-btn.ativo {
+  background-color: var(--badge-bg);
+  border-color: var(--mc-emerald);
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.15);
+}
+
+.guia-nav-btn-info strong {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.guia-nav-btn-info small {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.guia-nav-btn.ativo .guia-nav-btn-info strong {
+  color: var(--mc-emerald);
+}
+
+.guia-content-section {
+  max-width: 1240px;
+  margin: 20px auto 0;
+  padding: 0 20px;
+}
+
+.guia-bloco-conteudo.fade-in {
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Suporte Extra no Guia */
+.guia-suporte-extra {
+  margin-top: 35px;
+}
+
+.suporte-box {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  box-shadow: var(--shadow-sm);
+}
+
+.suporte-text {
+  flex: 1;
+  min-width: 260px;
+}
+
+.suporte-text h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.suporte-text p {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.suporte-text code {
+  background-color: var(--bg-canvas-subtle);
+  border: 1px solid var(--border-subtle);
+  color: var(--mc-emerald);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.btn-abrir-ticket {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--mc-emerald);
+  color: #022c22;
+  font-weight: 800;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-abrir-ticket:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+@media (max-width: 768px) {
+  .guia-hero-title {
+    font-size: 1.8rem;
+  }
+  .guia-hero-banner {
+    padding: 35px 15px 25px;
+  }
+  .guia-nav-tabs {
+    grid-template-columns: 1fr;
+  }
+  .suporte-box {
+    flex-direction: column;
+    text-align: center;
+  }
+  .btn-abrir-ticket {
+    width: 100%;
+    justify-content: center;
+  }
+}

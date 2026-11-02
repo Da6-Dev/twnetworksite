@@ -1,135 +1,183 @@
+/* ==========================================================================
+   SEÇÃO CASH SHOP — TW NETWORK (MÉTRICA 60-30-10)
+   ========================================================================== */
+
 .cash-section {
-  padding: 80px 5%;
-  background-color: #0c0c0e;
-  border-bottom: 1px solid #1f1f23;
+  padding: 85px 5%;
+  background-color: var(--bg-canvas-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 0.25s ease;
 }
 
 .cash-header {
   text-align: center;
-  max-width: 700px;
-  margin: 0 auto 35px auto;
+  max-width: 720px;
+  margin: 0 auto 40px auto;
+}
+
+.badge-secao-cash {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--mc-emerald);
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 14px;
 }
 
 .cash-header h2 {
   font-size: 2.3rem;
-  color: #ffffff;
+  color: var(--text-primary);
   margin-bottom: 12px;
+  letter-spacing: -0.015em;
 }
 
 .cash-header p {
-  color: #a1a1aa;
+  color: var(--text-secondary);
   font-size: 1.05rem;
+  line-height: 1.6;
 }
 
 .cash-tabs {
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 14px;
   margin-bottom: 40px;
+  flex-wrap: wrap;
 }
 
 .tab-filtro {
-  background-color: #18181b;
-  border: 1px solid #27272a;
-  color: #a1a1aa;
-  padding: 10px 24px;
-  border-radius: 8px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 11px 24px;
+  border-radius: 12px;
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
   transition: all 0.2s ease;
+  box-shadow: var(--card-shadow);
 }
 
 .tab-filtro:hover {
-  background-color: #27272a;
-  color: #ffffff;
+  background-color: var(--bg-surface-hover);
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+  transform: translateY(-2px);
 }
 
 .tab-filtro.ativo {
-  background-color: #7c3aed;
-  border-color: #8b5cf6;
+  background: linear-gradient(135deg, var(--mc-emerald) 0%, var(--mc-emerald-hover) 100%);
+  border-color: var(--mc-emerald);
   color: #ffffff;
-  box-shadow: 0 0 15px rgba(124, 58, 237, 0.35);
+  box-shadow: 0 4px 18px var(--mc-emerald-glow);
 }
 
 .cash-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 25px;
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
 .cash-card {
-  background-color: #141417;
-  border: 1px solid #27272a;
-  border-radius: 12px;
-  padding: 30px 24px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 18px;
+  padding: 34px 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   position: relative;
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  transition: all 0.22s ease;
+  box-shadow: var(--card-shadow);
 }
 
 .cash-card:hover {
   transform: translateY(-5px);
-  border-color: #8b5cf6;
+  border-color: var(--border-hover);
+  background-color: var(--bg-surface-hover);
+  box-shadow: var(--card-shadow-hover);
 }
 
 .cash-badge {
   position: absolute;
   top: -12px;
-  background: linear-gradient(90deg, #10b981, #059669);
+  background: linear-gradient(135deg, var(--mc-star-gold) 0%, #b45309 100%);
   color: #ffffff;
   font-size: 0.75rem;
-  font-weight: bold;
-  padding: 4px 12px;
-  border-radius: 20px;
+  font-weight: 800;
+  padding: 4px 14px;
+  border-radius: 9999px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px var(--mc-gold-glow);
 }
 
 .cash-card-icon {
-  font-size: 3rem;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  width: 68px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-surface-elevated);
+  border-radius: 16px;
+  border: 1px solid var(--border-subtle);
 }
 
 .cash-card-nome {
-  font-size: 1.25rem;
-  color: #ffffff;
+  font-size: 1.3rem;
+  color: var(--text-primary);
   margin-bottom: 10px;
+  font-weight: 800;
 }
 
 .cash-card-desc {
-  font-size: 0.88rem;
-  color: #a1a1aa;
-  line-height: 1.5;
-  margin-bottom: 20px;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 22px;
   flex: 1;
 }
 
 .cash-card-preco {
-  font-size: 1.8rem;
+  font-size: 1.9rem;
   font-weight: 800;
-  color: #4ade80;
-  margin-bottom: 20px;
+  color: var(--mc-frost-ice);
+  margin-bottom: 22px;
 }
 
 .btn-adicionar-cash {
   width: 100%;
-  padding: 12px;
-  background-color: #27272a;
-  border: 1px solid #3f3f46;
-  color: #ffffff;
-  border-radius: 8px;
-  font-weight: bold;
+  padding: 13px;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.95rem;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.2s ease;
 }
 
 .btn-adicionar-cash:hover {
-  background-color: #7c3aed;
-  border-color: #8b5cf6;
+  background: linear-gradient(135deg, var(--mc-emerald) 0%, var(--mc-emerald-hover) 100%);
+  color: #ffffff;
+  border-color: var(--mc-emerald);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px var(--mc-emerald-glow);
 }

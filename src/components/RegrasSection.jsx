@@ -1,82 +1,83 @@
 import React, { useState } from 'react';
 import './RegrasSection.css';
+import McIcon from './McIcon';
 
 export default function RegrasSection() {
   const [categoriaAtiva, setCategoriaAtiva] = useState('geral');
 
   const categorias = [
-    { id: 'geral', nome: 'Conduta & Chat' },
-    { id: 'hacks', nome: 'Trapaças & Clientes' },
-    { id: 'economia', nome: 'Economia & Comércio' },
-    { id: 'terrenos', nome: 'Terrenos & Clãs' }
+    { id: 'geral', nome: 'Conduta & Chat', mcIcon: 'Paper' },
+    { id: 'hacks', nome: 'Trapaças & Clientes', mcIcon: 'Barrier' },
+    { id: 'economia', nome: 'Economia & Comércio', mcIcon: 'Gold_Ingot' },
+    { id: 'terrenos', nome: 'Terrenos & Clãs', mcIcon: 'Grass_Block' }
   ];
 
   const regrasPorCategoria = {
     geral: [
       {
-        infracao: 'Ofensas, assédio ou discriminação',
-        detalhe: 'Qualquer discurso de ódio, discriminação étnica, religiosa ou desrespeito grave a jogadores e à equipa.',
-        punicao: 'Mute de 24h até Ban Permanente',
+        infracao: 'Ofensas, assédio ou qualquer forma de discriminação',
+        detalhe: 'Qualquer discurso de ódio, desrespeito religioso, preconceito racial ou ataques pessoais a jogadores e membros da equipe.',
+        punicao: 'Mute de 24h até Banimento Permanente',
         nivel: 'critico'
       },
       {
-        infracao: 'Divulgação de outros servidores',
-        detalhe: 'Mencionar endereços IP, ligações de comunidades externas ou fazer publicidade não autorizada no chat.',
-        punicao: 'Ban Permanente imediato',
+        infracao: 'Divulgação de outros servidores de Minecraft',
+        detalhe: 'Mencionar endereços de IP, links de comunidades externas ou fazer propaganda não autorizada em qualquer canal de chat.',
+        punicao: 'Banimento Permanente Imediato',
         nivel: 'critico'
       },
       {
-        infracao: 'Spam e Flood sistemático',
-        detalhe: 'Envio repetitivo de caracteres, maiúsculas excessivas ou mensagens idênticas em curto intervalo.',
-        punicao: 'Aviso verbal → Mute de 1h',
+        infracao: 'Spam e Flood sistemático no chat global',
+        detalhe: 'Envio repetitivo de mensagens, uso abusivo de maiúsculas (Caps Lock) ou poluição visual deliberada.',
+        punicao: 'Aviso Verbal → Mute Temporário de 2h',
         nivel: 'leve'
       }
     ],
     hacks: [
       {
-        infracao: 'Clientes modificados / Modos ilícitos (KillAura, Fly, Speed)',
-        detalhe: 'Uso de qualquer software, mod ou script que conceda vantagem mecânica injusta sobre os demais utilizadores.',
-        punicao: 'Banimento Permanente da Rede',
+        infracao: 'Uso de Clientes Modificados (KillAura, Fly, Speed, X-Ray)',
+        detalhe: 'Qualquer mod, script ou programa externo que proporcione vantagens injustas em combates, mineração ou locomoção.',
+        punicao: 'Banimento Permanente da Conta e IP',
         nivel: 'critico'
       },
       {
-        infracao: 'Aproveitamento de Bugs ou Duplicação',
-        detalhe: 'Ocultar ou tirar proveito de falhas do mapa, plugins ou do sistema económico sem reportar à administração.',
-        punicao: 'Ban Permanente + Reset de Conta',
+        infracao: 'Aproveitamento de Bugs ou Duplicação de Itens (Duping)',
+        detalhe: 'Descobrir falhas da economia ou do mapa e utilizá-las em benefício próprio em vez de reportar imediatamente à equipe.',
+        punicao: 'Ban Permanente + Reset Total da Conta',
         nivel: 'critico'
       },
       {
-        infracao: 'Macro / Autoclick com valor abusivo',
-        detalhe: 'Configurações de cliques por segundo (CPS) superiores ao limite permitido pelas diretrizes do servidor.',
-        punicao: 'Ban Temporário (7 dias)',
+        infracao: 'Macro ou Autoclick com taxa de CPS abusiva',
+        detalhe: 'Utilização de cliques automáticos acima do limite de 16 CPS estabelecido para segurança e equilíbrio do combate.',
+        punicao: 'Banimento Temporário (7 dias)',
         nivel: 'medio'
       }
     ],
     economia: [
       {
-        infracao: 'Comércio externo não oficial',
-        detalhe: 'Trocar moedas ou itens in-game por dinheiro real fora da loja oficial e das regras dos torneios sazonais.',
-        punicao: 'Ban Permanente de ambas as contas',
+        infracao: 'Comércio externo não autorizado (RMT)',
+        detalhe: 'Vender moedas do servidor ou itens por dinheiro real fora dos canais oficiais da loja ou sem autorização da administração.',
+        punicao: 'Banimento Permanente de Todas as Contas Envolvidas',
         nivel: 'critico'
       },
       {
-        infracao: 'Esquemas de burla (Scam) a novos jogadores',
-        detalhe: 'Enganar jogadores em trocas falsas, leilões fictícios ou combinações ilícitas.',
-        punicao: 'Ban Temporário (14 dias) + Remoção dos bens',
+        infracao: 'Golpes, Calotes e Enganações (Scam)',
+        detalhe: 'Prometer itens e roubar moedas, forjar leilões ou enganar novos jogadores em transações comerciais.',
+        punicao: 'Ban Temporário (14 dias) + Devolução Obrigatória dos Bens',
         nivel: 'medio'
       }
     ],
     terrenos: [
       {
-        infracao: 'Griefing ou invasão de terrenos delimitados',
-        detalhe: 'Construir armadilhas involuntárias em acessos públicos ou bloquear visualmente lotes adjacentes.',
-        punicao: 'Remoção da estrutura + Aviso formal',
+        infracao: 'Griefing ou invasão de terrenos protegidos',
+        detalhe: 'Construir estruturas com intenção de prender jogadores, bloquear entradas públicas ou atrapalhar lotes vizinhos.',
+        punicao: 'Remoção da Estrutura + Advertência Formal',
         nivel: 'leve'
       },
       {
-        infracao: 'Construções inadequadas ou ofensivas',
-        detalhe: 'Representação de símbolos ofensivos ou conteúdos desrespeitosos em lotes particulares.',
-        punicao: 'Ban de 3 dias + Limpeza do lote',
+        infracao: 'Construções inadequadas ou símbolos ofensivos',
+        detalhe: 'Erguer construções de teor preconceituoso, ofensivo ou vulgar em qualquer setor do mapa.',
+        punicao: 'Banimento de 3 dias + Limpeza do Terreno',
         nivel: 'medio'
       }
     ]
@@ -85,20 +86,29 @@ export default function RegrasSection() {
   return (
     <section id="regras" className="regras-section">
       <div className="regras-header">
+        <span className="badge-secao-regras">
+          <McIcon name="Paper" size={16} />
+          Normas da Comunidade
+        </span>
         <h2>Diretrizes & <span className="highlight">Regulamento Oficial</span></h2>
         <p>A integridade e o respeito são pilares na TW Network. Conheça as normas vigentes para manter a sua conta em segurança.</p>
       </div>
 
       <div className="regras-tabs">
-        {categorias.map((cat) => (
-          <button
-            key={cat.id}
-            className={`tab-regra-btn ${categoriaAtiva === cat.id ? 'ativa' : ''}`}
-            onClick={() => setCategoriaAtiva(cat.id)}
-          >
-            {cat.nome}
-          </button>
-        ))}
+        {categorias.map((cat) => {
+          const isAtiva = categoriaAtiva === cat.id;
+          return (
+            <button
+              key={cat.id}
+              type="button"
+              className={`tab-regra-btn ${isAtiva ? 'ativa' : ''}`}
+              onClick={() => setCategoriaAtiva(cat.id)}
+            >
+              <McIcon name={cat.mcIcon} size={18} />
+              {cat.nome}
+            </button>
+          );
+        })}
       </div>
 
       <div className="regras-grid">

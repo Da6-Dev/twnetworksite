@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './DailyRewards.css';
+import McIcon from './McIcon';
 
 export default function DailyRewards() {
   const [nick, setNick] = useState('');
@@ -8,13 +9,13 @@ export default function DailyRewards() {
   const [carregando, setCarregando] = useState(false);
 
   const recompensas = [
-    { dia: 'Dia 1', premio: '500 Moedas', icone: '🪙' },
-    { dia: 'Dia 2', premio: '1x Chave Comum', icone: '🗝️' },
-    { dia: 'Dia 3', premio: 'Booster de Mineração (30m)', icone: '⚡' },
-    { dia: 'Dia 4', premio: '2.500 Moedas', icone: '💰' },
-    { dia: 'Dia 5', premio: '1x Chave Épica', icone: '💎' },
-    { dia: 'Dia 6', premio: 'Booster de Economia (1h)', icone: '🔥' },
-    { dia: 'Dia 7', premio: '1x Chave Suprema + Tag', icone: '👑' },
+    { dia: 'Dia 1', premio: '500 Moedas', mcIcon: 'Gold_Nugget' },
+    { dia: 'Dia 2', premio: '1x Chave Comum', mcIcon: 'Tripwire_Hook' },
+    { dia: 'Dia 3', premio: 'Booster de Mineração (30m)', mcIcon: 'Golden_Pickaxe' },
+    { dia: 'Dia 4', premio: '2.500 Moedas', mcIcon: 'Gold_Ingot' },
+    { dia: 'Dia 5', premio: '1x Chave Épica', mcIcon: 'Diamond' },
+    { dia: 'Dia 6', premio: 'Booster de Economia (1h)', mcIcon: 'Fire_Charge' },
+    { dia: 'Dia 7', premio: '1x Chave Suprema + Tag', mcIcon: 'Nether_Star' },
   ];
 
   const lidarConfirmacao = (e) => {
@@ -70,7 +71,7 @@ export default function DailyRewards() {
               className="input-nick"
             />
             <button type="submit" className="btn-sincronizar" disabled={carregando}>
-              {carregando ? 'A procurar...' : 'Sincronizar'}
+              {carregando ? 'Buscando...' : 'Sincronizar'}
             </button>
           </form>
 
@@ -80,13 +81,20 @@ export default function DailyRewards() {
               disabled={resgatado}
               className={`btn-resgatar ${resgatado ? 'desativado' : ''}`}
             >
-              {resgatado ? '✅ Presente Resgatado Hoje!' : '🎁 Resgatar Recompensa de Hoje'}
+              {resgatado ? (
+                <>✅ Presente Resgatado Hoje!</>
+              ) : (
+                <>
+                  <McIcon name="Chest" size={22} style={{ marginRight: '8px' }} />
+                  Resgatar Recompensa de Hoje
+                </>
+              )}
             </button>
           )}
 
           {resgatado && (
             <p className="aviso-entrega">
-              Comando enviado para o servidor! Utilize <code>/recompensas</code> dentro do jogo para coletar.
+              Comando enviado para o servidor! Use <code>/recompensas</code> dentro do jogo para resgatar.
             </p>
           )}
         </div>
@@ -101,7 +109,9 @@ export default function DailyRewards() {
                 className={`card-premio ${index === 0 && resgatado ? 'coletado' : ''}`}
               >
                 <span className="card-dia">{item.dia}</span>
-                <span className="card-icone">{item.icone}</span>
+                <span className="card-icone">
+                  <McIcon name={item.mcIcon} size={36} />
+                </span>
                 <span className="card-titulo">{item.premio}</span>
               </div>
             ))}

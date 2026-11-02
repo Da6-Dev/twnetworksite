@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import './CheckoutModal.css';
 import CupomDesconto from './CupomDesconto';
+import McIcon from './McIcon';
 
 export default function CheckoutModal({ isOpen, onClose, itens, onRemoverItem, onLimparCarrinho }) {
   const [nick, setNick] = useState('');
   const [metodoPagamento, setMetodoPagamento] = useState('pix');
   const [compraConcluida, setCompraConcluida] = useState(false);
   const [cupomAtivo, setCupomAtivo] = useState(null);
+
+  const [erroValidacao, setErroValidacao] = useState('');
 
   if (!isOpen) return null;
 
@@ -23,15 +26,17 @@ export default function CheckoutModal({ isOpen, onClose, itens, onRemoverItem, o
   const finalizarPedido = (e) => {
     e.preventDefault();
     if (!nick.trim()) {
-      alert('Por favor, introduza o seu Nick do Minecraft!');
+      setErroValidacao('Por favor, introduza o seu Nick do Minecraft!');
       return;
     }
+    setErroValidacao('');
     setCompraConcluida(true);
   };
 
   const fecharEresetar = () => {
     setCompraConcluida(false);
     setNick('');
+    setErroValidacao('');
     setCupomAtivo(null);
     if (compraConcluida) {
       onLimparCarrinho();
@@ -58,9 +63,12 @@ export default function CheckoutModal({ isOpen, onClose, itens, onRemoverItem, o
                 <div className="lista-itens">
                   {itens.map((item, index) => (
                     <div key={index} className="item-carrinho">
-                      <div>
-                        <strong>{item.nome}</strong>
-                        <span className="item-preco">{item.preco}</span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <McIcon name={item.mcIcon || 'Chest'} size={28} />
+                        <div>
+                          <strong>{item.nome}</strong>
+                          <span className="item-preco">{item.preco}</span>
+                        </div>
                       </div>
                       <button 
                         type="button" 
@@ -102,9 +110,13 @@ export default function CheckoutModal({ isOpen, onClose, itens, onRemoverItem, o
                     type="text"
                     placeholder="Ex: TeDabliukkkkk"
                     value={nick}
-                    onChange={(e) => setNick(e.target.value)}
+                    onChange={(e) => {
+                      setNick(e.target.value);
+                      if (erroValidacao) setErroValidacao('');
+                    }}
                     required
                   />
+                  {erroValidacao && <p style={{ color: '#ef4444', marginTop: '0.4rem', fontSize: '0.85rem' }}>{erroValidacao}</p>}
                   <small>Os artigos serão entregues diretamente nesta conta in-game.</small>
                 </div>
 
@@ -115,15 +127,19 @@ export default function CheckoutModal({ isOpen, onClose, itens, onRemoverItem, o
                       type="button"
                       className={`btn-opcao ${metodoPagamento === 'pix' ? 'ativo' : ''}`}
                       onClick={() => setMetodoPagamento('pix')}
+                      style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
                     >
-                      ⚡ Pix (Instantâneo)
+                      <McIcon name="Redstone" size={18} />
+                      Pix (Instantâneo)
                     </button>
                     <button
                       type="button"
                       className={`btn-opcao ${metodoPagamento === 'cartao' ? 'ativo' : ''}`}
                       onClick={() => setMetodoPagamento('cartao')}
+                      style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
                     >
-                      💳 Cartão de Crédito
+                      <McIcon name="Gold_Ingot" size={18} />
+                      Cartão de Crédito
                     </button>
                   </div>
                 </div>

@@ -7,11 +7,12 @@ export const serverInfo = {
     {
       id: 1,
       nome: "RankUP Supremo",
-      descricao: "Economia personalizada, minas temáticas, leilões e disputas sazonais com prémios reais.",
+      descricao: "Economia personalizada, minas temáticas, leilões e disputas sazonais com prêmios reais.",
       jogadores: 112,
       maxJogadores: 300,
       online: true,
-      tipo: "Principal"
+      tipo: "Principal",
+      mcIcon: "Netherite_Sword"
     },
     {
       id: 2,
@@ -20,16 +21,18 @@ export const serverInfo = {
       jogadores: 36,
       maxJogadores: 150,
       online: true,
-      tipo: "Competitivo"
+      tipo: "Competitivo",
+      mcIcon: "Bow"
     },
     {
       id: 3,
       nome: "Servidor de Testes / Beta",
-      descricao: "Ambiente para testes de novidades da equipa de desenvolvimento.",
+      descricao: "Ambiente para testes de novidades da equipe de desenvolvimento.",
       jogadores: 0,
       maxJogadores: 50,
       online: false,
-      tipo: "Manutenção"
+      tipo: "Manutenção",
+      mcIcon: "Command_Block"
     }
   ]
 };

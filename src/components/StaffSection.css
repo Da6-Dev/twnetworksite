@@ -1,59 +1,88 @@
+/* ==========================================================================
+   SEÇÃO EQUIPE — TW NETWORK (MÉTRICA 60-30-10)
+   - 60% Fundo: var(--bg-canvas)
+   - 30% Estrutura: var(--bg-surface), var(--border-subtle), var(--text-primary)
+   - 10% Acentos: var(--mc-emerald), var(--mc-redstone), var(--mc-star-gold), var(--mc-frost-ice)
+   ========================================================================== */
+
 .staff-section {
-  padding: 80px 5%;
-  background-color: #09090b;
-  border-bottom: 1px solid #1f1f23;
+  padding: 85px 5%;
+  background-color: var(--bg-canvas);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 0.25s ease;
 }
 
 .staff-header {
   text-align: center;
-  max-width: 700px;
-  margin: 0 auto 40px auto;
+  max-width: 720px;
+  margin: 0 auto 45px auto;
+}
+
+.badge-secao-staff {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--mc-emerald);
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 14px;
 }
 
 .staff-header h2 {
   font-size: 2.3rem;
-  color: #ffffff;
+  color: var(--text-primary);
   margin-bottom: 12px;
+  letter-spacing: -0.015em;
 }
 
 .staff-header p {
-  color: #a1a1aa;
+  color: var(--text-secondary);
   font-size: 1.05rem;
+  line-height: 1.6;
 }
 
 .staff-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 25px;
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto 50px auto;
 }
 
 .staff-card {
-  background-color: #141417;
-  border: 1px solid #27272a;
-  border-radius: 12px;
-  padding: 30px 20px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 30px 22px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  transition: all 0.22s ease;
+  box-shadow: var(--card-shadow);
 }
 
 .staff-card:hover {
   transform: translateY(-5px);
-  border-color: #8b5cf6;
+  border-color: var(--border-hover);
+  background-color: var(--bg-surface-hover);
 }
 
 .staff-avatar-box {
-  width: 80px;
-  height: 80px;
-  border-radius: 12px;
+  width: 84px;
+  height: 84px;
+  border-radius: 14px;
   overflow: hidden;
-  border: 2px solid #27272a;
-  background-color: #18181b;
-  margin-bottom: 15px;
+  border: 2px solid var(--border-subtle);
+  background-color: var(--bg-canvas);
+  margin-bottom: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 }
 
 .staff-avatar {
@@ -64,90 +93,146 @@
 
 .staff-nick {
   font-size: 1.25rem;
-  color: #ffffff;
-  margin-bottom: 8px;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+  font-weight: 800;
 }
 
 .staff-badge {
-  font-size: 0.78rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
   font-weight: 700;
-  padding: 4px 12px;
-  border-radius: 20px;
+  padding: 5px 14px;
+  border-radius: 9999px;
   text-transform: uppercase;
   letter-spacing: 0.4px;
   margin-bottom: 15px;
 }
 
 .staff-badge.fundador {
-  background-color: rgba(220, 38, 38, 0.15);
-  color: #f87171;
-  border: 1px solid rgba(220, 38, 38, 0.4);
+  background-color: rgba(225, 29, 72, 0.15);
+  color: var(--mc-redstone);
+  border: 1px solid rgba(225, 29, 72, 0.35);
 }
 
 .staff-badge.admin {
-  background-color: rgba(234, 179, 8, 0.15);
-  color: #facc15;
-  border: 1px solid rgba(234, 179, 8, 0.4);
+  background-color: rgba(245, 158, 11, 0.15);
+  color: var(--mc-star-gold);
+  border: 1px solid rgba(245, 158, 11, 0.35);
 }
 
 .staff-badge.mod {
-  background-color: rgba(139, 92, 246, 0.15);
-  color: #c4b5fd;
-  border: 1px solid rgba(139, 92, 246, 0.4);
+  background-color: rgba(56, 189, 248, 0.15);
+  color: var(--mc-frost-ice);
+  border: 1px solid rgba(56, 189, 248, 0.35);
 }
 
 .staff-badge.ajudante {
-  background-color: rgba(34, 197, 94, 0.15);
-  color: #4ade80;
-  border: 1px solid rgba(34, 197, 94, 0.4);
+  background-color: rgba(16, 185, 129, 0.15);
+  color: var(--mc-emerald);
+  border: 1px solid rgba(16, 185, 129, 0.35);
 }
 
 .staff-desc {
-  font-size: 0.88rem;
-  color: #a1a1aa;
-  line-height: 1.5;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
 }
 
+/* Banner de Recrutamento */
 .recrutamento-banner {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
-  background: radial-gradient(circle at top right, #1f1435, #141417 65%);
-  border: 1px solid #27272a;
-  border-radius: 14px;
-  padding: 30px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 18px;
+  padding: 32px 36px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 24px;
+  box-shadow: var(--card-shadow);
 }
 
-.recrutamento-info h3 {
-  font-size: 1.3rem;
-  color: #ffffff;
-  margin-bottom: 6px;
+.recrutamento-info {
+  flex: 1;
+  min-width: 280px;
+}
+
+.recrutamento-titulo-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.recrutamento-titulo-box h3 {
+  font-size: 1.35rem;
+  color: var(--text-primary);
+  font-weight: 800;
+  margin: 0;
 }
 
 .recrutamento-info p {
-  color: #a1a1aa;
-  font-size: 0.95rem;
+  color: var(--text-secondary);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.aviso-candidatura-card {
+  margin-top: 16px;
+  padding: 16px 20px;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.aviso-candidatura-linha {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.aviso-candidatura-linha code {
+  background-color: var(--bg-canvas);
+  color: var(--mc-frost-ice);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.85rem;
+  border: 1px solid var(--border-subtle);
 }
 
 .btn-candidatura {
-  background-color: #7c3aed;
+  background: linear-gradient(135deg, var(--mc-emerald) 0%, var(--mc-emerald-hover) 100%);
   color: #ffffff;
   border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: bold;
+  padding: 14px 26px;
+  border-radius: 12px;
+  font-weight: 800;
   font-size: 0.95rem;
-  text-decoration: none;
   cursor: pointer;
-  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.22s ease;
   white-space: nowrap;
+  box-shadow: 0 4px 16px var(--mc-emerald-glow);
 }
 
 .btn-candidatura:hover {
-  background-color: #6d28d9;
+  filter: brightness(1.1);
   transform: translateY(-2px);
+  box-shadow: 0 6px 22px var(--mc-emerald-glow);
 }
