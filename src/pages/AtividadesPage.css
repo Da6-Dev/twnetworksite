@@ -1,62 +1,37 @@
-/* ==========================================================================
-   PÁGINA DEDICADA DE ATIVIDADES — TW NETWORK
-   MÉTRICA 60-30-10:
-   - 60% Fundo: var(--bg-canvas)
-   - 30% Estrutura: var(--bg-surface), var(--border-subtle), var(--text-primary)
-   - 10% Destaque: var(--mc-emerald), var(--mc-gold), var(--mc-diamond)
-   ========================================================================== */
-
 .atividades-page-container {
-  min-height: calc(100vh - 80px);
-  background-color: var(--bg-canvas);
-  color: var(--text-primary);
-  padding-bottom: 70px;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 40px 24px 90px;
 }
 
 .atividades-hero-banner {
-  background: linear-gradient(180deg, var(--bg-canvas-subtle) 0%, var(--bg-canvas) 100%);
-  border-bottom: 1px solid var(--border-subtle);
-  padding: 50px 20px 40px;
+  background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-surface-elevated) 100%);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px;
+  padding: 48px 32px;
   text-align: center;
+  box-shadow: var(--card-shadow);
+  margin-bottom: 40px;
 }
 
 .atividades-hero-content {
-  max-width: 900px;
+  max-width: 800px;
   margin: 0 auto;
 }
 
-.atividades-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background-color: var(--badge-bg);
-  border: 1px solid var(--border-subtle);
-  padding: 6px 16px;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--mc-emerald);
-  margin-bottom: 16px;
-}
-
 .atividades-title {
-  font-size: 2.4rem;
+  font-size: 2.6rem;
   font-weight: 800;
-  line-height: 1.2;
   color: var(--text-primary);
   margin-bottom: 14px;
-}
-
-.atividades-title .highlight {
-  color: var(--mc-emerald);
+  letter-spacing: -0.025em;
 }
 
 .atividades-subtitle {
-  font-size: 1.05rem;
-  line-height: 1.6;
   color: var(--text-secondary);
-  max-width: 720px;
-  margin: 0 auto 30px;
+  font-size: 1.08rem;
+  line-height: 1.65;
+  margin-bottom: 32px;
 }
 
 .atividades-quick-stats {
@@ -67,68 +42,65 @@
 }
 
 .stat-pill {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 12px;
   background-color: var(--bg-surface);
   border: 1px solid var(--border-subtle);
-  padding: 12px 20px;
-  border-radius: 12px;
+  padding: 10px 20px;
+  border-radius: 16px;
   text-align: left;
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.2s ease, border-color 0.2s ease;
-}
-
-.stat-pill:hover {
-  transform: translateY(-2px);
-  border-color: var(--border-focus);
 }
 
 .stat-pill strong {
   display: block;
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--text-primary);
-  font-weight: 800;
 }
 
 .stat-pill small {
   display: block;
   font-size: 0.78rem;
   color: var(--text-muted);
-  font-weight: 600;
+}
+
+.stat-link-pill {
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.stat-link-pill:hover {
+  background-color: var(--bg-surface-elevated);
+  transform: translateY(-2px);
+  border-color: var(--mc-emerald);
 }
 
 .atividades-hub-wrapper {
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 0 20px;
+  margin-bottom: 50px;
 }
 
-/* Informações extras abaixo do hub */
 .atividades-info-cards {
-  max-width: 1240px;
-  margin: 50px auto 0;
-  padding: 0 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 24px;
 }
 
 .info-card {
   background-color: var(--bg-surface);
   border: 1px solid var(--border-subtle);
-  border-radius: 14px;
-  padding: 26px;
+  border-radius: 20px;
+  padding: 30px 26px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.22s ease, border-color 0.22s ease;
 }
 
 .info-card:hover {
   transform: translateY(-3px);
-  border-color: var(--border-focus);
+  border-color: var(--border-hover);
 }
 
 .info-card-header {
@@ -139,7 +111,7 @@
 }
 
 .info-card-header h3 {
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: var(--text-primary);
   margin: 0;
@@ -149,46 +121,20 @@
   font-size: 0.92rem;
   color: var(--text-secondary);
   line-height: 1.6;
-  margin-bottom: 20px;
-}
-
-.info-card p code {
-  background-color: var(--bg-canvas-subtle);
-  border: 1px solid var(--border-subtle);
-  color: var(--mc-gold);
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-weight: 700;
-  font-size: 0.85rem;
+  margin-bottom: 22px;
 }
 
 .info-card-link {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--mc-emerald);
-  text-decoration: none;
   display: inline-flex;
   align-items: center;
-  transition: opacity 0.2s ease;
-  margin-top: auto;
+  gap: 6px;
+  color: var(--mc-emerald);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: gap 0.2s ease;
 }
 
 .info-card-link:hover {
-  text-decoration: underline;
-  opacity: 0.85;
-}
-
-@media (max-width: 768px) {
-  .atividades-title {
-    font-size: 1.8rem;
-  }
-  .atividades-hero-banner {
-    padding: 35px 15px 30px;
-  }
-  .atividades-quick-stats {
-    flex-direction: column;
-  }
-  .stat-pill {
-    width: 100%;
-  }
+  gap: 10px;
 }

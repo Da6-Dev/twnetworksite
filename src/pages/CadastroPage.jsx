@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Eye, EyeOff, Check, AlertCircle, ArrowRight, User } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useSound } from '../context/SoundContext';
-import McIcon from '../components/McIcon';
 import './CadastroPage.css';
 
 export default function CadastroPage() {
@@ -14,6 +14,7 @@ export default function CadastroPage() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
+  const [mostrarSenha, setMostrarSenha] = useState(false);
   const [erro, setErro] = useState('');
   const [carregando, setCarregando] = useState(false);
   const [statusNick, setStatusNick] = useState(null);
@@ -32,7 +33,7 @@ export default function CadastroPage() {
     }
   };
 
-  // Validação em tempo real do Nick de Minecraft (Modo Pirata/Livre por padrão)
+  // Validação em tempo real do Nick de Minecraft
   useEffect(() => {
     if (!nick.trim()) return;
     let cancelado = false;
@@ -48,7 +49,7 @@ export default function CadastroPage() {
     };
   }, [nick, validarNickMinecraft]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!nick.trim()) {
@@ -79,34 +80,80 @@ export default function CadastroPage() {
     setCarregando(true);
     setErro('');
 
-    setTimeout(() => {
-      const res = cadastrar({ nick, email, senha });
-      setCarregando(false);
-      if (res.sucesso) {
-        tocarSucesso();
-        navigate('/perfil');
-      } else {
-        setErro(res.mensagem);
-      }
-    }, 400);
-  };
-
-  const handleCadastrarGoogle = async () => {
-    tocarClique();
-    setCarregando(true);
-    setErro('');
-    const nickEscolhido = nick.trim() || 'Davi_Player';
-    const res = await loginComGoogle({
-      email: email.trim() || 'davipassos213@gmail.com',
-      nome: 'Davi',
-      nick: nickEscolhido
-    });
+    const res = await cadastrar({ nick, email, senha });
     setCarregando(false);
     if (res.sucesso) {
       tocarSucesso();
       navigate('/perfil');
     } else {
-      setErro(res.mensagem || 'Falha ao cadastrar com o Google.');
+      setErro(res.mensagem || 'Falha ao cadastrar conta.');
+    }
+  };
+
+  const [googleClientId, setGoogleClientId] = useState('');
+
+  // Inicialização do Google Identity Services oficial
+  useEffect(() => {
+    fetch('/api/auth/google/client-id')
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.clientId) {
+          setGoogleClientId(data.clientId);
+          const interval = setInterval(() => {
+            if (window.google?.accounts?.id) {
+              clearInterval(interval);
+              window.google.accounts.id.initialize({
+                client_id: data.clientId,
+                callback: async (response) => {
+                  setCarregando(true);
+                  setErro('');
+                  const res = await loginComGoogle({
+                    credential: response.credential,
+                    nickEscolhido: nick.trim() || undefined
+                  });
+                  setCarregando(false);
+                  if (res.sucesso) {
+                    tocarSucesso();
+                    navigate('/perfil');
+                  } else {
+                    setErro(res.mensagem || 'Falha ao cadastrar com o Google.');
+                  }
+                }
+              });
+
+              const btnContainer = document.getElementById('google-btn-rendered-cadastro');
+              if (btnContainer) {
+                btnContainer.innerHTML = '';
+                window.google.accounts.id.renderButton(btnContainer, {
+                  type: 'standard',
+                  theme: 'filled_black',
+                  size: 'large',
+                  text: 'signup_with',
+                  shape: 'pill',
+                  width: 320
+                });
+              }
+            }
+          }, 100);
+          setTimeout(() => clearInterval(interval), 4000);
+        }
+      })
+      .catch(() => {});
+  }, [loginComGoogle, navigate, nick, tocarSucesso]);
+
+  const handleCadastrarGoogle = () => {
+    tocarClique();
+    if (!googleClientId) {
+      setErro('Configure seu GOOGLE_CLIENT_ID no arquivo .env para abrir a janela oficial do Google.');
+      return;
+    }
+    if (window.google?.accounts?.id) {
+      window.google.accounts.id.prompt((notification) => {
+        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+          const btn = document.querySelector('#google-btn-rendered-cadastro div[role=button]');
+          if (btn) btn.click();
+        }
+      });
     }
   };
 
@@ -114,61 +161,40 @@ export default function CadastroPage() {
 
   return (
     <div className="cadastro-page-container">
-      <div className="cadastro-card">
+      <div className="cadastro-grid">
         {/* Lado Esquerdo: Formulário */}
-        <div className="cadastro-form-col">
+        <div className="cadastro-form-card">
           <div className="cadastro-header">
-            <span className="badge-cadastro">
-              <McIcon name="Grass_Block" size={16} />
-              Registro de Jogador
-            </span>
-            <h1>Criar Conta na <span className="highlight">TW Network</span></h1>
-            <p>Cadastre seu Nick para receber pacotes VIP, recompensas diárias e chaves in-game.</p>
-
-            <div className="cadastro-modo-pirata-alerta">
-              <div className="pirata-alerta-tag">
-                <McIcon name="Compass" size={14} />
-                <strong>Modo Pirata / Livre Ativo</strong>
-              </div>
-              <span>Qualquer jogador pode jogar! Basta escolher seu nickname livremente sem precisar de conta oficial paga.</span>
-            </div>
+            <h1>Criar Conta Gratuita</h1>
+            <p>Vincule seu Nick de Minecraft para resgatar prêmios diários e acompanhar seus pedidos.</p>
           </div>
 
           {erro && (
-            <div className="auth-alert-erro">
-              <McIcon name="Barrier" size={16} />
+            <div className="cadastro-alert-erro">
+              <AlertCircle size={16} />
               <span>{erro}</span>
             </div>
           )}
 
-          {/* Opção Rápida: Cadastrar com Google */}
-          <div className="cadastro-google-wrapper">
-            <button
-              type="button"
-              className="btn-google-cadastro"
-              onClick={handleCadastrarGoogle}
-              disabled={carregando}
-            >
-              <svg className="google-icon-svg" viewBox="0 0 24 24" width="20" height="20">
-                <path
-                  fill="#4285F4"
-                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                />
-                <path
-                  fill="#34A853"
-                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                />
-                <path
-                  fill="#FBBC05"
-                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
-                />
-                <path
-                  fill="#EA4335"
-                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
-                />
-              </svg>
-              <span>Cadastrar Rápido com Google</span>
-            </button>
+          {/* Botão Oficial de Cadastro com Google */}
+          <div className="auth-google-wrapper" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
+            <div id="google-btn-rendered-cadastro" style={{ display: googleClientId ? 'flex' : 'none', justifyContent: 'center', width: '100%', minHeight: '44px' }} />
+            {!googleClientId && (
+              <button
+                type="button"
+                className="btn-google-login"
+                onClick={handleCadastrarGoogle}
+                disabled={carregando}
+              >
+                <svg className="google-icon-svg" viewBox="0 0 24 24" width="20" height="20">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+                </svg>
+                <span>Cadastrar Rápido com Google</span>
+              </button>
+            )}
           </div>
 
           <div className="auth-divider">
@@ -179,7 +205,7 @@ export default function CadastroPage() {
             <div className="cadastro-field">
               <div className="cadastro-label-row">
                 <label htmlFor="cad-nick">Nick do Minecraft (In-Game)</label>
-                <span className="label-tipo-pirata">Pirata / Livre</span>
+                <span className="label-tipo-pirata">Modo Livre / Pirata</span>
               </div>
               <div className="cadastro-input-wrapper">
                 <input
@@ -198,12 +224,12 @@ export default function CadastroPage() {
                 <div className={`status-nick-box ${statusNick.valido ? 'valido' : 'invalido'}`}>
                   {statusNick.valido ? (
                     <>
-                      <McIcon name="Emerald" size={14} />
-                      <span>{statusNick.mensagem || 'Nick válido no Modo Pirata/Offline!'}</span>
+                      <Check size={14} className="text-emerald-400" />
+                      <span>{statusNick.mensagem || 'Nick válido no Modo Livre/Offline!'}</span>
                     </>
                   ) : (
                     <>
-                      <McIcon name="Barrier" size={14} />
+                      <AlertCircle size={14} className="text-rose-400" />
                       <span>{statusNick.erro}</span>
                     </>
                   )}
@@ -211,12 +237,12 @@ export default function CadastroPage() {
               )}
 
               <small className="field-hint">
-                Seu personagem receberá os VIPs, cash e prêmios do passe neste Nick.
+                Seu personagem receberá VIPs, Cash e prêmios do passe neste Nick.
               </small>
             </div>
 
             <div className="cadastro-field">
-              <label htmlFor="cad-email">E-mail para Acesso & Recibos</label>
+              <label htmlFor="cad-email">E-mail para Acesso &amp; Recibos</label>
               <div className="cadastro-input-wrapper">
                 <input
                   id="cad-email"
@@ -232,25 +258,32 @@ export default function CadastroPage() {
             <div className="cadastro-campos-senha">
               <div className="cadastro-field">
                 <label htmlFor="cad-pass">Senha</label>
-                <div className="cadastro-input-wrapper">
+                <div className="cadastro-input-wrapper password-wrapper">
                   <input
                     id="cad-pass"
-                    type="password"
-                    placeholder="••••••••"
+                    type={mostrarSenha ? 'text' : 'password'}
+                    placeholder="Mínimo 3 caracteres"
                     value={senha}
                     onChange={(e) => setSenha(e.target.value)}
                     required
                   />
+                  <button
+                    type="button"
+                    className="btn-toggle-eye"
+                    onClick={() => setMostrarSenha(!mostrarSenha)}
+                  >
+                    {mostrarSenha ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
                 </div>
               </div>
 
               <div className="cadastro-field">
                 <label htmlFor="cad-pass-confirm">Confirmar Senha</label>
-                <div className="cadastro-input-wrapper">
+                <div className="cadastro-input-wrapper password-wrapper">
                   <input
                     id="cad-pass-confirm"
-                    type="password"
-                    placeholder="••••••••"
+                    type={mostrarSenha ? 'text' : 'password'}
+                    placeholder="Repita sua senha"
                     value={confirmarSenha}
                     onChange={(e) => setConfirmarSenha(e.target.value)}
                     required
@@ -265,7 +298,6 @@ export default function CadastroPage() {
               disabled={carregando}
               onClick={() => tocarClique()}
             >
-              <McIcon name="Nether_Star" size={18} />
               <span>{carregando ? 'Criando Conta...' : 'Cadastrar e Conectar'}</span>
             </button>
           </form>
@@ -273,7 +305,8 @@ export default function CadastroPage() {
           <div className="cadastro-footer">
             <span>Já possui uma conta criada?</span>
             <Link to="/login" onClick={() => tocarClique()}>
-              Fazer login agora →
+              <span>Fazer login agora</span>
+              <ArrowRight size={14} />
             </Link>
           </div>
         </div>
@@ -282,8 +315,8 @@ export default function CadastroPage() {
         <div className="cadastro-skin-preview-col">
           <div className="skin-preview-box">
             <span className="skin-preview-label">
-              <McIcon name="Compass" size={14} />
-              Personagem In-Game
+              <User size={14} />
+              <span>Personagem In-Game</span>
             </span>
 
             <div className="skin-figure-frame">

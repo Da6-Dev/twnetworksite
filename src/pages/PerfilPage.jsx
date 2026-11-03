@@ -1,10 +1,34 @@
 import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import {
+  Trophy,
+  Gift,
+  ShoppingBag,
+  ShieldCheck,
+  Settings,
+  ChevronLeft,
+  ChevronRight,
+  Copy,
+  Check,
+  Lock,
+  Crown,
+  Sun,
+  Moon,
+  Volume2,
+  VolumeX,
+  LogOut,
+  RefreshCw,
+  Sparkles,
+  Award
+} from 'lucide-react';
+import { toast } from 'sonner';
+import confetti from 'canvas-confetti';
 import { useAuth } from '../context/AuthContext';
 import { useOrders } from '../context/OrderContext';
 import { useTheme } from '../context/useTheme';
 import { useSound } from '../context/SoundContext';
 import McIcon from '../components/McIcon';
+import AnimatedTabs from '../components/ui/AnimatedTabs';
 import './PerfilPage.css';
 
 export default function PerfilPage() {
@@ -16,10 +40,11 @@ export default function PerfilPage() {
     resgatarDiaCalendario,
     completarMissaoPasse,
     resgatarRecompensaPasse,
-    ativarPasseVip
+    ativarPasseVip,
+    abrirModalVincular
   } = useAuth();
 
-  const { buscarPedidosPorNick } = useOrders();
+  const { pedidos, carregandoPedidos, recarregarPedidos } = useOrders();
   const { isDark, alternarTema } = useTheme();
   const { somHabilitado, alternarSom, tocarClique, tocarXP, tocarSucesso } = useSound();
   const navigate = useNavigate();
@@ -37,19 +62,30 @@ export default function PerfilPage() {
     }
   };
 
-  // Aba inicial padrão: 'passe' ou 'recompensas'
+  // Aba inicial padrão: 'passe'
   const [abaAtiva, setAbaAtiva] = useState('passe');
   const [comandoCopiado, setComandoCopiado] = useState(null);
   const [ultimoComandoPasse, setUltimoComandoPasse] = useState(null);
   const [ultimoComandoCalendario, setUltimoComandoCalendario] = useState(null);
-  const [toastNotificacao, setToastNotificacao] = useState(null);
+
+  // Efeito de confete para grandes conquistas (Dia 7, Nível 10, Ativação VIP)
+  const dispararConfete = () => {
+    confetti({
+      particleCount: 80,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ['#10b981', '#38bdf8', '#fbbf24', '#f43f5e']
+    });
+  };
 
   // Se não estiver logado, exibe tela para fazer login
   if (!estaLogado || !usuario) {
     return (
       <div className="perfil-nao-logado-container">
         <div className="perfil-login-prompt-card">
-          <McIcon name="Compass" size={54} />
+          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-[var(--mc-emerald)]/10 border border-[var(--mc-emerald)]/20 flex items-center justify-center">
+            <McIcon name="Compass" size={40} />
+          </div>
           <h2>Acesso Restrito ao Jogador</h2>
           <p>Você precisa estar conectado à sua conta para visualizar seu perfil, recolher recompensas diárias e evoluir no Passe de Batalha.</p>
           <div className="prompt-botoes">
@@ -65,7 +101,7 @@ export default function PerfilPage() {
     );
   }
 
-  const pedidosDoUsuario = buscarPedidosPorNick(usuario.nick);
+  const pedidosDoUsuario = pedidos;
 
   // Dados do Calendário de 7 Dias
   const diasCalendario = [
@@ -157,25 +193,20 @@ export default function PerfilPage() {
 
   const proximoDiaParaColetar = diasCalendario.find(d => !streak.diasColetados.includes(d.dia))?.dia || null;
 
-  const exibirToast = (msg) => {
-    setToastNotificacao(msg);
-    setTimeout(() => {
-      setToastNotificacao(null);
-    }, 3500);
-  };
-
-  const copiarComando = (cmd, id) => {
+  const copiarComando = (cmd, id, mensagemFeedback = 'Comando copiado!') => {
     tocarClique();
     navigator.clipboard.writeText(cmd);
     setComandoCopiado(id);
+    toast.success(mensagemFeedback);
     setTimeout(() => {
       setComandoCopiado(null);
-    }, 1800);
+    }, 2000);
   };
 
   const handleLogout = () => {
     tocarClique();
     logout();
+    toast.info('Você saiu da sua conta.');
     navigate('/');
   };
 
@@ -184,8 +215,9 @@ export default function PerfilPage() {
     tocarSucesso();
     const resultado = resgatarDiaCalendario(dia);
     if (resultado.sucesso) {
+      if (dia === 7) dispararConfete();
       setUltimoComandoCalendario(resultado.comando);
-      exibirToast(`🎁 Recompensa do Dia ${dia} resgatada com sucesso no Nick ${usuario.nick}!`);
+      toast.success(`🎁 Recompensa do Dia ${dia} resgatada com sucesso para ${usuario.nick}!`);
     }
   };
 
@@ -194,8 +226,9 @@ export default function PerfilPage() {
     tocarSucesso();
     const resultado = resgatarRecompensaPasse(nivel, tipo);
     if (resultado.sucesso) {
+      if (nivel === 10) dispararConfete();
       setUltimoComandoPasse(resultado.comando);
-      exibirToast(`⭐ Recompensa ${tipo === 'vip' ? 'VIP' : 'Gratuita'} do Nível ${nivel} resgatada!`);
+      toast.success(`⭐ Recompensa ${tipo === 'vip' ? 'VIP' : 'Gratuita'} do Nível ${nivel} resgatada!`);
     }
   };
 
@@ -205,29 +238,57 @@ export default function PerfilPage() {
     const resultado = completarMissaoPasse(missaoId, xpGanho);
     if (resultado?.subiuNivel) {
       tocarSucesso();
-      exibirToast(`🎉 PARABÉNS! Você subiu para o NÍVEL ${resultado.novoNivel} no Passe de Batalha!`);
+      if (resultado.novoNivel >= 10) dispararConfete();
+      toast.success(`🎉 PARABÉNS! Você subiu para o NÍVEL ${resultado.novoNivel} no Passe de Batalha!`);
     } else {
-      exibirToast(`+${xpGanho} XP adicionado ao seu Passe de Batalha!`);
+      toast.info(`+${xpGanho} XP adicionado ao seu Passe de Batalha!`);
     }
   };
 
   // Ação de Desbloquear Passe VIP Instantâneo
   const handleAtivarVipPasse = () => {
     tocarSucesso();
+    dispararConfete();
     ativarPasseVip();
-    exibirToast(`👑 Passe VIP ativado para a conta ${usuario.nick}! Agora você pode resgatar todas as recompensas douradas.`);
+    toast.success(`👑 Passe VIP ativado para a conta ${usuario.nick}! Todas as recompensas douradas estão liberadas.`);
   };
 
   // Cálculo da barra de progresso de XP
   const percentualXp = Math.min(100, Math.round((passe.xp / passe.xpMaxNivel) * 100));
 
+  const abasDisponiveis = [
+    { id: 'passe', label: 'Passe de Batalha', icon: <Trophy size={16} /> },
+    { id: 'recompensas', label: 'Recompensas Diárias', icon: <Gift size={16} /> },
+    { id: 'pedidos', label: 'Meus Pedidos', icon: <ShoppingBag size={16} />, badge: pedidosDoUsuario.length > 0 ? pedidosDoUsuario.length : null },
+    { id: 'conta', label: 'Minha Conta In-Game', icon: <ShieldCheck size={16} /> },
+    { id: 'configuracoes', label: 'Configurações', icon: <Settings size={16} /> },
+  ];
+
   return (
     <div className="perfil-page-container">
-      {/* Toast Notificação Flutuante */}
-      {toastNotificacao && (
-        <div className="perfil-toast-flutuante">
-          <McIcon name="Emerald" size={20} />
-          <span>{toastNotificacao}</span>
+      {/* Banner de alerta caso o nick do Minecraft ainda não tenha sido vinculado */}
+      {!usuario.nickVinculado && (
+        <div className="perfil-alerta-vincular-container">
+          <div className="perfil-alerta-vincular-card">
+            <div className="perfil-alerta-icon-badge">
+              <McIcon name="Name_Tag" size={26} />
+            </div>
+            <div className="perfil-alerta-conteudo">
+              <strong>Vincule seu Nickname do Minecraft</strong>
+              <p>Você entrou com uma conta Google. Para que seus VIPs, Cash e caixas sejam entregues no servidor, informe seu Nickname exato no jogo.</p>
+            </div>
+            <button
+              type="button"
+              className="btn-perfil-alerta-acao"
+              onClick={() => {
+                tocarClique();
+                abrirModalVincular();
+              }}
+            >
+              <McIcon name="Emerald" size={16} />
+              Vincular Agora
+            </button>
+          </div>
         </div>
       )}
 
@@ -252,7 +313,7 @@ export default function PerfilPage() {
               </span>
               {(usuario.patenteVip && usuario.patenteVip !== 'Nenhum') || passe.temVipPasse ? (
                 <span className="badge-vip-ativa">
-                  <McIcon name="Gold_Ingot" size={14} />
+                  <Crown size={14} className="text-amber-400" />
                   {usuario.patenteVip !== 'Nenhum' ? usuario.patenteVip : 'Passe VIP Ativo'}
                 </span>
               ) : (
@@ -261,9 +322,41 @@ export default function PerfilPage() {
                   Membro Free
                 </span>
               )}
+              {usuario.nickVinculado ? (
+                <span className="badge-nick-status vinculado">
+                  <Check size={13} />
+                  Nick Vinculado
+                </span>
+              ) : (
+                <span 
+                  className="badge-nick-status pendente"
+                  onClick={() => {
+                    tocarClique();
+                    abrirModalVincular();
+                  }}
+                  title="Clique para vincular seu Nick do Minecraft"
+                >
+                  <McIcon name="Barrier" size={13} />
+                  Nick Pendente
+                </span>
+              )}
             </div>
 
-            <h1 className="perfil-nick-titulo">{usuario.nick}</h1>
+            <div className="perfil-nick-linha">
+              <h1 className="perfil-nick-titulo">{usuario.nick}</h1>
+              <button
+                type="button"
+                className="btn-acao-alterar-nick"
+                onClick={() => {
+                  tocarClique();
+                  abrirModalVincular();
+                }}
+                title="Alterar ou vincular Nick do Minecraft"
+              >
+                <McIcon name="Name_Tag" size={14} />
+                <span>{usuario.nickVinculado ? 'Alterar Nick' : 'Vincular Nick'}</span>
+              </button>
+            </div>
             <p className="perfil-email-sub">{usuario.email}</p>
 
             <div className="perfil-kpi-strip">
@@ -286,69 +379,17 @@ export default function PerfilPage() {
         </div>
       </section>
 
-      {/* Navegador de Abas do Perfil */}
+      {/* Navegador de Abas com Framer Motion AnimatedTabs */}
       <div className="perfil-abas-container">
-        <div className="perfil-abas-nav">
-          <button
-            type="button"
-            className={`perfil-tab-btn ${abaAtiva === 'passe' ? 'ativo' : ''}`}
-            onClick={() => {
-              tocarClique();
-              setAbaAtiva('passe');
-            }}
-          >
-            <McIcon name="Nether_Star" size={18} />
-            <span>Passe de Batalha</span>
-          </button>
-
-          <button
-            type="button"
-            className={`perfil-tab-btn ${abaAtiva === 'recompensas' ? 'ativo' : ''}`}
-            onClick={() => {
-              tocarClique();
-              setAbaAtiva('recompensas');
-            }}
-          >
-            <McIcon name="Chest" size={18} />
-            <span>Recompensas Diárias (7 Dias)</span>
-          </button>
-
-          <button
-            type="button"
-            className={`perfil-tab-btn ${abaAtiva === 'pedidos' ? 'ativo' : ''}`}
-            onClick={() => {
-              tocarClique();
-              setAbaAtiva('pedidos');
-            }}
-          >
-            <McIcon name="Gold_Ingot" size={18} />
-            <span>Meus Pedidos ({pedidosDoUsuario.length})</span>
-          </button>
-
-          <button
-            type="button"
-            className={`perfil-tab-btn ${abaAtiva === 'conta' ? 'ativo' : ''}`}
-            onClick={() => {
-              tocarClique();
-              setAbaAtiva('conta');
-            }}
-          >
-            <McIcon name="Compass" size={18} />
-            <span>Minha Conta In-Game</span>
-          </button>
-
-          <button
-            type="button"
-            className={`perfil-tab-btn ${abaAtiva === 'configuracoes' ? 'ativo' : ''}`}
-            onClick={() => {
-              tocarClique();
-              setAbaAtiva('configuracoes');
-            }}
-          >
-            <McIcon name="Redstone" size={18} />
-            <span>Configurações & Tema</span>
-          </button>
-        </div>
+        <AnimatedTabs
+          layoutId="perfilTabIndicator"
+          tabs={abasDisponiveis}
+          activeTab={abaAtiva}
+          onChange={(id) => {
+            tocarClique();
+            setAbaAtiva(id);
+          }}
+        />
       </div>
 
       {/* Conteúdo Dinâmico das Abas */}
@@ -396,7 +437,7 @@ export default function PerfilPage() {
                 {passe.temVipPasse ? (
                   <div className="status-vip-ativo">
                     <div className="vip-ativo-header">
-                      <McIcon name="Gold_Ingot" size={22} />
+                      <Crown size={22} className="text-amber-400" />
                       <strong>Passe Premium VIP Ativo</strong>
                     </div>
                     <p>Sua conta tem acesso liberado para coletar todos os itens da trilha dourada VIP até o Nível 10!</p>
@@ -404,7 +445,7 @@ export default function PerfilPage() {
                 ) : (
                   <div className="status-vip-bloqueado">
                     <div className="vip-bloqueado-header">
-                      <McIcon name="Barrier" size={20} />
+                      <Lock size={20} className="text-red-400" />
                       <strong>Trilha VIP Bloqueada</strong>
                     </div>
                     <p>Você está na trilha gratuita. Ative o Passe VIP para desbloquear Chaves Supremas, Cash e Cosméticos.</p>
@@ -413,7 +454,7 @@ export default function PerfilPage() {
                       className="btn-desbloquear-passe-vip"
                       onClick={handleAtivarVipPasse}
                     >
-                      <McIcon name="Gold_Ingot" size={16} />
+                      <Sparkles size={16} />
                       <span>Ativar Passe VIP Instantâneo</span>
                     </button>
                   </div>
@@ -425,7 +466,7 @@ export default function PerfilPage() {
             {ultimoComandoPasse && (
               <div className="passe-comando-sucesso-box">
                 <div className="comando-sucesso-texto">
-                  <McIcon name="Emerald" size={20} />
+                  <Check size={20} className="text-emerald-400 shrink-0" />
                   <div>
                     <strong>Recompensa liberada para entrega in-game!</strong>
                     <p>Copie o comando abaixo e digite no servidor com o nick <strong>{usuario.nick}</strong>:</p>
@@ -435,20 +476,20 @@ export default function PerfilPage() {
                 <button
                   type="button"
                   className={`btn-copiar-cmd-perfil ${comandoCopiado === 'passe' ? 'sucesso' : ''}`}
-                  onClick={() => copiarComando(ultimoComandoPasse, 'passe')}
+                  onClick={() => copiarComando(ultimoComandoPasse, 'passe', 'Comando do Passe copiado!')}
                 >
-                  <McIcon name={comandoCopiado === 'passe' ? 'Emerald' : 'Compass'} size={15} />
+                  {comandoCopiado === 'passe' ? <Check size={15} /> : <Copy size={15} />}
                   <span>{comandoCopiado === 'passe' ? 'Copiado!' : 'Copiar'}</span>
                 </button>
               </div>
             )}
 
-            {/* Trilha do Passe de Batalha com Scroll Horizontal (Grátis em Cima / VIP em Baixo) */}
+            {/* Trilha do Passe de Batalha com Scroll Horizontal */}
             <div className="passe-trilha-secao">
               <div className="trilha-secao-cabecalho">
                 <div className="trilha-secao-titulos">
                   <span className="trilha-badge-topo">
-                    <McIcon name="Nether_Star" size={14} />
+                    <Trophy size={14} className="text-amber-400 inline mr-1.5" />
                     Passe de Batalha
                   </span>
                   <h3>Trilha da Temporada (Níveis 1 ao 10)</h3>
@@ -469,16 +510,18 @@ export default function PerfilPage() {
                       className="btn-scroll-trilha"
                       onClick={() => rolarTrilha('esq')}
                       title="Rolar níveis para a esquerda"
+                      aria-label="Rolar para a esquerda"
                     >
-                      ◀
+                      <ChevronLeft size={18} />
                     </button>
                     <button
                       type="button"
                       className="btn-scroll-trilha"
                       onClick={() => rolarTrilha('dir')}
                       title="Rolar níveis para a direita"
+                      aria-label="Rolar para a direita"
                     >
-                      ▶
+                      <ChevronRight size={18} />
                     </button>
                   </div>
                 </div>
@@ -498,12 +541,12 @@ export default function PerfilPage() {
                     </div>
 
                     <div className="rotulo-bloco rotulo-nivel">
-                      <McIcon name="Nether_Star" size={16} />
+                      <Award size={16} className="text-emerald-400" />
                       <span>Nível</span>
                     </div>
 
                     <div className="rotulo-bloco rotulo-vip">
-                      <McIcon name="Gold_Ingot" size={20} />
+                      <Crown size={20} className="text-amber-400" />
                       <div>
                         <strong>VIP</strong>
                         <small>Em Baixo</small>
@@ -535,7 +578,9 @@ export default function PerfilPage() {
 
                             <div className="slot-item-action-area">
                               {freeColetado ? (
-                                <span className="badge-coletado-status-mini">✓ Coletado</span>
+                                <span className="badge-coletado-status-mini">
+                                  <Check size={12} /> Coletado
+                                </span>
                               ) : nivelAlcancado ? (
                                 <button
                                   type="button"
@@ -566,7 +611,8 @@ export default function PerfilPage() {
                           {/* 3. EM BAIXO: TRILHA VIP */}
                           <div className={`trilha-slot-card vip ${vipColetado ? 'coletado' : ''}`}>
                             <div className="slot-tipo-tag vip">
-                              <span>★ VIP</span>
+                              <Crown size={11} className="inline mr-1" />
+                              <span>VIP</span>
                             </div>
                             <div className="slot-item-icon-box vip">
                               <McIcon name={item.vip.icone} size={30} />
@@ -575,14 +621,17 @@ export default function PerfilPage() {
 
                             <div className="slot-item-action-area">
                               {vipColetado ? (
-                                <span className="badge-coletado-status-mini vip">✓ VIP Coletado</span>
+                                <span className="badge-coletado-status-mini vip">
+                                  <Check size={12} /> VIP Coletado
+                                </span>
                               ) : nivelAlcancado && passe.temVipPasse ? (
                                 <button
                                   type="button"
                                   className="btn-coletar-trilha-btn vip"
                                   onClick={() => handleColetarPasse(item.nivel, 'vip')}
                                 >
-                                  ★ Coletar VIP
+                                  <Sparkles size={13} />
+                                  <span>Coletar VIP</span>
                                 </button>
                               ) : nivelAlcancado && !passe.temVipPasse ? (
                                 <button
@@ -591,10 +640,13 @@ export default function PerfilPage() {
                                   onClick={handleAtivarVipPasse}
                                   title="Ativar Passe VIP para coletar"
                                 >
-                                  🔒 Requer VIP
+                                  <Lock size={13} />
+                                  <span>Requer VIP</span>
                                 </button>
                               ) : (
-                                <span className="badge-bloqueado-trilha-mini vip">🔒 Nível {item.nivel}</span>
+                                <span className="badge-bloqueado-trilha-mini vip">
+                                  <Lock size={12} /> Nível {item.nivel}
+                                </span>
                               )}
                             </div>
                           </div>
@@ -610,7 +662,9 @@ export default function PerfilPage() {
             <div className="passe-missoes-secao">
               <div className="missoes-secao-cabecalho">
                 <div className="missoes-titulo-row">
-                  <McIcon name="Compass" size={24} />
+                  <div className="w-10 h-10 rounded-xl bg-[var(--mc-emerald)]/10 border border-[var(--mc-emerald)]/20 flex items-center justify-center">
+                    <McIcon name="Compass" size={22} />
+                  </div>
                   <div>
                     <h3>Missões da Temporada para Acumular XP</h3>
                     <p>Complete as tarefas abaixo para avançar mais rápido na trilha do Passe de Batalha.</p>
@@ -645,7 +699,7 @@ export default function PerfilPage() {
                       <div className="missao-botao-col">
                         {concluida ? (
                           <span className="badge-missao-feita">
-                            ✓ Concluída
+                            <Check size={14} /> Concluída
                           </span>
                         ) : (
                           <button
@@ -653,7 +707,7 @@ export default function PerfilPage() {
                             className="btn-completar-missao"
                             onClick={() => handleCompletarMissao(missao.id, missao.xp)}
                           >
-                            <McIcon name="Emerald" size={14} />
+                            <Sparkles size={14} />
                             <span>Completar</span>
                           </button>
                         )}
@@ -675,7 +729,7 @@ export default function PerfilPage() {
             <div className="calendario-hero-topo">
               <div className="calendario-info-bloco">
                 <div className="calendario-tag">
-                  <McIcon name="Clock" size={16} />
+                  <Gift size={15} className="text-emerald-400" />
                   <span>Sequência de Login Contínuo</span>
                 </div>
                 <h2>Calendário Diário de 7 Dias</h2>
@@ -700,7 +754,7 @@ export default function PerfilPage() {
             {ultimoComandoCalendario && (
               <div className="calendario-comando-box">
                 <div className="comando-sucesso-texto">
-                  <McIcon name="Emerald" size={20} />
+                  <Check size={20} className="text-emerald-400 shrink-0" />
                   <div>
                     <strong>Presente do dia registrado com sucesso!</strong>
                     <p>Digite no console do jogo para receber seus itens no inventário:</p>
@@ -710,9 +764,9 @@ export default function PerfilPage() {
                 <button
                   type="button"
                   className={`btn-copiar-cmd-perfil ${comandoCopiado === 'calendario' ? 'sucesso' : ''}`}
-                  onClick={() => copiarComando(ultimoComandoCalendario, 'calendario')}
+                  onClick={() => copiarComando(ultimoComandoCalendario, 'calendario', 'Código diário copiado!')}
                 >
-                  <McIcon name={comandoCopiado === 'calendario' ? 'Emerald' : 'Compass'} size={15} />
+                  {comandoCopiado === 'calendario' ? <Check size={15} /> : <Copy size={15} />}
                   <span>{comandoCopiado === 'calendario' ? 'Copiado!' : 'Copiar'}</span>
                 </button>
               </div>
@@ -733,7 +787,9 @@ export default function PerfilPage() {
                     <div className="dia-card-topo">
                       <span className="dia-titulo-tag">{item.titulo}</span>
                       {jaColetado ? (
-                        <span className="dia-badge-status coletado">✓ Coletado</span>
+                        <span className="dia-badge-status coletado">
+                          <Check size={12} /> Coletado
+                        </span>
                       ) : prontoParaColetar ? (
                         <span className="dia-badge-status pronto">Disponível</span>
                       ) : (
@@ -757,15 +813,15 @@ export default function PerfilPage() {
                           className="btn-dia-coletado"
                           onClick={() => {
                             if (codigoGerado) {
-                              copiarComando(`/recompensa resgatar ${codigoGerado}`, `dia-${item.dia}`);
+                              copiarComando(`/recompensa resgatar ${codigoGerado}`, `dia-${item.dia}`, 'Comando de resgate copiado!');
                             } else {
                               tocarClique();
-                              exibirToast(`Dia ${item.dia} já coletado anteriormente.`);
+                              toast.info(`Dia ${item.dia} já foi coletado.`);
                             }
                           }}
                         >
-                          <McIcon name="Emerald" size={14} />
-                          <span>{comandoCopiado === `dia-${item.dia}` ? 'Código Copiado!' : '✓ Já Coletado'}</span>
+                          {comandoCopiado === `dia-${item.dia}` ? <Check size={14} /> : <Check size={14} />}
+                          <span>{comandoCopiado === `dia-${item.dia}` ? 'Código Copiado!' : 'Já Coletado'}</span>
                         </button>
                       ) : prontoParaColetar ? (
                         <button
@@ -773,7 +829,7 @@ export default function PerfilPage() {
                           className="btn-dia-resgatar-hoje"
                           onClick={() => handleResgatarCalendario(item.dia)}
                         >
-                          <McIcon name="Chest" size={16} />
+                          <Gift size={16} />
                           <span>Resgatar Hoje!</span>
                         </button>
                       ) : (
@@ -797,69 +853,121 @@ export default function PerfilPage() {
             <div className="secao-titulo-row">
               <div>
                 <h2>Histórico de Compras & Entregas</h2>
-                <p>Todos os pacotes VIPs, chaves e moedas de Cash adquiridos para a conta de <strong>{usuario.nick}</strong>.</p>
+                <p>Pedidos sincronizados em tempo real com o banco de dados para <strong>{usuario.nick}</strong>.</p>
               </div>
-              <Link to="/loja" className="btn-comprar-mais" onClick={() => tocarClique()}>
-                <McIcon name="Emerald" size={16} />
-                <span>Explorar Loja VIP</span>
-              </Link>
+              <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+                <button
+                  type="button"
+                  className="btn-atualizar-pedidos"
+                  onClick={() => {
+                    tocarClique();
+                    recarregarPedidos();
+                    toast.success('Status dos pedidos atualizado!');
+                  }}
+                  disabled={carregandoPedidos}
+                >
+                  <RefreshCw size={14} className={carregandoPedidos ? 'animate-spin' : ''} />
+                  <span>{carregandoPedidos ? 'Sincronizando...' : 'Atualizar Status'}</span>
+                </button>
+                <Link to="/loja" className="btn-comprar-mais" onClick={() => tocarClique()}>
+                  <ShoppingBag size={16} />
+                  <span>Explorar Loja VIP</span>
+                </Link>
+              </div>
             </div>
 
             {pedidosDoUsuario.length > 0 ? (
               <div className="perfil-pedidos-grid">
-                {pedidosDoUsuario.map((pedido) => (
-                  <div key={pedido.id} className="perfil-pedido-card">
-                    <div className="pedido-topo-linha">
-                      <span className="pedido-id-badge">{pedido.id}</span>
-                      <span className={`pedido-status-badge ${pedido.status}`}>
-                        <McIcon name={pedido.status === 'entregue' ? 'Emerald' : 'Clock'} size={14} />
-                        {pedido.statusTexto}
-                      </span>
-                    </div>
+                {pedidosDoUsuario.map((pedido) => {
+                  const statusKey = String(pedido.status || 'pendente').toLowerCase();
+                  const isAprovado = statusKey === 'aprovado' || statusKey === 'entregue';
+                  const isPendente = statusKey === 'pendente';
+                  const isRecusado = statusKey === 'recusado';
 
-                    <div className="pedido-item-principal">
-                      <div className="pedido-mc-icon-frame">
-                        <McIcon name={pedido.mcIcon || 'Emerald'} size={32} />
+                  return (
+                    <div key={pedido.id} className={`perfil-pedido-card ${statusKey}`}>
+                      <div className="pedido-topo-linha">
+                        <span className="pedido-id-badge font-mono">{pedido.id}</span>
+                        <span className={`pedido-status-badge ${statusKey}`}>
+                          {isAprovado ? (
+                            <Check size={14} />
+                          ) : isRecusado ? (
+                            <McIcon name="Barrier" size={14} />
+                          ) : (
+                            <RefreshCw size={14} />
+                          )}
+                          {pedido.statusTexto || (isAprovado ? 'Pagamento Aprovado' : (isRecusado ? 'Recusado' : 'Aguardando Pagamento'))}
+                        </span>
                       </div>
-                      <div className="pedido-info-texto">
-                        <h3>{pedido.pacote}</h3>
-                        <div className="pedido-meta-row">
-                          <span>Valor: <strong>{pedido.valor}</strong></span>
-                          <span>·</span>
-                          <span>Data: <strong>{pedido.data}</strong></span>
-                          <span>·</span>
-                          <span>Pagamento: <strong>{pedido.metodo}</strong></span>
+
+                      <div className="pedido-item-principal">
+                        <div className="pedido-mc-icon-frame">
+                          <McIcon name={pedido.mcIcon || 'Emerald'} size={32} />
+                        </div>
+                        <div className="pedido-info-texto">
+                          <h3>{pedido.pacote}</h3>
+                          <div className="pedido-meta-row">
+                            <span>Valor: <strong>{pedido.valor}</strong></span>
+                            <span>·</span>
+                            <span>Data: <strong>{pedido.data}</strong></span>
+                            <span>·</span>
+                            <span>Método: <strong>{pedido.metodoTexto || pedido.metodo}</strong></span>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    {pedido.comando && (
-                      <div className="pedido-comando-area">
-                        <div className="comando-label-box">
-                          <small>Comando de Ativação In-Game:</small>
-                          <code>{pedido.comando}</code>
+                      {/* Box de Ação para Pix Pendente */}
+                      {isPendente && pedido.pixCopiaCola && (
+                        <div className="pedido-pendente-box">
+                          <div className="pedido-pendente-info">
+                            <McIcon name="Gold_Ingot" size={18} />
+                            <div>
+                              <strong>Aguardando Pagamento Pix</strong>
+                              <p>Seu código Pix Copia e Cola ainda está ativo para pagamento no app do banco:</p>
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            className="btn-copiar-pix-pedido"
+                            onClick={() => copiarComando(pedido.pixCopiaCola, `pix-${pedido.id}`, 'Código Pix Copia e Cola copiado!')}
+                          >
+                            {comandoCopiado === `pix-${pedido.id}` ? <Check size={15} /> : <Copy size={15} />}
+                            <span>{comandoCopiado === `pix-${pedido.id}` ? 'Código Copiado!' : 'Copiar Código Pix'}</span>
+                          </button>
                         </div>
-                        <button
-                          type="button"
-                          className={`btn-copiar-cmd-perfil ${comandoCopiado === pedido.id ? 'sucesso' : ''}`}
-                          onClick={() => copiarComando(pedido.comando, pedido.id)}
-                          title="Copiar comando de ativação"
-                        >
-                          <McIcon name={comandoCopiado === pedido.id ? 'Emerald' : 'Compass'} size={15} />
-                          <span>{comandoCopiado === pedido.id ? 'Copiado!' : 'Copiar'}</span>
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                ))}
+                      )}
+
+                      {/* Box de Ativação para Pedidos Pagos */}
+                      {isAprovado && pedido.comando && (
+                        <div className="pedido-comando-area">
+                          <div className="comando-label-box">
+                            <small>Comando de Ativação In-Game:</small>
+                            <code>{pedido.comando}</code>
+                          </div>
+                          <button
+                            type="button"
+                            className={`btn-copiar-cmd-perfil ${comandoCopiado === pedido.id ? 'sucesso' : ''}`}
+                            onClick={() => copiarComando(pedido.comando, pedido.id, 'Comando de ativação copiado!')}
+                            title="Copiar comando de ativação"
+                          >
+                            {comandoCopiado === pedido.id ? <Check size={15} /> : <Copy size={15} />}
+                            <span>{comandoCopiado === pedido.id ? 'Copiado!' : 'Copiar'}</span>
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             ) : (
               <div className="pedidos-vazio-card">
-                <McIcon name="Chest" size={48} />
+                <div className="w-16 h-16 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-subtle)] flex items-center justify-center mx-auto mb-4">
+                  <McIcon name="Chest" size={38} />
+                </div>
                 <h3>Nenhum pedido efetuado ainda</h3>
                 <p>Você ainda não realizou compras na loja com o Nick <strong>{usuario.nick}</strong>.</p>
                 <Link to="/loja" className="btn-ir-loja-vazio" onClick={() => tocarClique()}>
-                  <McIcon name="Emerald" size={16} />
+                  <ShoppingBag size={16} />
                   <span>Ver Pacotes VIP Disponíveis</span>
                 </Link>
               </div>
@@ -882,7 +990,9 @@ export default function PerfilPage() {
             <div className="conta-cards-grid">
               <div className="conta-info-card">
                 <div className="conta-card-header">
-                  <McIcon name="Grass_Block" size={24} />
+                  <div className="w-9 h-9 rounded-lg bg-[var(--mc-emerald)]/10 border border-[var(--mc-emerald)]/20 flex items-center justify-center">
+                    <McIcon name="Grass_Block" size={20} />
+                  </div>
                   <h3>Personagem Vinculado</h3>
                 </div>
                 <div className="conta-avatar-destaque">
@@ -893,7 +1003,10 @@ export default function PerfilPage() {
                   />
                   <div className="avatar-dados">
                     <h4>{usuario.nick}</h4>
-                    <span className="status-autenticado">● Conta Ativa & Sincronizada</span>
+                    <span className="status-autenticado">
+                      <Check size={13} className="inline mr-1" />
+                      Conta Ativa & Sincronizada
+                    </span>
                     <p>Qualquer compra na loja ou recompensa do passe é creditada neste nick.</p>
                   </div>
                 </div>
@@ -901,7 +1014,9 @@ export default function PerfilPage() {
 
               <div className="conta-info-card">
                 <div className="conta-card-header">
-                  <McIcon name="Compass" size={24} />
+                  <div className="w-9 h-9 rounded-lg bg-[var(--mc-ice)]/10 border border-[var(--mc-ice)]/20 flex items-center justify-center">
+                    <McIcon name="Compass" size={20} />
+                  </div>
                   <h3>Como Conectar no Servidor</h3>
                 </div>
                 <p>Utilize o endereço oficial da rede para acessar os servidores:</p>
@@ -911,11 +1026,11 @@ export default function PerfilPage() {
                     type="button"
                     className="btn-copiar-ip-perfil"
                     onClick={() => {
-                      tocarClique();
-                      navigator.clipboard.writeText('TWNetwork.com.br');
+                      copiarComando('TWNetwork.com.br', 'ip-server', 'IP TWNetwork.com.br copiado!');
                     }}
                   >
-                    Copiar IP
+                    {comandoCopiado === 'ip-server' ? <Check size={14} /> : <Copy size={14} />}
+                    <span>{comandoCopiado === 'ip-server' ? 'Copiado!' : 'Copiar IP'}</span>
                   </button>
                 </div>
                 <ul className="instrucoes-servidor">
@@ -944,7 +1059,9 @@ export default function PerfilPage() {
               {/* Seção 1: Tema da Interface */}
               <div className="config-card">
                 <div className="config-card-header">
-                  <McIcon name="Clock" size={22} />
+                  <div className="w-9 h-9 rounded-lg bg-[var(--mc-gold)]/10 border border-[var(--mc-gold)]/20 flex items-center justify-center">
+                    <Sun size={20} className="text-amber-400" />
+                  </div>
                   <div>
                     <h3>Tema da Interface</h3>
                     <small>Escolha entre o Modo Escuro profundo ou o Modo Claro nevado</small>
@@ -961,13 +1078,17 @@ export default function PerfilPage() {
                     }}
                   >
                     <div className="tema-preview escuro">
-                      <McIcon name="Clock" size={20} />
+                      <Moon size={20} className="text-indigo-300" />
                     </div>
                     <div className="tema-texto">
                       <strong>Noite Polar (Escuro)</strong>
                       <small>Contrastes profundos e brilho suave de minérios</small>
                     </div>
-                    {isDark && <span className="check-ativo">✓ Ativo</span>}
+                    {isDark && (
+                      <span className="check-ativo">
+                        <Check size={14} /> Ativo
+                      </span>
+                    )}
                   </button>
 
                   <button
@@ -979,13 +1100,17 @@ export default function PerfilPage() {
                     }}
                   >
                     <div className="tema-preview claro">
-                      <McIcon name="Compass" size={20} />
+                      <Sun size={20} className="text-amber-500" />
                     </div>
                     <div className="tema-texto">
                       <strong>Dia de Neve (Claro)</strong>
                       <small>Tons claros, máxima legibilidade e cartões translúcidos</small>
                     </div>
-                    {!isDark && <span className="check-ativo">✓ Ativo</span>}
+                    {!isDark && (
+                      <span className="check-ativo">
+                        <Check size={14} /> Ativo
+                      </span>
+                    )}
                   </button>
                 </div>
               </div>
@@ -993,7 +1118,9 @@ export default function PerfilPage() {
               {/* Seção 2: Efeitos Sonoros de Minecraft */}
               <div className="config-card">
                 <div className="config-card-header">
-                  <McIcon name="Jukebox" size={22} />
+                  <div className="w-9 h-9 rounded-lg bg-[var(--mc-redstone)]/10 border border-[var(--mc-redstone)]/20 flex items-center justify-center">
+                    <Volume2 size={20} className="text-emerald-400" />
+                  </div>
                   <div>
                     <h3>Efeitos Sonoros de Minecraft</h3>
                     <small>Sons sintetizados via Web Audio API (sem travamentos)</small>
@@ -1016,7 +1143,7 @@ export default function PerfilPage() {
                       className={`btn-toggle-audio ${somHabilitado ? 'ativo' : 'mudo'}`}
                       onClick={() => alternarSom()}
                     >
-                      <McIcon name={somHabilitado ? 'Jukebox' : 'Barrier'} size={18} />
+                      {somHabilitado ? <Volume2 size={18} /> : <VolumeX size={18} />}
                       <span>{somHabilitado ? 'Som Ligado' : 'Mudo'}</span>
                     </button>
 
@@ -1029,7 +1156,8 @@ export default function PerfilPage() {
                         }}
                         title="Tocar som de teste"
                       >
-                        🎵 Testar Som de XP
+                        <Sparkles size={14} />
+                        <span>Testar Som de XP</span>
                       </button>
                     )}
                   </div>
@@ -1039,7 +1167,9 @@ export default function PerfilPage() {
               {/* Seção 3: Sessão & Segurança */}
               <div className="config-card zona-logout">
                 <div className="config-card-header">
-                  <McIcon name="Barrier" size={22} />
+                  <div className="w-9 h-9 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+                    <LogOut size={20} className="text-red-400" />
+                  </div>
                   <div>
                     <h3>Encerrar Sessão</h3>
                     <small>Desconectar sua conta deste navegador com segurança</small>
@@ -1055,7 +1185,7 @@ export default function PerfilPage() {
                     className="btn-logout-conta"
                     onClick={handleLogout}
                   >
-                    <McIcon name="Barrier" size={16} />
+                    <LogOut size={16} />
                     <span>Sair da Minha Conta</span>
                   </button>
                 </div>

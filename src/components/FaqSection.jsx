@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import './FaqSection.css';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
 import McIcon from './McIcon';
+import './FaqSection.css';
 
 export default function FaqSection() {
   const [perguntaAberta, setPerguntaAberta] = useState(1);
@@ -10,7 +12,7 @@ export default function FaqSection() {
       id: 1,
       mcIcon: 'Clock',
       pergunta: 'Quanto tempo demora para receber meu VIP ou Cash após a compra?',
-      resposta: 'Os pagamentos via Pix são aprovados de forma instantânea e os benefícios são ativados na sua conta do jogo em menos de 1 minuto por entrega automatizada. Para pagamentos em Cartão de Crédito, a liberação ocorre imediatamente após a confirmação pela operadora (geralmente de 1 a 3 minutos).'
+      resposta: 'Os pagamentos via Pix contam com aprovação instantânea pelo Banco Central e os benefícios são ativados na sua conta do jogo em menos de 1 minuto por entrega automatizada. Para pagamentos em Cartão de Crédito, a liberação ocorre imediatamente após a confirmação pela operadora (geralmente de 1 a 3 minutos).'
     },
     {
       id: 2,
@@ -51,12 +53,8 @@ export default function FaqSection() {
   return (
     <section id="suporte" className="faq-section">
       <div className="faq-header">
-        <span className="badge-secao-faq">
-          <McIcon name="Book" size={16} />
-          Central de Dúvidas
-        </span>
-        <h2>Perguntas <span className="highlight">Frequentes</span></h2>
-        <p>Tire todas as suas dúvidas sobre prazos de entrega, métodos de pagamento e funcionamento da TW Network.</p>
+        <h2>Perguntas Frequentes &amp; Prazos</h2>
+        <p>Tire suas dúvidas sobre métodos de pagamento, regras da temporada e entrega automática de VIPs.</p>
       </div>
 
       <div className="faq-lista">
@@ -66,23 +64,40 @@ export default function FaqSection() {
             <div 
               key={faq.id} 
               className={`faq-item ${isAberta ? 'aberto' : ''}`}
-              onClick={() => alternarPergunta(faq.id)}
             >
-              <div className="faq-pergunta">
+              <button
+                type="button"
+                className="faq-pergunta-btn"
+                onClick={() => alternarPergunta(faq.id)}
+                aria-expanded={isAberta}
+              >
                 <div className="faq-titulo-box">
                   <div className="faq-icon-circulo">
                     <McIcon name={faq.mcIcon} size={20} />
                   </div>
                   <h3>{faq.pergunta}</h3>
                 </div>
-                <span className="faq-seta">{isAberta ? '−' : '+'}</span>
-              </div>
-              
-              {isAberta && (
-                <div className="faq-resposta">
-                  <p>{faq.resposta}</p>
+                <div className={`faq-chevron ${isAberta ? 'girado' : ''}`}>
+                  <ChevronDown size={20} />
                 </div>
-              )}
+              </button>
+              
+              <AnimatePresence initial={false}>
+                {isAberta && (
+                  <motion.div
+                    key="conteudo"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.22, ease: 'easeInOut' }}
+                    style={{ overflow: 'hidden' }}
+                  >
+                    <div className="faq-resposta">
+                      <p>{faq.resposta}</p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           );
         })}

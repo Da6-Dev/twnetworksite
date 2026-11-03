@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import './RegrasSection.css';
 import McIcon from './McIcon';
+import './RegrasSection.css';
 
 export default function RegrasSection() {
   const [categoriaAtiva, setCategoriaAtiva] = useState('geral');
@@ -15,14 +15,14 @@ export default function RegrasSection() {
   const regrasPorCategoria = {
     geral: [
       {
-        infracao: 'Ofensas, assédio ou qualquer forma de discriminação',
+        infracao: 'Ofensas, assédio ou qualquer discriminação',
         detalhe: 'Qualquer discurso de ódio, desrespeito religioso, preconceito racial ou ataques pessoais a jogadores e membros da equipe.',
         punicao: 'Mute de 24h até Banimento Permanente',
         nivel: 'critico'
       },
       {
         infracao: 'Divulgação de outros servidores de Minecraft',
-        detalhe: 'Mencionar endereços de IP, links de comunidades externas ou fazer propaganda não autorizada em qualquer canal de chat.',
+        detalhe: 'Mencionar endereços de IP, links de comunidades externas ou fazer propaganda não autorizada em qualquer canal.',
         punicao: 'Banimento Permanente Imediato',
         nivel: 'critico'
       },
@@ -86,11 +86,7 @@ export default function RegrasSection() {
   return (
     <section id="regras" className="regras-section">
       <div className="regras-header">
-        <span className="badge-secao-regras">
-          <McIcon name="Paper" size={16} />
-          Normas da Comunidade
-        </span>
-        <h2>Diretrizes & <span className="highlight">Regulamento Oficial</span></h2>
+        <h2>Diretrizes &amp; Código de Conduta</h2>
         <p>A integridade e o respeito são pilares na TW Network. Conheça as normas vigentes para manter a sua conta em segurança.</p>
       </div>
 
@@ -105,7 +101,7 @@ export default function RegrasSection() {
               onClick={() => setCategoriaAtiva(cat.id)}
             >
               <McIcon name={cat.mcIcon} size={18} />
-              {cat.nome}
+              <span>{cat.nome}</span>
             </button>
           );
         })}

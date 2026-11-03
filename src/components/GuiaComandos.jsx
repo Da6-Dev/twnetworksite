@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import './GuiaComandos.css';
+import { Search, Copy, Check } from 'lucide-react';
+import { toast } from 'sonner';
+import { useSound } from '../context/SoundContext';
 import McIcon from './McIcon';
+import './GuiaComandos.css';
 
 export default function GuiaComandos() {
   const [categoriaAtiva, setCategoriaAtiva] = useState('geral');
+  const [busca, setBusca] = useState('');
   const [comandoCopiado, setComandoCopiado] = useState(null);
+  const { tocarXP } = useSound();
 
   const categorias = [
     { id: 'geral', nome: 'Geral & Progresso', mcIcon: 'Compass' },
@@ -42,22 +47,39 @@ export default function GuiaComandos() {
   };
 
   const copiarComando = (cmd) => {
+    tocarXP();
     navigator.clipboard.writeText(cmd);
     setComandoCopiado(cmd);
+    toast.success(`Comando ${cmd} copiado! Cole no chat do jogo.`);
     setTimeout(() => {
       setComandoCopiado(null);
     }, 1800);
   };
 
+  // Filtragem inteligente por busca
+  const comandosFiltrados = comandosPorCategoria[categoriaAtiva].filter((c) => {
+    if (!busca.trim()) return true;
+    const termo = busca.toLowerCase();
+    return c.comando.toLowerCase().includes(termo) || c.descricao.toLowerCase().includes(termo);
+  });
+
   return (
     <section id="comandos" className="guia-container">
       <div className="guia-header">
-        <span className="badge-secao-comandos">
-          <McIcon name="Compass" size={16} />
-          Atalhos Rápidos
-        </span>
-        <h2>Guia de <span className="highlight">Comandos & Dicas</span></h2>
-        <p>Consulte os principais atalhos in-game para acelerar a sua evolução no RankUP.</p>
+        <h2>Atalhos &amp; Comandos Essenciais</h2>
+        <p>Consulte todos os atalhos disponíveis no jogo com cópia rápida para agilizar sua jogatina.</p>
+      </div>
+
+      {/* Barra de Busca de Comandos */}
+      <div className="guia-busca-wrapper">
+        <Search size={18} className="guia-busca-icon" />
+        <input
+          type="text"
+          placeholder="Pesquisar comando (ex: /rankup, /fly, /loja)..."
+          value={busca}
+          onChange={(e) => setBusca(e.target.value)}
+          className="guia-busca-input"
+        />
       </div>
 
       <div className="guia-tabs">
@@ -71,30 +93,41 @@ export default function GuiaComandos() {
               onClick={() => setCategoriaAtiva(cat.id)}
             >
               <McIcon name={cat.mcIcon} size={18} />
-              {cat.nome}
+              <span>{cat.nome}</span>
             </button>
           );
         })}
       </div>
 
       <div className="comandos-lista">
-        {comandosPorCategoria[categoriaAtiva].map((item, index) => (
-          <div key={index} className="comando-card">
-            <div className="comando-info">
-              <code className="comando-codigo">{item.comando}</code>
-              <p className="comando-desc">{item.descricao}</p>
-            </div>
-            <button
-              type="button"
-              className={`btn-copiar-cmd ${comandoCopiado === item.comando ? 'sucesso' : ''}`}
-              onClick={() => copiarComando(item.comando)}
-              title="Copiar comando"
-            >
-              <McIcon name={comandoCopiado === item.comando ? 'Emerald' : 'Clock'} size={14} />
-              {comandoCopiado === item.comando ? 'Copiado!' : 'Copiar'}
-            </button>
+        {comandosFiltrados.length === 0 ? (
+          <div className="comandos-vazio">
+            <p>Nenhum comando encontrado para o termo pesquisado.</p>
           </div>
-        ))}
+        ) : (
+          comandosFiltrados.map((item, index) => {
+            const isCopiado = comandoCopiado === item.comando;
+            return (
+              <div key={index} className="comando-card">
+                <div className="comando-info">
+                  <div className="comando-code-row">
+                    <code>{item.comando}</code>
+                  </div>
+                  <p>{item.descricao}</p>
+                </div>
+                <button
+                  type="button"
+                  className={`btn-copiar-cmd ${isCopiado ? 'copiado' : ''}`}
+                  onClick={() => copiarComando(item.comando)}
+                  title="Copiar comando"
+                >
+                  {isCopiado ? <Check size={16} /> : <Copy size={16} />}
+                  <span>{isCopiado ? 'Copiado' : 'Copiar'}</span>
+                </button>
+              </div>
+            );
+          })
+        )}
       </div>
     </section>
   );

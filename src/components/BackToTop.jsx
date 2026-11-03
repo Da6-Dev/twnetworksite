@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ChevronUp } from 'lucide-react';
 import './BackToTop.css';
 
 export default function BackToTop() {
@@ -6,14 +7,10 @@ export default function BackToTop() {
 
   useEffect(() => {
     const controlarVisibilidade = () => {
-      if (window.scrollY > 400) {
-        setVisivel(true);
-      } else {
-        setVisivel(false);
-      }
+      setVisivel(window.scrollY > 400);
     };
 
-    window.addEventListener('scroll', controlarVisibilidade);
+    window.addEventListener('scroll', controlarVisibilidade, { passive: true });
     return () => window.removeEventListener('scroll', controlarVisibilidade);
   }, []);
 
@@ -28,12 +25,13 @@ export default function BackToTop() {
 
   return (
     <button 
+      type="button"
       className="btn-back-to-top" 
       onClick={voltarAoTopo}
       title="Voltar ao início da página"
       aria-label="Voltar ao topo"
     >
-      ▲
+      <ChevronUp size={20} />
     </button>
   );
 }

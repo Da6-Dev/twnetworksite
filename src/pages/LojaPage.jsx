@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { ShoppingBag, Zap, Check, ArrowRight, Sparkles, KeyRound, Coins, Layers, ShieldCheck } from 'lucide-react';
 import { useCart } from '../context/useCart';
 import { useSound } from '../context/SoundContext';
+import AnimatedTabs from '../components/ui/AnimatedTabs';
 import McIcon from '../components/McIcon';
 import './LojaPage.css';
 
@@ -24,7 +26,7 @@ export default function LojaPage() {
       beneficios: [
         'Tag Exclusiva [Ouro] no chat e tab',
         'Kit Semanal VIP Ouro com armadura completa',
-        'Acesso à Mina VIP Básica (minérios + rápidos)',
+        'Acesso à Mina VIP Básica (minérios rápidos)',
         'Sem fila de espera para login no servidor',
         '+10% de Bônus em todas as vendas no /loja',
         'Comando /reparar básico (1x a cada 6h)',
@@ -40,12 +42,12 @@ export default function LojaPage() {
       valor: 39.9,
       destaque: true,
       mcIcon: 'Emerald',
-      descricao: 'O plano mais equilibrado e popular, com comando /fly e boost significativo de vendas.',
+      descricao: 'O plano mais equilibrado e popular, com comando /fly liberado e boost expressivo de vendas.',
       beneficios: [
         'Tag Exclusiva [Esmeralda] com cor diferenciada',
         'Kit Diário e Semanal VIP+ com ferramentas P4',
-        'Acesso à Mina VIP Épica (com diamantes e esmeraldas)',
-        'Comando /fly liberado nos lobbys e no seu terreno',
+        'Acesso à Mina VIP Épica (diamantes e esmeraldas)',
+        'Comando /fly liberado nos lobbys e terrenos',
         'Prioridade alta na fila de espera do servidor',
         '+25% de Bônus na economia in-game',
         'Comando /reparar ilimitado (sem custo)',
@@ -65,7 +67,7 @@ export default function LojaPage() {
       beneficios: [
         'Tag Exclusiva [Supremo] com efeito de brilho',
         'Todos os Kits do servidor liberados permanentemente',
-        'Acesso irrestrito a todas as Minas VIPs (Suprema)',
+        'Acesso irrestrito a todas as Minas VIPs',
         'Comando /fly liberado em todas as áreas permitidas',
         'Entrada garantida mesmo com o servidor 100% lotado',
         '+50% de Bônus máximo em todas as vendas',
@@ -154,86 +156,64 @@ export default function LojaPage() {
     adicionarAoCarrinho(item);
   };
 
+  const tabsLoja = [
+    { id: 'todos', label: 'Todos os Produtos', icon: <Layers size={16} /> },
+    { id: 'vips', label: 'Planos VIP', icon: <Sparkles size={16} /> },
+    { id: 'comparativo', label: 'Comparativo de Benefícios', icon: <ShieldCheck size={16} /> },
+    { id: 'cash', label: 'Pacotes de Cash', icon: <Coins size={16} /> },
+    { id: 'chaves', label: 'Chaves & Caixas', icon: <KeyRound size={16} /> }
+  ];
+
   return (
     <div className="loja-page-container">
       {/* Banner Principal da Loja */}
       <section className="loja-hero-banner">
-        <span className="loja-tag-topo">
-          <McIcon name="Nether_Star" size={16} style={{ marginRight: '6px' }} />
-          Loja Oficial • TW Network
-        </span>
-        <h1>Loja Oficial & Planos <span className="highlight">VIP</span></h1>
+        <h1>Loja Oficial &amp; Patentes VIP</h1>
         <p>
-          Adquira planos VIP, moedas de Cash e chaves misteriosas para impulsionar o seu progresso no servidor.
-          Todos os pedidos contam com entrega automatizada instantânea via Pix e cartão!
+          Adquira planos VIP, saldo em Cash e chaves misteriosas para impulsionar seu progresso.
+          Todos os pedidos contam com entrega automatizada em menos de 1 minuto via Pix e Cartão de Crédito.
         </p>
 
         <div className="loja-vantagens-rapidas">
           <div className="vantagem-chip">
-            <McIcon name="Redstone" size={18} />
-            Ativação Automática via Pix
+            <Zap size={16} className="text-amber-400" />
+            <span>Ativação Imediata via Pix</span>
           </div>
           <div className="vantagem-chip">
-            <McIcon name="Emerald" size={18} />
-            Suporte Prioritário 24/7
+            <ShieldCheck size={16} className="text-emerald-400" />
+            <span>Garantia &amp; Suporte Dedicado</span>
           </div>
           <div className="vantagem-chip">
-            <McIcon name="Gold_Ingot" size={18} />
-            Bônus de Economia Acumulativo
+            <Coins size={16} className="text-sky-400" />
+            <span>Bônus Cumulativos de Economia</span>
           </div>
         </div>
       </section>
 
-      {/* Menu de Abas da Loja */}
-      <div className="loja-nav-tabs">
-        <button
-          className={`loja-tab-btn ${abaAtiva === 'todos' ? 'ativo' : ''}`}
-          onClick={() => setAbaAtiva('todos')}
-        >
-          <McIcon name="Chest" size={18} />
-          Todos os Produtos
-        </button>
-        <button
-          className={`loja-tab-btn ${abaAtiva === 'vips' ? 'ativo' : ''}`}
-          onClick={() => setAbaAtiva('vips')}
-        >
-          <McIcon name="Emerald" size={18} />
-          Planos VIP
-        </button>
-        <button
-          className={`loja-tab-btn ${abaAtiva === 'comparativo' ? 'ativo' : ''}`}
-          onClick={() => setAbaAtiva('comparativo')}
-        >
-          <McIcon name="Book" size={18} />
-          Comparativo de VIPs
-        </button>
-        <button
-          className={`loja-tab-btn ${abaAtiva === 'cash' ? 'ativo' : ''}`}
-          onClick={() => setAbaAtiva('cash')}
-        >
-          <McIcon name="Gold_Ingot" size={18} />
-          Pacotes de Cash
-        </button>
-        <button
-          className={`loja-tab-btn ${abaAtiva === 'chaves' ? 'ativo' : ''}`}
-          onClick={() => setAbaAtiva('chaves')}
-        >
-          <McIcon name="Tripwire_Hook" size={18} />
-          Chaves & Caixas
-        </button>
+      {/* Menu de Abas da Loja com Framer Motion */}
+      <div className="loja-tabs-wrapper">
+        <AnimatedTabs
+          tabs={tabsLoja}
+          activeTab={abaAtiva}
+          onChange={(novaAba) => {
+            tocarClique();
+            setAbaAtiva(novaAba);
+          }}
+          layoutId="lojaTabsIndicator"
+        />
       </div>
 
       {/* Seção de Planos VIP */}
       {(abaAtiva === 'todos' || abaAtiva === 'vips') && (
         <section id="secao-vips" className="loja-secao">
           <div className="loja-secao-header">
-            <h2>Escolha o seu <span className="highlight">Plano VIP</span></h2>
-            <p>Os planos VIP oferecem multiplicadores de economia, kits raros e comando /fly para acelerar o seu RankUP.</p>
+            <h2>Planos VIP da Temporada</h2>
+            <p>Vantagens contínuas para acelerar o seu RankUP com comandos exclusivos, kits e bônus de venda.</p>
           </div>
 
           <div className="vips-grid">
             {planosVip.map((vip) => (
-              <div key={vip.id} className={`vip-card-loja ${vip.destaque ? 'destaque mc-enchanted-glint' : ''}`}>
+              <div key={vip.id} className={`vip-card-loja ${vip.destaque ? 'destaque' : ''}`}>
                 {vip.destaque && <span className="vip-badge-tag">Mais Escolhido</span>}
                 
                 <div className="vip-icone-topo">
@@ -245,32 +225,36 @@ export default function LojaPage() {
 
                 <div className="vip-preco-box">
                   <span className="vip-preco-valor">{vip.preco}</span>
-                  <span className="vip-preco-ciclo"> /mensal</span>
+                  <span className="vip-preco-ciclo"> /mês</span>
                 </div>
+
+                <p className="vip-card-desc">{vip.descricao}</p>
 
                 <ul className="vip-lista-vantagens">
                   {vip.beneficios.map((b, idx) => (
                     <li key={idx}>
-                      <McIcon name="Emerald" size={14} />
-                      {b}
+                      <Check size={16} className="text-emerald-400 flex-shrink-0" />
+                      <span>{b}</span>
                     </li>
                   ))}
                 </ul>
 
                 <div className="vip-acoes-card">
                   <button
+                    type="button"
                     className="btn-comprar-agora"
                     onClick={() => comprarDireto(vip)}
                   >
-                    Comprar Agora
-                    <McIcon name="Redstone" size={16} />
+                    <Zap size={16} />
+                    <span>Comprar Agora</span>
                   </button>
                   <button
+                    type="button"
                     className="btn-add-carrinho"
                     onClick={() => handleAdicionar(vip)}
                   >
-                    Adicionar ao Carrinho
-                    <McIcon name="Chest" size={16} />
+                    <ShoppingBag size={16} />
+                    <span>Adicionar</span>
                   </button>
                 </div>
               </div>
@@ -283,11 +267,8 @@ export default function LojaPage() {
       {(abaAtiva === 'todos' || abaAtiva === 'comparativo' || abaAtiva === 'vips') && (
         <section className="comparativo-wrapper">
           <div className="comparativo-header">
-            <span className="badge-temporada" style={{ marginBottom: '8px', display: 'inline-block' }}>
-              Transparência & Benefícios
-            </span>
-            <h3>Comparativo Completo de <span className="highlight">Planos VIP</span></h3>
-            <p>Veja detalhadamente tudo o que cada patente desbloqueia dentro dos servidores da TW Network.</p>
+            <h3>Comparativo Completo de Recursos</h3>
+            <p>Confira em detalhes o que cada plano VIP desbloqueia para o seu jogador.</p>
           </div>
 
           <div className="tabela-overflow">
@@ -295,24 +276,9 @@ export default function LojaPage() {
               <thead>
                 <tr>
                   <th>Vantagem / Recurso</th>
-                  <th>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <McIcon name="Gold_Ingot" size={18} />
-                      VIP Ouro
-                    </div>
-                  </th>
-                  <th className="col-vip-destaque">
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <McIcon name="Emerald" size={18} />
-                      VIP Esmeralda (Recomendado)
-                    </div>
-                  </th>
-                  <th>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <McIcon name="Nether_Star" size={18} />
-                      VIP Supremo
-                    </div>
-                  </th>
+                  <th>VIP Ouro</th>
+                  <th className="col-vip-destaque">VIP Esmeralda (Recomendado)</th>
+                  <th>VIP Supremo</th>
                 </tr>
               </thead>
               <tbody>
@@ -324,7 +290,7 @@ export default function LojaPage() {
                       <strong>{item.esmeralda}</strong>
                     </td>
                     <td>
-                      <span className="text-gold-gradient" style={{ fontWeight: 700 }}>
+                      <span className="font-bold text-amber-400">
                         {item.supremo}
                       </span>
                     </td>
@@ -340,8 +306,8 @@ export default function LojaPage() {
       {(abaAtiva === 'todos' || abaAtiva === 'cash') && (
         <section id="secao-cash" className="loja-secao">
           <div className="loja-secao-header">
-            <h2>Pacotes de <span className="highlight">Cash</span></h2>
-            <p>Moeda premium para adquirir lotes extras, multiplicadores temporários e itens exclusivos na loja in-game.</p>
+            <h2>Pacotes de Moedas Cash</h2>
+            <p>Moeda premium para comprar lotes adicionais, itens de conveniência e chaves na praça in-game.</p>
           </div>
 
           <div className="itens-shop-grid">
@@ -359,17 +325,20 @@ export default function LojaPage() {
 
                 <div className="vip-acoes-card">
                   <button
+                    type="button"
                     className="btn-comprar-agora"
                     onClick={() => comprarDireto(item)}
                   >
-                    Comprar Direto
+                    <Zap size={16} />
+                    <span>Comprar Direto</span>
                   </button>
                   <button
+                    type="button"
                     className="btn-add-carrinho"
                     onClick={() => handleAdicionar(item)}
                   >
-                    Adicionar ao Carrinho
-                    <McIcon name="Chest" size={16} />
+                    <ShoppingBag size={16} />
+                    <span>Carrinho</span>
                   </button>
                 </div>
               </div>
@@ -382,13 +351,13 @@ export default function LojaPage() {
       {(abaAtiva === 'todos' || abaAtiva === 'chaves') && (
         <section id="secao-chaves" className="loja-secao">
           <div className="loja-secao-header">
-            <h2>Chaves & <span className="highlight">Caixas Misteriosas</span></h2>
-            <p>Abra caixas mágicas na praça central do spawn e ganhe equipamentos épicos, poções e relíquias de guerra.</p>
+            <h2>Chaves &amp; Caixas Misteriosas</h2>
+            <p>Abra caixas mágicas na praça central do spawn e conquiste equipamentos épicos e relíquias de guerra.</p>
           </div>
 
           <div className="itens-shop-grid">
             {pacotesChaves.map((item) => (
-              <div key={item.id} className={`item-shop-card ${item.bonus === 'Melhor Valor' ? 'mc-enchanted-glint' : ''}`}>
+              <div key={item.id} className="item-shop-card">
                 {item.bonus && <span className="item-shop-badge">{item.bonus}</span>}
                 
                 <div className="item-shop-icon-box">
@@ -401,17 +370,20 @@ export default function LojaPage() {
 
                 <div className="vip-acoes-card">
                   <button
+                    type="button"
                     className="btn-comprar-agora"
                     onClick={() => comprarDireto(item)}
                   >
-                    Comprar Direto
+                    <Zap size={16} />
+                    <span>Comprar Direto</span>
                   </button>
                   <button
+                    type="button"
                     className="btn-add-carrinho"
                     onClick={() => handleAdicionar(item)}
                   >
-                    Adicionar ao Carrinho
-                    <McIcon name="Chest" size={16} />
+                    <ShoppingBag size={16} />
+                    <span>Carrinho</span>
                   </button>
                 </div>
               </div>
@@ -424,13 +396,14 @@ export default function LojaPage() {
       {totalItens > 0 && (
         <div className="barra-carrinho-flutuante">
           <div className="barra-carrinho-info">
-            <McIcon name="Chest" size={24} />
+            <ShoppingBag size={22} className="text-emerald-400" />
             <span>
-              <strong>{totalItens} {totalItens === 1 ? 'artigo' : 'artigos'}</strong> no carrinho • Total: <strong>R$ {totalFinal.toFixed(2).replace('.', ',')}</strong>
+              <strong>{totalItens} {totalItens === 1 ? 'item' : 'itens'}</strong> no carrinho • Total: <strong>R$ {totalFinal.toFixed(2).replace('.', ',')}</strong>
             </span>
           </div>
           <Link to="/carrinho" className="barra-carrinho-btn">
-            Ver Carrinho & Pagar →
+            <span>Ver Carrinho &amp; Finalizar</span>
+            <ArrowRight size={16} />
           </Link>
         </div>
       )}

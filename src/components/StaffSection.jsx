@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import './StaffSection.css';
+import { Users, ChevronDown, CheckCircle2, HelpCircle } from 'lucide-react';
 import McIcon from './McIcon';
+import './StaffSection.css';
 
 export default function StaffSection() {
   const [avisoCandidatura, setAvisoCandidatura] = useState(false);
@@ -39,12 +40,8 @@ export default function StaffSection() {
   return (
     <section id="equipe" className="staff-section">
       <div className="staff-header">
-        <span className="badge-secao-staff">
-          <McIcon name="Nether_Star" size={16} />
-          Administração & Moderação
-        </span>
-        <h2>Equipe da <span className="highlight">TW Network</span></h2>
-        <p>Conheça os responsáveis pela administração, suporte técnico e integridade das partidas no servidor.</p>
+        <h2>Equipe &amp; Administração Oficial</h2>
+        <p>Conheça os responsáveis pela infraestrutura técnica, moderação de denúncias e suporte aos jogadores.</p>
       </div>
 
       <div className="staff-grid">
@@ -52,7 +49,7 @@ export default function StaffSection() {
           <div key={index} className="staff-card">
             <div className="staff-avatar-box">
               <img
-                src={`https://mc-heads.net/avatar/${membro.nick}/80`}
+                src={`https://mc-heads.net/avatar/${membro.nick}/72`}
                 alt={membro.nick}
                 className="staff-avatar"
               />
@@ -73,7 +70,7 @@ export default function StaffSection() {
       <div className="recrutamento-banner">
         <div className="recrutamento-info">
           <div className="recrutamento-titulo-box">
-            <McIcon name="Chest" size={24} />
+            <Users size={22} className="text-emerald-400" />
             <h3>Quer fazer parte da equipe da TW Network?</h3>
           </div>
           <p>
@@ -82,12 +79,12 @@ export default function StaffSection() {
           {avisoCandidatura && (
             <div className="aviso-candidatura-card">
               <div className="aviso-candidatura-linha">
-                <McIcon name="Emerald" size={16} />
-                <strong>Requisitos Básicos:</strong> Idade mínima de 15 anos, microfone funcional, tempo diário disponível e bom histórico na rede.
+                <CheckCircle2 size={16} className="text-emerald-400 flex-shrink-0" />
+                <span><strong>Requisitos:</strong> Idade mínima de 15 anos, microfone funcional, tempo diário disponível e bom histórico na rede.</span>
               </div>
               <div className="aviso-candidatura-linha">
-                <McIcon name="Compass" size={16} />
-                <strong>Como se candidatar:</strong> As fichas de inscrição são divulgadas na sala <code>#formularios</code> do nosso Discord oficial antes da abertura de cada temporada!
+                <HelpCircle size={16} className="text-sky-400 flex-shrink-0" />
+                <span><strong>Inscrições:</strong> Fichas abertas periodicamente no canal <code>#formularios</code> do nosso Discord oficial.</span>
               </div>
             </div>
           )}
@@ -97,8 +94,8 @@ export default function StaffSection() {
           className="btn-candidatura"
           onClick={() => setAvisoCandidatura(!avisoCandidatura)}
         >
-          <McIcon name={avisoCandidatura ? 'Barrier' : 'Paper'} size={18} />
-          {avisoCandidatura ? 'Ocultar Requisitos' : 'Ver Requisitos de Inscrição'}
+          <span>{avisoCandidatura ? 'Ocultar Requisitos' : 'Ver Requisitos'}</span>
+          <ChevronDown size={16} className={`transition-transform duration-200 ${avisoCandidatura ? 'rotate-180' : ''}`} />
         </button>
       </div>
     </section>

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './PlayerHub.css';
+import { Trophy, Radio, Clock, Crown, ArrowRight, RefreshCw } from 'lucide-react';
+import AnimatedTabs from './ui/AnimatedTabs';
 import McIcon from './McIcon';
 import { useServerPing } from '../hooks/useServerPing';
 import { serverInfo } from '../data/serverData';
 import { useSound } from '../context/SoundContext';
+import './PlayerHub.css';
 
 export default function PlayerHub() {
   const [abaAtiva, setAbaAtiva] = useState('ranking');
@@ -19,7 +21,7 @@ export default function PlayerHub() {
       nivelRank: 'Deus Supremo',
       saldo: 'R$ 150.000.000',
       premio: 'R$ 250,00 via Pix',
-      mcIcon: 'Totem_Of_Undying'
+      tier: 'ouro'
     },
     {
       posicao: 2,
@@ -27,7 +29,7 @@ export default function PlayerHub() {
       nivelRank: 'Titã III',
       saldo: 'R$ 112.450.000',
       premio: 'R$ 100,00 via Pix',
-      mcIcon: 'Diamond'
+      tier: 'prata'
     },
     {
       posicao: 3,
@@ -35,120 +37,127 @@ export default function PlayerHub() {
       nivelRank: 'Campeão I',
       saldo: 'R$ 88.900.000',
       premio: 'R$ 50,00 via Pix',
-      mcIcon: 'Iron_Ingot'
+      tier: 'bronze'
     },
     {
       posicao: 4,
       nick: 'Alex_Master',
       nivelRank: 'Lorde II',
       saldo: 'R$ 64.200.000',
-      premio: 'VIP Supremo + 50k Cash',
-      mcIcon: 'Gold_Ingot'
+      premio: 'VIP Supremo + 50k Cash'
     },
     {
       posicao: 5,
       nick: 'ValkyriePvP',
       nivelRank: 'Lorde I',
       saldo: 'R$ 51.700.000',
-      premio: 'VIP Esmeralda + 25k Cash',
-      mcIcon: 'Emerald'
+      premio: 'VIP Esmeralda + 25k Cash'
     }
   ];
 
+  const tabsHub = [
+    { id: 'ranking', label: 'Ranking da Temporada (Pix)', icon: <Trophy size={16} /> },
+    { id: 'status', label: 'Status dos Servidores', icon: <Radio size={16} /> }
+  ];
+
+  const podiumOrder = [topJogadores[1], topJogadores[0], topJogadores[2]];
+
   return (
     <section id="hub" className="player-hub-section">
-      <div className="hub-header">
-        <span className="badge-secao-hub">
-          <McIcon name="Nether_Star" size={16} />
-          Central da Comunidade
-        </span>
-        <h2>Hub & Rankings da <span className="highlight">TW Network</span></h2>
-        <p>Acompanhe a disputa em tempo real pela premiação semanal em Pix e monitore a lotação de todas as salas.</p>
-      </div>
-
-      {/* Banner de Direcionamento para Recompensas & Passe no Perfil */}
+      {/* Banner de Direcionamento para Perfil */}
       <div className="hub-perfil-aviso-banner">
         <div className="aviso-banner-icone">
           <McIcon name="Chest" size={28} />
         </div>
         <div className="aviso-banner-texto">
-          <strong>Recompensas Diárias & Passe de Batalha</strong>
-          <p>Seus presentes diários e a trilha do passe agora são resgatados diretamente no seu perfil vinculado ao seu Nick!</p>
+          <strong>Recompensas Diárias &amp; Passe de Batalha</strong>
+          <p>Seu calendário de 7 dias e as missões do passe agora são resgatados no seu perfil com seu Nick!</p>
         </div>
         <Link to="/perfil" className="btn-ir-perfil-hub" onClick={() => tocarClique()}>
-          <McIcon name="Nether_Star" size={16} />
           <span>Abrir Meu Perfil</span>
+          <ArrowRight size={16} />
         </Link>
       </div>
 
-      {/* Navegador de Abas do Hub */}
-      <div className="hub-tabs-container">
-        <button
-          type="button"
-          className={`hub-tab-btn ${abaAtiva === 'ranking' ? 'ativo' : ''}`}
-          onClick={() => {
+      {/* Navegador de Abas com Framer Motion */}
+      <div className="hub-tabs-wrapper">
+        <AnimatedTabs
+          tabs={tabsHub}
+          activeTab={abaAtiva}
+          onChange={(tab) => {
             tocarClique();
-            setAbaAtiva('ranking');
+            setAbaAtiva(tab);
           }}
-        >
-          <McIcon name="Gold_Ingot" size={20} />
-          <span>Ranking da Temporada (Pix)</span>
-        </button>
-
-        <button
-          type="button"
-          className={`hub-tab-btn ${abaAtiva === 'status' ? 'ativo' : ''}`}
-          onClick={() => {
-            tocarClique();
-            setAbaAtiva('status');
-          }}
-        >
-          <McIcon name="Beacon" size={20} />
-          <span>Status dos Modos</span>
-        </button>
+          layoutId="hubTabsIndicator"
+        />
       </div>
 
-      {/* Conteúdo Dinâmico da Aba Ativa */}
+      {/* Conteúdo Dinâmico */}
       <div className="hub-card-wrapper">
-
-        {/* ABA 2: RANKING & PREMIAÇÕES PIX */}
         {abaAtiva === 'ranking' && (
           <div className="hub-ranking-box">
             <div className="hub-ranking-topo">
               <div className="hub-ranking-alerta">
-                <McIcon name="Clock" size={18} />
-                <span>Encerramento da Temporada: <strong>Domingo às 23h59</strong></span>
+                <Clock size={16} />
+                <span>Encerramento: <strong>Domingo às 23h59</strong></span>
               </div>
               <div className="hub-ranking-total">
-                <McIcon name="Gold_Ingot" size={18} />
-                <span>Total em Prêmios: <strong>R$ 400,00+ via Pix</strong></span>
+                <Trophy size={16} className="text-amber-400" />
+                <span>Premiação Semanal: <strong>R$ 400,00+ via Pix</strong></span>
               </div>
             </div>
 
+            {/* PÓDIO TOP 3 VISUAL */}
+            <div className="podium-container">
+              {podiumOrder.map((jogador) => {
+                const isPrimeiro = jogador.posicao === 1;
+                return (
+                  <div
+                    key={jogador.posicao}
+                    className={`podium-card podium-${jogador.tier} ${isPrimeiro ? 'podium-first' : ''}`}
+                  >
+                    {isPrimeiro && (
+                      <div className="podium-crown">
+                        <Crown size={26} className="text-amber-300" />
+                      </div>
+                    )}
+                    <span className="podium-rank-badge">#{jogador.posicao}</span>
+                    <img
+                      src={`https://mc-heads.net/avatar/${jogador.nick}/${isPrimeiro ? 64 : 48}`}
+                      alt={jogador.nick}
+                      className="podium-avatar"
+                    />
+                    <strong className="podium-nick">{jogador.nick}</strong>
+                    <span className="podium-cargo">{jogador.nivelRank}</span>
+                    <div className="podium-premio">{jogador.premio}</div>
+                    <span className="podium-saldo">{jogador.saldo}</span>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* TABELA COM DEMAIS POSIÇÕES */}
             <div className="hub-tabela-overflow">
               <table className="hub-tabela">
                 <thead>
                   <tr>
                     <th>Posição</th>
                     <th>Jogador</th>
-                    <th>Patente / Rank</th>
+                    <th>Patente</th>
                     <th>Fortuna Total</th>
-                    <th>Premiação Sazonal</th>
+                    <th>Premiação</th>
                   </tr>
                 </thead>
                 <tbody>
                   {topJogadores.map((jogador) => (
                     <tr key={jogador.posicao} className={`pos-linha-${jogador.posicao}`}>
                       <td>
-                        <span className="hub-pos-chip">
-                          <McIcon name={jogador.mcIcon} size={20} />
-                          #{jogador.posicao}
-                        </span>
+                        <span className="hub-pos-chip">#{jogador.posicao}</span>
                       </td>
                       <td>
                         <div className="hub-jogador-col">
                           <img
-                            src={`https://mc-heads.net/avatar/${jogador.nick}/32`}
+                            src={`https://mc-heads.net/avatar/${jogador.nick}/28`}
                             alt={jogador.nick}
                             className="hub-avatar-mini"
                           />
@@ -172,16 +181,12 @@ export default function PlayerHub() {
           </div>
         )}
 
-        {/* ABA 3: STATUS DOS MODOS DE JOGO */}
         {abaAtiva === 'status' && (
           <div className="hub-status-box">
             <div className="hub-status-bar">
               <div className="hub-bar-item">
                 <span className="hub-bar-label">Endereço IP:</span>
-                <span className="hub-bar-valor destaque-ip">
-                  <McIcon name="Compass" size={16} />
-                  {serverInfo.ip}
-                </span>
+                <span className="hub-bar-valor destaque-ip">{serverInfo.ip}</span>
               </div>
               <div className="hub-bar-item">
                 <span className="hub-bar-label">Total Conectado:</span>
@@ -201,9 +206,10 @@ export default function PlayerHub() {
                     tocarClique();
                     atualizar();
                   }}
-                  title="Atualizar ping"
+                  title="Atualizar dados de conexão"
                 >
-                  🔄 {ultimaAtualizacao || 'Atualizar'}
+                  <RefreshCw size={15} />
+                  <span>{ultimaAtualizacao || 'Atualizar'}</span>
                 </button>
               </div>
             </div>
@@ -233,7 +239,7 @@ export default function PlayerHub() {
                       <div
                         className="hub-progresso-barra"
                         style={{ width: `${modo.online ? (modo.jogadores / modo.maxJogadores) * 100 : 0}%` }}
-                      ></div>
+                      />
                     </div>
                   </div>
                 </div>

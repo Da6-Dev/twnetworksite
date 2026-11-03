@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './VipShowcase.css';
+import { Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
 import McIcon from './McIcon';
+import './VipShowcase.css';
 
 export default function VipShowcase() {
   const destaques = [
@@ -10,14 +11,14 @@ export default function VipShowcase() {
       preco: 'R$ 19,90',
       icone: 'Gold_Ingot',
       vantagem: 'Mina Básica & Tag [Ouro]',
-      bonus: '+10% Vendas'
+      bonus: '+10% em Vendas'
     },
     {
       nome: 'VIP Esmeralda',
       preco: 'R$ 39,90',
       icone: 'Emerald',
       vantagem: 'Comando /fly & Kit P4',
-      bonus: '+25% Vendas',
+      bonus: '+25% em Vendas',
       maisEscolhido: true
     },
     {
@@ -25,7 +26,7 @@ export default function VipShowcase() {
       preco: 'R$ 69,90',
       icone: 'Nether_Star',
       vantagem: 'Todos os Kits & Minas',
-      bonus: '+50% Vendas'
+      bonus: '+50% Máximo'
     }
   ];
 
@@ -33,20 +34,16 @@ export default function VipShowcase() {
     <section className="vip-showcase-section">
       <div className="vip-showcase-card">
         <div className="vip-showcase-header">
-          <span className="vip-showcase-badge">
-            <McIcon name="Emerald" size={16} />
-            Economia & Patentes VIP
-          </span>
-          <h2>Acelere sua Evolução no <span className="highlight">RankUP</span></h2>
+          <h2>Planos VIP &amp; Impulso Econômico</h2>
           <p>
-            Obtenha comando <code>/fly</code>, multiplicadores acumulativos de economia, acesso a minas com regeneração acelerada e kits periódicos exclusivos.
+            Voe livremente com <code>/fly</code>, ative multiplicadores permanentes de venda e garanta acesso a minas de regeneração instantânea.
           </p>
         </div>
 
         <div className="vip-showcase-grid">
           {destaques.map((item, idx) => (
-            <div key={idx} className={`showcase-mini-card ${item.maisEscolhido ? 'destaque mc-enchanted-glint' : ''}`}>
-              {item.maisEscolhido && <span className="mini-card-badge">Mais Popular</span>}
+            <div key={idx} className={`showcase-mini-card ${item.maisEscolhido ? 'destaque' : ''}`}>
+              {item.maisEscolhido && <span className="mini-card-badge">Mais Escolhido</span>}
               <div className="mini-card-icon">
                 <McIcon name={item.icone} size={36} />
               </div>
@@ -60,12 +57,13 @@ export default function VipShowcase() {
 
         <div className="vip-showcase-footer">
           <Link to="/loja" className="btn-showcase-loja">
-            <McIcon name="Chest" size={20} />
-            Explorar Loja Completa & Comparativo VIP
+            <Sparkles size={18} />
+            <span>Ver Todos os Planos &amp; Comparativo</span>
+            <ArrowRight size={18} />
           </Link>
           <span className="showcase-aviso-seguro">
-            <McIcon name="Shield" size={16} />
-            Ativação 100% Automática via Pix e Cartão de Crédito
+            <ShieldCheck size={18} className="text-emerald-400" />
+            <span>Ativação automatizada em menos de 1 minuto via Pix e Cartão</span>
           </span>
         </div>
       </div>

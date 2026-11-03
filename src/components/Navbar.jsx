@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { ShoppingBag, Sparkles, BookOpen, Radio, Menu, X, User } from 'lucide-react';
 import { useCart } from '../context/useCart';
 import { useAuth } from '../context/AuthContext';
 import { useSound } from '../context/SoundContext';
-import './Navbar.css';
 import McIcon from './McIcon';
+import './Navbar.css';
 
 export default function Navbar() {
   const [menuAberto, setMenuAberto] = useState(false);
@@ -13,35 +14,29 @@ export default function Navbar() {
   const { tocarClique } = useSound();
   const location = useLocation();
 
-  const alternarMenu = () => {
-    setMenuAberto(!menuAberto);
-  };
-
-  const fecharMenu = () => {
-    setMenuAberto(false);
-  };
+  const alternarMenu = () => setMenuAberto(!menuAberto);
+  const fecharMenu = () => setMenuAberto(false);
 
   return (
     <nav className="navbar" id="inicio">
       <div className="navbar-logo">
-        <Link to="/" onClick={fecharMenu} style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }}>
-          <McIcon name="Grass_Block" size={24} style={{ marginRight: '8px' }} />
+        <Link to="/" onClick={fecharMenu} className="logo-link">
+          <McIcon name="Grass_Block" size={24} />
           <h2><span className="destaque-logo">TW</span> Network</h2>
         </Link>
       </div>
 
-      {/* Botão Hambúrguer para telas móveis */}
+      {/* Botão Hambúrguer moderno com Lucide */}
       <button 
-        className={`btn-hamburger ${menuAberto ? 'aberto' : ''}`} 
+        type="button"
+        className="btn-hamburger" 
         onClick={alternarMenu}
-        aria-label="Abrir menu"
+        aria-label={menuAberto ? 'Fechar menu de navegação' : 'Abrir menu de navegação'}
       >
-        <span></span>
-        <span></span>
-        <span></span>
+        {menuAberto ? <X size={24} /> : <Menu size={24} />}
       </button>
 
-      {/* Lista de navegação */}
+      {/* Links de navegação */}
       <ul className={`navbar-links ${menuAberto ? 'ativo' : ''}`}>
         <li>
           <Link 
@@ -62,25 +57,23 @@ export default function Navbar() {
               tocarClique();
               fecharMenu();
             }}
-            className={location.pathname === '/atividades' ? 'link-ativo' : ''}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}
+            className={`nav-link-flex ${location.pathname === '/atividades' ? 'link-ativo' : ''}`}
           >
-            <McIcon name="Beacon" size={15} />
-            Atividades
+            <Radio size={16} />
+            <span>Atividades</span>
           </Link>
         </li>
         <li>
           <Link 
             to="/loja" 
-            className={`destaque ${location.pathname === '/loja' ? 'link-ativo' : ''}`} 
+            className={`nav-link-flex destaque ${location.pathname === '/loja' ? 'link-ativo' : ''}`} 
             onClick={() => {
               tocarClique();
               fecharMenu();
-            }} 
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}
+            }}
           >
-            <McIcon name="Emerald" size={16} />
-            Loja VIP
+            <Sparkles size={16} />
+            <span>Loja VIP</span>
           </Link>
         </li>
         <li>
@@ -90,11 +83,10 @@ export default function Navbar() {
               tocarClique();
               fecharMenu();
             }}
-            className={location.pathname === '/guia' ? 'link-ativo' : ''}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}
+            className={`nav-link-flex ${location.pathname === '/guia' ? 'link-ativo' : ''}`}
           >
-            <McIcon name="Book" size={15} />
-            Guia & Suporte
+            <BookOpen size={16} />
+            <span>Guia &amp; Suporte</span>
           </Link>
         </li>
 
@@ -107,14 +99,14 @@ export default function Navbar() {
               tocarClique();
               fecharMenu();
             }}
-            style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }}
           >
-            <McIcon name="Chest" size={18} style={{ marginRight: '6px' }} />
-            Carrinho {totalItens > 0 && <span className="badge-carrinho">{totalItens}</span>}
+            <ShoppingBag size={18} />
+            <span>Carrinho</span>
+            {totalItens > 0 && <span className="badge-carrinho">{totalItens}</span>}
           </Link>
         </li>
 
-        {/* Área de Autenticação / Perfil do Jogador */}
+        {/* Área de Autenticação / Perfil */}
         <li className="nav-item-auth">
           {estaLogado && usuario ? (
             <Link
@@ -142,7 +134,7 @@ export default function Navbar() {
                 fecharMenu();
               }}
             >
-              <McIcon name="Nether_Star" size={16} />
+              <User size={16} />
               <span>Entrar</span>
             </Link>
           )}

@@ -1,12 +1,7 @@
-/* ==========================================================================
-   SHOWCASE VIP — TW NETWORK (MÉTRICA 60-30-10)
-   ========================================================================== */
-
 .vip-showcase-section {
-  padding: 85px 5%;
-  background-color: var(--bg-canvas-subtle);
+  padding: 80px 6%;
+  background-color: var(--bg-canvas);
   border-bottom: 1px solid var(--border-subtle);
-  transition: background-color 0.25s ease;
 }
 
 .vip-showcase-card {
@@ -15,38 +10,22 @@
   background-color: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: 24px;
-  padding: 48px 36px;
+  padding: 44px 32px;
   box-shadow: var(--card-shadow);
   text-align: center;
 }
 
-.vip-showcase-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background-color: var(--bg-surface-elevated);
-  border: 1px solid var(--border-subtle);
-  color: var(--mc-emerald);
-  padding: 6px 14px;
-  border-radius: 9999px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  margin-bottom: 16px;
-}
-
 .vip-showcase-header h2 {
-  font-size: 2.3rem;
+  font-size: 2.2rem;
   color: var(--text-primary);
   margin-bottom: 12px;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
 }
 
 .vip-showcase-header p {
   color: var(--text-secondary);
   font-size: 1.05rem;
-  max-width: 700px;
+  max-width: 680px;
   margin: 0 auto 36px;
   line-height: 1.6;
 }
@@ -71,8 +50,8 @@
 .showcase-mini-card {
   background-color: var(--bg-surface-elevated);
   border: 1px solid var(--border-subtle);
-  border-radius: 18px;
-  padding: 24px 20px;
+  border-radius: 20px;
+  padding: 28px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -88,104 +67,99 @@
 }
 
 .showcase-mini-card.destaque {
-  border-color: var(--mc-emerald);
-  box-shadow: 0 4px 20px var(--mc-emerald-glow);
+  border-color: rgba(16, 185, 129, 0.5);
+  box-shadow: 0 0 24px rgba(16, 185, 129, 0.15);
+  background: linear-gradient(180deg, var(--bg-surface-elevated) 0%, rgba(16, 185, 129, 0.04) 100%);
 }
 
 .mini-card-badge {
   position: absolute;
-  top: -10px;
-  background: linear-gradient(135deg, var(--mc-emerald) 0%, var(--mc-emerald-hover) 100%);
+  top: -12px;
+  background-color: var(--mc-emerald);
   color: #ffffff;
-  font-size: 0.72rem;
+  font-size: 0.74rem;
   font-weight: 800;
   padding: 3px 12px;
   border-radius: 9999px;
-  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .mini-card-icon {
-  width: 56px;
-  height: 56px;
-  margin-bottom: 12px;
+  width: 58px;
+  height: 58px;
+  border-radius: 14px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--bg-surface);
-  border-radius: 14px;
-  border: 1px solid var(--border-subtle);
+  margin-bottom: 16px;
 }
 
 .showcase-mini-card h4 {
   font-size: 1.25rem;
   font-weight: 800;
+  margin-bottom: 8px;
   color: var(--text-primary);
-  margin-bottom: 6px;
 }
 
 .mini-card-vantagem {
   font-size: 0.88rem;
-  color: var(--text-secondary);
-  margin-bottom: 8px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
 }
 
 .mini-card-bonus {
   font-size: 0.85rem;
-  font-weight: 800;
-  color: var(--mc-emerald);
-  background-color: rgba(16, 185, 129, 0.12);
-  padding: 3px 10px;
-  border-radius: 6px;
-  margin-bottom: 14px;
+  font-weight: 700;
+  color: var(--mc-star-gold);
+  margin-bottom: 16px;
 }
 
 .mini-card-preco {
-  font-size: 1.45rem;
-  font-weight: 900;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.55rem;
+  font-weight: 800;
   color: var(--text-primary);
 }
 
 .mini-card-preco span {
   font-size: 0.85rem;
+  font-weight: 500;
   color: var(--text-muted);
-  font-weight: normal;
 }
 
 .vip-showcase-footer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
-  padding-top: 24px;
-  border-top: 1px solid var(--border-subtle);
+  gap: 16px;
 }
 
 .btn-showcase-loja {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: linear-gradient(135deg, var(--mc-emerald) 0%, var(--mc-emerald-hover) 100%);
+  background-color: var(--mc-emerald);
   color: #ffffff;
-  padding: 15px 32px;
-  border-radius: 14px;
-  font-weight: 800;
-  font-size: 1.05rem;
+  padding: 13px 28px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.95rem;
   text-decoration: none;
-  transition: all 0.22s ease;
-  box-shadow: 0 4px 18px var(--mc-emerald-glow);
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px var(--mc-emerald-glow);
 }
 
 .btn-showcase-loja:hover {
-  filter: brightness(1.1);
+  background-color: var(--mc-emerald-hover);
   transform: translateY(-2px);
-  box-shadow: 0 6px 24px var(--mc-emerald-glow);
 }
 
 .showcase-aviso-seguro {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
-  font-weight: 600;
 }

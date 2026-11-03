@@ -1,34 +1,48 @@
 import React, { useState } from 'react';
+import { Tag, Check, X, Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
+import { useSound } from '../context/SoundContext';
 import './CupomDesconto.css';
-import McIcon from './McIcon';
 
 export default function CupomDesconto({ onAplicarCupom, cupomAtivo }) {
   const [codigo, setCodigo] = useState('');
   const [mensagemErro, setMensagemErro] = useState('');
+  const [validando, setValidando] = useState(false);
+  const { tocarXP, tocarClique } = useSound();
 
-  // Lista de cupons configurados
-  const cuponsValidos = {
-    TWSTUDIOS: 0.15, // 15% de desconto
-    BEMVINDO: 0.10,  // 10% de desconto
-    TEDABLIU: 0.20,  // 20% de desconto de abertura
-    NATAL20: 0.20    // 20% de desconto natalino
-  };
-
-  const aplicarCodigo = (e) => {
+  const aplicarCodigo = async (e) => {
     e.preventDefault();
     const codigoFormatado = codigo.trim().toUpperCase();
-
     if (!codigoFormatado) return;
 
-    if (cuponsValidos[codigoFormatado]) {
-      onAplicarCupom({
-        codigo: codigoFormatado,
-        desconto: cuponsValidos[codigoFormatado]
+    setValidando(true);
+    setMensagemErro('');
+
+    try {
+      const res = await fetch('/api/cupons/validar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ codigo: codigoFormatado })
       });
-      setMensagemErro('');
-      setCodigo('');
-    } else {
-      setMensagemErro('Cupom inválido ou expirado.');
+
+      const dados = await res.json();
+      if (res.ok && dados.sucesso && dados.cupom) {
+        tocarXP();
+        onAplicarCupom({
+          codigo: dados.cupom.codigo,
+          desconto: dados.cupom.desconto,
+          descontoPercentual: dados.cupom.descontoPercentual
+        });
+        toast.success(`Cupom ${dados.cupom.codigo} aplicado com sucesso!`);
+        setMensagemErro('');
+        setCodigo('');
+      } else {
+        setMensagemErro(dados.mensagem || 'Cupom inválido ou expirado.');
+      }
+    } catch {
+      setMensagemErro('Erro ao validar o cupom. Tente novamente.');
+    } finally {
+      setValidando(false);
     }
   };
 
@@ -36,32 +50,44 @@ export default function CupomDesconto({ onAplicarCupom, cupomAtivo }) {
     <div className="cupom-container">
       {!cupomAtivo ? (
         <form onSubmit={aplicarCodigo} className="cupom-form">
-          <input
-            type="text"
-            placeholder="Possui cupom de desconto?"
-            value={codigo}
-            onChange={(e) => {
-              setCodigo(e.target.value);
-              setMensagemErro('');
-            }}
-            className="input-cupom"
-          />
-          <button type="submit" className="btn-aplicar-cupom">
-            <McIcon name="Paper" size={14} />
-            Aplicar
+          <div className="cupom-input-box">
+            <Tag size={16} className="cupom-input-icon" />
+            <input
+              type="text"
+              placeholder="Cupom de desconto (Ex: NATAL20)"
+              value={codigo}
+              onChange={(e) => {
+                setCodigo(e.target.value.toUpperCase());
+                if (mensagemErro) setMensagemErro('');
+              }}
+              className="input-cupom"
+              disabled={validando}
+            />
+          </div>
+          <button type="submit" className="btn-aplicar-cupom" disabled={validando || !codigo.trim()}>
+            {validando ? <Loader2 size={16} className="animate-spin" /> : <span>Aplicar</span>}
           </button>
         </form>
       ) : (
         <div className="cupom-ativo-box">
-          <span>
-            Cupom <strong>{cupomAtivo.codigo}</strong> aplicado ({cupomAtivo.desconto * 100}% OFF)
-          </span>
+          <div className="cupom-ativo-info">
+            <Check size={16} className="text-emerald-400" />
+            <span>
+              Cupom <strong>{cupomAtivo.codigo}</strong> ativo ({Math.round(cupomAtivo.desconto * 100)}% OFF)
+            </span>
+          </div>
           <button 
             type="button" 
             className="btn-remover-cupom" 
-            onClick={() => onAplicarCupom(null)}
+            onClick={() => {
+              tocarClique();
+              onAplicarCupom(null);
+              toast.info('Cupom removido.');
+            }}
+            title="Remover cupom"
           >
-            Remover
+            <X size={15} />
+            <span>Remover</span>
           </button>
         </div>
       )}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import './NewsSection.css';
+import { Calendar, ArrowRight } from 'lucide-react';
 import McIcon from './McIcon';
+import './NewsSection.css';
 
 export default function NewsSection() {
   const [filtro, setFiltro] = useState('todas');
@@ -9,7 +10,7 @@ export default function NewsSection() {
     {
       id: 1,
       categoria: 'atualizacao',
-      categoriaNome: 'Atualização',
+      categoriaNome: 'Notas de Versão',
       mcIcon: 'Anvil',
       data: 'Hoje às 18:30',
       titulo: 'Patch Notes v1.2: Balanceamento da Economia e Minas',
@@ -19,7 +20,7 @@ export default function NewsSection() {
     {
       id: 2,
       categoria: 'evento',
-      categoriaNome: 'Evento',
+      categoriaNome: 'Evento Especial',
       mcIcon: 'Golden_Apple',
       data: 'Ontem',
       titulo: 'Torneio Gladiador de Abertura com Premiação via Pix',
@@ -38,6 +39,13 @@ export default function NewsSection() {
     }
   ];
 
+  const filtros = [
+    { id: 'todas', nome: 'Todas' },
+    { id: 'atualizacao', nome: 'Notas de Versão' },
+    { id: 'evento', nome: 'Eventos' },
+    { id: 'comunicado', nome: 'Comunicados' }
+  ];
+
   const noticiasFiltradas = filtro === 'todas'
     ? noticias
     : noticias.filter((item) => item.categoria === filtro);
@@ -45,66 +53,46 @@ export default function NewsSection() {
   return (
     <section id="noticias" className="news-section">
       <div className="news-header">
-        <span className="badge-secao-news">
-          <McIcon name="Paper" size={16} />
-          Mural da Comunidade
-        </span>
-        <h2>Notícias & <span className="highlight">Atualizações</span></h2>
-        <p>Acompanhe em primeira mão os comunicados da administração e as notas de versão do servidor.</p>
+        <h2>Atualizações &amp; Mural Oficial</h2>
+        <p>Acompanhe em primeira mão os comunicados da administração, notas de versão e eventos sazonais.</p>
       </div>
 
       <div className="news-filtros">
-        <button
-          className={`filtro-btn ${filtro === 'todas' ? 'ativo' : ''}`}
-          onClick={() => setFiltro('todas')}
-          style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
-        >
-          <McIcon name="Book" size={16} />
-          Todas
-        </button>
-        <button
-          className={`filtro-btn ${filtro === 'atualizacao' ? 'ativo' : ''}`}
-          onClick={() => setFiltro('atualizacao')}
-          style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
-        >
-          <McIcon name="Anvil" size={16} />
-          Notas de Versão
-        </button>
-        <button
-          className={`filtro-btn ${filtro === 'evento' ? 'ativo' : ''}`}
-          onClick={() => setFiltro('evento')}
-          style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
-        >
-          <McIcon name="Golden_Apple" size={16} />
-          Eventos
-        </button>
-        <button
-          className={`filtro-btn ${filtro === 'comunicado' ? 'ativo' : ''}`}
-          onClick={() => setFiltro('comunicado')}
-          style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
-        >
-          <McIcon name="Paper" size={16} />
-          Comunicados
-        </button>
+        {filtros.map((f) => (
+          <button
+            key={f.id}
+            type="button"
+            className={`filtro-btn ${filtro === f.id ? 'ativo' : ''}`}
+            onClick={() => setFiltro(f.id)}
+          >
+            {f.nome}
+          </button>
+        ))}
       </div>
 
       <div className="news-grid">
         {noticiasFiltradas.map((artigo) => (
           <article key={artigo.id} className="news-card">
             <div className="news-card-topo">
-              <span className={`news-tag ${artigo.categoria}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                <McIcon name={artigo.mcIcon} size={16} />
-                {artigo.categoriaNome}
+              <span className={`news-tag ${artigo.categoria}`}>
+                <McIcon name={artigo.mcIcon} size={15} />
+                <span>{artigo.categoriaNome}</span>
               </span>
-              <time className="news-data">{artigo.data}</time>
+              <time className="news-data">
+                <Calendar size={13} />
+                <span>{artigo.data}</span>
+              </time>
             </div>
 
             <h3 className="news-titulo">{artigo.titulo}</h3>
             <p className="news-resumo">{artigo.resumo}</p>
 
             <div className="news-card-rodape">
-              <span className="news-autor">Publicado por <strong>{artigo.autor}</strong></span>
-              <span className="news-ler-mais">Ler notícia completa →</span>
+              <span className="news-autor">Por <strong>{artigo.autor}</strong></span>
+              <span className="news-ler-mais">
+                <span>Ler nota</span>
+                <ArrowRight size={14} />
+              </span>
             </div>
           </article>
         ))}

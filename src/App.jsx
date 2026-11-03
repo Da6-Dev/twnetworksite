@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { Toaster } from 'sonner';
 import './App.css';
 import { ThemeProvider } from './context/ThemeContext';
 import { CartProvider } from './context/CartContext';
 import { SoundProvider } from './context/SoundContext';
 import { OrderProvider } from './context/OrderContext';
 import { AuthProvider } from './context/AuthContext';
-import { useCart } from './context/useCart';
+import { useTheme } from './context/useTheme';
 import Snowfall from './components/Snowfall';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import BackToTop from './components/BackToTop';
-import Toast from './components/Toast';
+import VincularNickModal from './components/VincularNickModal';
 
 // Páginas com rotas dedicadas
 import HomePage from './pages/HomePage';
@@ -34,9 +35,9 @@ function ScrollToTop() {
   return null;
 }
 
-// Layout interno que consome o contexto de notificações do carrinho
+// Layout interno com Toaster moderno e dinâmico
 function AppLayout() {
-  const { toastInfo, setToastInfo } = useCart();
+  const { isDark } = useTheme();
 
   return (
     <div className="App">
@@ -69,14 +70,22 @@ function AppLayout() {
       <Footer />
       <BackToTop />
 
-      {/* Alerta flutuante de feedback */}
-      {toastInfo && (
-        <Toast
-          mensagem={toastInfo.mensagem}
-          tipo={toastInfo.tipo}
-          onClose={() => setToastInfo(null)}
-        />
-      )}
+      {/* Modal Global para Vincular Nick do Minecraft (Google Auth ou Edição) */}
+      <VincularNickModal />
+
+      {/* Sistema Moderno de Notificações com Sonner */}
+      <Toaster
+        theme={isDark ? 'dark' : 'light'}
+        position="bottom-right"
+        richColors
+        closeButton
+        toastOptions={{
+          style: {
+            fontFamily: "'Plus Jakarta Sans', sans-serif",
+            borderRadius: '12px'
+          }
+        }}
+      />
     </div>
   );
 }

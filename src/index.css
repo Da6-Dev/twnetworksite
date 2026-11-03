@@ -6,8 +6,6 @@
    - 60% DOMINANTE: Canvas / Fundo geral da página e seções alternadas
    - 30% SECUNDÁRIO: Estruturas, Cards, Superfícies, Bordas e Textos de Alto Contraste
    - 10% DESTAQUE: Acentos temáticos de Minecraft Natalino (Esmeralda, Redstone, Ouro, Gelo)
-   
-   AO ALTERAR AS VARIÁVEIS ABAIXO, TODO O SITE MUDA DE FORMA UNIFICADA!
    ========================================================================== */
 
 :root {
@@ -16,7 +14,7 @@
      ======================================================== */
   --bg-canvas: #070b12;                 /* Fundo mestre da página */
   --bg-canvas-subtle: #0b121e;          /* Seções secundárias/alternadas */
-  --bg-nav: rgba(7, 11, 18, 0.94);      /* Fundo da barra de navegação */
+  --bg-nav: rgba(7, 11, 18, 0.88);      /* Fundo da barra de navegação com blur */
   --bg-input: #0e1726;                  /* Campos de texto e formulários */
 
   /* ========================================================
@@ -25,14 +23,14 @@
   --bg-surface: #0f192b;                /* Superfície padrão de cards e painéis */
   --bg-surface-elevated: #16243d;       /* Sub-cards, chips e itens em destaque */
   --bg-surface-hover: #1c2d4a;          /* Hover de cards */
-  --bg-surface-glass: rgba(15, 25, 43, 0.88); /* Efeito vidro gélido */
+  --bg-surface-glass: rgba(15, 25, 43, 0.82); /* Efeito vidro gélido */
 
-  --border-subtle: rgba(255, 255, 255, 0.12); /* Borda visível com nitidez */
-  --border-hover: rgba(255, 255, 255, 0.28);  /* Borda destacada em foco */
+  --border-subtle: rgba(255, 255, 255, 0.10); /* Borda visível com nitidez */
+  --border-hover: rgba(255, 255, 255, 0.24);  /* Borda destacada em foco */
 
   /* Tipografia de Alto Contraste (Modo Escuro - WCAG AAA) */
   --text-primary: #ffffff;              /* Títulos e destaques principais (100% legível) */
-  --text-secondary: #e2e8f0;            /* Parágrafos e descrições (nítido e confortável) */
+  --text-secondary: #e2e8f0;            /* Parágrafos e descrições */
   --text-muted: #94a3b8;                /* Legendas, datas e informações secundárias */
   --text-inverse: #090d16;              /* Texto escuro para fundos claros/botões */
 
@@ -41,24 +39,24 @@
      ======================================================== */
   --mc-emerald: #10b981;                /* Esmeralda / Pinheiro Natalino */
   --mc-emerald-hover: #059669;
-  --mc-emerald-glow: rgba(16, 185, 129, 0.35);
+  --mc-emerald-glow: rgba(16, 185, 129, 0.28);
 
   --mc-redstone: #e11d48;               /* Redstone / Vermelho Festivo */
   --mc-redstone-hover: #be123c;
-  --mc-redstone-glow: rgba(225, 29, 72, 0.35);
+  --mc-redstone-glow: rgba(225, 29, 72, 0.28);
 
   --mc-frost-ice: #38bdf8;              /* Diamante / Gelo Glacial */
-  --mc-frost-glow: rgba(56, 189, 248, 0.3);
+  --mc-frost-glow: rgba(56, 189, 248, 0.25);
 
   --mc-star-gold: #f59e0b;              /* Ouro / Estrela do Nether */
   --mc-gold-light: #fef08a;
-  --mc-gold-glow: rgba(245, 158, 11, 0.35);
+  --mc-gold-glow: rgba(245, 158, 11, 0.28);
 
-  --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.55);
-  --card-shadow-hover: 0 16px 36px -8px rgba(0, 0, 0, 0.7);
+  --card-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.45);
+  --card-shadow-hover: 0 16px 36px -6px rgba(0, 0, 0, 0.6);
   --scrollbar-thumb: #1e293b;
 
-  /* Aliases para compatibilidade total */
+  /* Aliases para compatibilidade */
   --text-snow: var(--text-primary);
   --text-subtle: var(--text-muted);
   --bg-surface-solid: var(--bg-surface);
@@ -70,51 +68,50 @@
   /* ========================================================
      60% DOMINANTE (CANVAS & FUNDOS PRINCIPAIS - MODO CLARO)
      ======================================================== */
-  --bg-canvas: #f8fafc;                 /* Fundo limpo e suave */
-  --bg-canvas-subtle: #f1f5f9;          /* Fundo de seções alternadas */
-  --bg-nav: rgba(248, 250, 252, 0.94);
+  --bg-canvas: #f8fafc;
+  --bg-canvas-subtle: #f1f5f9;
+  --bg-nav: rgba(248, 250, 252, 0.88);
   --bg-input: #ffffff;
 
   /* ========================================================
      30% SECUNDÁRIO (ESTRUTURAS, CARDS, BORDAS E TIPOGRAFIA DE ALTO CONTRASTE)
      ======================================================== */
-  --bg-surface: #ffffff;                /* Superfície dos cards totalmente branca */
-  --bg-surface-elevated: #e2e8f0;       /* Sub-cards e tags */
-  --bg-surface-hover: #f1f5f9;
-  --bg-surface-glass: rgba(255, 255, 255, 0.94);
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #f1f5f9;
+  --bg-surface-hover: #e2e8f0;
+  --bg-surface-glass: rgba(255, 255, 255, 0.90);
 
-  --border-subtle: rgba(15, 23, 42, 0.12); /* Contorno nítido contra o branco */
-  --border-hover: rgba(15, 23, 42, 0.28);
+  --border-subtle: rgba(15, 23, 42, 0.10);
+  --border-hover: rgba(15, 23, 42, 0.24);
 
   /* Tipografia de Alto Contraste (Modo Claro - WCAG AAA) */
-  --text-primary: #090d16;              /* Títulos em Preto Tinta Ultra Legível */
-  --text-secondary: #1e293b;            /* Parágrafos em Slate Escuro 100% nítidos */
-  --text-muted: #475569;                /* Legendas e notas informativas */
+  --text-primary: #090d16;
+  --text-secondary: #1e293b;
+  --text-muted: #475569;
   --text-inverse: #ffffff;
 
   /* ========================================================
      10% DESTAQUE (ACENTOS MINECRAFT NATALINOS & CTAs)
      ======================================================== */
-  --mc-emerald: #059669;                /* Esmeralda vibrante e acessível */
+  --mc-emerald: #059669;
   --mc-emerald-hover: #047857;
-  --mc-emerald-glow: rgba(5, 150, 105, 0.25);
+  --mc-emerald-glow: rgba(5, 150, 105, 0.20);
 
-  --mc-redstone: #e11d48;               /* Vermelho Redstone vivo */
+  --mc-redstone: #e11d48;
   --mc-redstone-hover: #be123c;
-  --mc-redstone-glow: rgba(225, 29, 72, 0.25);
+  --mc-redstone-glow: rgba(225, 29, 72, 0.20);
 
-  --mc-frost-ice: #0284c7;              /* Azul Glacial de alto contraste */
-  --mc-frost-glow: rgba(2, 132, 199, 0.2);
+  --mc-frost-ice: #0284c7;
+  --mc-frost-glow: rgba(2, 132, 199, 0.18);
 
-  --mc-star-gold: #d97706;              /* Dourado quente e legível */
+  --mc-star-gold: #d97706;
   --mc-gold-light: #854d0e;
-  --mc-gold-glow: rgba(217, 119, 6, 0.25);
+  --mc-gold-glow: rgba(217, 119, 6, 0.20);
 
   --card-shadow: 0 4px 18px -2px rgba(15, 23, 42, 0.08);
   --card-shadow-hover: 0 10px 28px -3px rgba(15, 23, 42, 0.14);
   --scrollbar-thumb: #cbd5e1;
 
-  /* Aliases para compatibilidade total */
   --text-snow: var(--text-primary);
   --text-subtle: var(--text-muted);
   --bg-surface-solid: var(--bg-surface);
@@ -127,24 +124,27 @@
     box-sizing: border-box;
   }
   body {
-    font-family: 'Outfit', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background-color: var(--bg-canvas);
     color: var(--text-secondary);
     overflow-x: hidden;
     transition: background-color 0.25s ease, color 0.25s ease;
   }
   h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', sans-serif;
     color: var(--text-primary);
     font-weight: 700;
+    letter-spacing: -0.02em;
   }
   p {
     color: var(--text-secondary);
+    line-height: 1.65;
   }
 }
 
 /* Scrollbar adaptável ao tema */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 7px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg-canvas);
@@ -157,61 +157,10 @@
   background: var(--mc-emerald);
 }
 
-/* Efeitos de Iluminação Natalina Minimalista */
-.glow-gold {
-  box-shadow: 0 0 25px -5px var(--mc-gold-glow);
-}
-
-.glow-red {
-  box-shadow: 0 0 25px -5px var(--mc-redstone-glow);
-}
-
-.glow-ice {
-  box-shadow: 0 0 25px -5px var(--mc-frost-glow);
-}
-
-.glow-emerald {
-  box-shadow: 0 0 25px -5px var(--mc-emerald-glow);
-}
-
-/* Gradientes Tipográficos Temáticos */
-.text-gold-gradient {
-  background: linear-gradient(135deg, var(--mc-star-gold) 0%, #b45309 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-ice-gradient {
-  background: linear-gradient(135deg, var(--mc-frost-ice) 0%, #0369a1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-emerald-gradient {
-  background: linear-gradient(135deg, var(--mc-emerald) 0%, #047857 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-xmas-gradient {
-  background: linear-gradient(135deg, var(--mc-redstone) 0%, #be123c 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Destaque Padrão do Servidor (Verde Esmeralda Natalino) */
+/* Destaque Padrão da TW Network (Verde Esmeralda Vibrante) */
 .highlight {
-  background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-[data-theme="light"] .highlight, .light .highlight {
-  background: linear-gradient(135deg, #059669 0%, #047857 50%, #065f46 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--mc-emerald);
+  font-weight: 800;
 }
 
 /* Superfícies de Vidro Gélido Padronizadas */
@@ -228,7 +177,7 @@
   backdrop-filter: blur(12px);
   border: 1px solid var(--border-subtle);
   box-shadow: var(--card-shadow);
-  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  transition: border-color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
 }
 
 .glass-card:hover {
@@ -236,9 +185,7 @@
   box-shadow: var(--card-shadow-hover);
 }
 
-/* ==========================================================================
-   EFEITO DE ENCANTAMENTO DE MINECRAFT (ENCHANTED GLINT)
-   ========================================================================== */
+/* Efeito de Encantamento Suave (Enchanted Glint) */
 .mc-enchanted-glint {
   position: relative;
   overflow: hidden;
@@ -253,14 +200,14 @@
   height: 220%;
   background: linear-gradient(
     125deg,
-    transparent 25%,
-    rgba(168, 85, 247, 0.08) 38%,
-    rgba(192, 132, 252, 0.26) 48%,
-    rgba(56, 189, 248, 0.18) 55%,
-    transparent 70%
+    transparent 35%,
+    rgba(168, 85, 247, 0.06) 45%,
+    rgba(192, 132, 252, 0.15) 50%,
+    rgba(56, 189, 248, 0.10) 55%,
+    transparent 65%
   );
   pointer-events: none;
-  animation: mcEnchantGlint 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: mcEnchantGlint 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   z-index: 2;
 }
 
@@ -268,7 +215,7 @@
   0% {
     transform: translate(-100%, -100%) rotate(25deg);
   }
-  35%, 100% {
+  30%, 100% {
     transform: translate(100%, 100%) rotate(25deg);
   }
 }

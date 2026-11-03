@@ -36,6 +36,11 @@ export function AuthProvider({ children }) {
     return CONTAS_PADRAO;
   });
 
+  const [modalVincularAberto, setModalVincularAberto] = useState(false);
+
+  const abrirModalVincular = () => setModalVincularAberto(true);
+  const fecharModalVincular = () => setModalVincularAberto(false);
+
   const [usuario, setUsuario] = useState(() => {
     try {
       const salvo = localStorage.getItem('tw_usuario_logado');
@@ -110,114 +115,141 @@ export function AuthProvider({ children }) {
     return null;
   });
 
-  // Função de Login
-  const login = (nickOuEmail, senha) => {
-    const busca = nickOuEmail.trim().toLowerCase();
-    const conta = usuarios.find(
-      (u) =>
-        (u.nick.toLowerCase() === busca || u.email.toLowerCase() === busca) &&
-        u.senha === senha
-    );
+  // Recarregar dados mais recentes do usuário (saldo Cash, VIP, etc)
+  const recarregarUsuario = useCallback(async () => {
+    const token = localStorage.getItem('tw_auth_token');
+    if (!token) return null;
+    try {
+      const res = await fetch('/api/auth/me', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (res.ok) {
+        const dados = await res.json();
+        if (dados?.sucesso && dados.usuario) {
+          setUsuario(dados.usuario);
+          return dados.usuario;
+        }
+      }
+    } catch {}
+    return null;
+  }, []);
 
-    if (conta) {
-      setUsuario(conta);
-      setProgresso(obterProgressoJogador(conta.nick));
-      return { sucesso: true, usuario: conta };
+  // Restaurar sessão pelo JWT no banco PostgreSQL
+  useEffect(() => {
+    const token = localStorage.getItem('tw_auth_token');
+    if (token) {
+      recarregarUsuario().then((u) => {
+        if (!u) {
+          localStorage.removeItem('tw_auth_token');
+        } else {
+          setProgresso(obterProgressoJogador(u.nick));
+        }
+      });
     }
-    return { sucesso: false, mensagem: 'Nick/E-mail ou senha incorretos!' };
+  }, [recarregarUsuario]);
+
+  // Função de Login Real com PostgreSQL + JWT
+  const login = async (nickOuEmail, senha) => {
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identificador: nickOuEmail, senha })
+      });
+      const dados = await res.json();
+      if (res.ok && dados.sucesso && dados.usuario) {
+        if (dados.token) {
+          localStorage.setItem('tw_auth_token', dados.token);
+        }
+        setUsuario(dados.usuario);
+        setProgresso(obterProgressoJogador(dados.usuario.nick));
+        return { sucesso: true, usuario: dados.usuario };
+      }
+      return { sucesso: false, mensagem: dados.mensagem || 'Nick/E-mail ou senha incorretos!' };
+    } catch {
+      return { sucesso: false, mensagem: 'Erro de conexão com o servidor.' };
+    }
   };
 
-  // Função de Cadastro
-  const cadastrar = ({ nick, email, senha }) => {
-    const nickLimpo = nick.trim();
-    const emailLimpo = email.trim().toLowerCase();
-
-    // Valida se já existe
-    const jaExiste = usuarios.some(
-      (u) =>
-        u.nick.toLowerCase() === nickLimpo.toLowerCase() ||
-        u.email.toLowerCase() === emailLimpo
-    );
-
-    if (jaExiste) {
-      return { sucesso: false, mensagem: 'Este Nick ou E-mail já está cadastrado!' };
+  // Função de Cadastro Real com PostgreSQL + Bcrypt
+  const cadastrar = async ({ nick, email, senha }) => {
+    try {
+      const res = await fetch('/api/auth/cadastrar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nick, email, senha })
+      });
+      const dados = await res.json();
+      if (res.ok && dados.sucesso && dados.usuario) {
+        if (dados.token) {
+          localStorage.setItem('tw_auth_token', dados.token);
+        }
+        setUsuario(dados.usuario);
+        setProgresso(obterProgressoJogador(dados.usuario.nick));
+        return { sucesso: true, usuario: dados.usuario };
+      }
+      return { sucesso: false, mensagem: dados.mensagem || 'Falha ao realizar cadastro.' };
+    } catch {
+      return { sucesso: false, mensagem: 'Erro de conexão com o servidor.' };
     }
-
-    const agora = new Date();
-    const dataFormatada = agora.toLocaleDateString('pt-BR');
-
-    const novoUsuario = {
-      nick: nickLimpo,
-      email: emailLimpo,
-      senha,
-      cargo: 'Membro',
-      patenteVip: 'Nenhum',
-      dataRegistro: dataFormatada,
-      saldoCash: '0 Cash'
-    };
-
-    setUsuarios((prev) => [...prev, novoUsuario]);
-    setUsuario(novoUsuario);
-    setProgresso(obterProgressoJogador(novoUsuario.nick));
-    return { sucesso: true, usuario: novoUsuario };
   };
 
-  // Login Rápido com Google
+  // Login / Cadastro Oficial com Google Identity Services
   const loginComGoogle = async (googleData = {}) => {
-    const email = googleData.email || 'davipassos213@gmail.com';
-    const nome = googleData.nome || 'Davi';
-    const nickEscolhido = googleData.nick || (googleData.nome ? googleData.nome.replace(/[^a-zA-Z0-9_]/g, '') : 'Davi_Player');
-
     try {
       const res = await fetch('/api/auth/google', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, nome, nickEscolhido, avatarGoogle: googleData.avatar })
+        body: JSON.stringify(googleData)
       });
-      if (res.ok) {
-        const dados = await res.json();
-        if (dados.sucesso && dados.usuario) {
-          setUsuario(dados.usuario);
-          setProgresso(obterProgressoJogador(dados.usuario.nick));
-          setUsuarios((prev) => {
-            if (!prev.some((u) => u.email.toLowerCase() === dados.usuario.email.toLowerCase())) {
-              return [...prev, dados.usuario];
-            }
-            return prev;
-          });
-          return { sucesso: true, usuario: dados.usuario, novo: dados.novo };
+      const dados = await res.json();
+      if (res.ok && dados.sucesso && dados.usuario) {
+        if (dados.token) {
+          localStorage.setItem('tw_auth_token', dados.token);
         }
+        setUsuario(dados.usuario);
+        setProgresso(obterProgressoJogador(dados.usuario.nick));
+        if (dados.usuario.nickVinculado === false) {
+          setModalVincularAberto(true);
+        }
+        return { sucesso: true, usuario: dados.usuario, novo: dados.novo };
       }
+      return { sucesso: false, mensagem: dados.mensagem || 'Falha ao autenticar com o Google.' };
     } catch {
-      // Fallback local caso fetch falhe
+      return { sucesso: false, mensagem: 'Erro de conexão com o servidor ao autenticar com Google.' };
+    }
+  };
+
+  // Vincular ou alterar o Nickname do Minecraft (para jogadores Google ou outros)
+  const vincularNickMinecraft = async (novoNick) => {
+    const token = localStorage.getItem('tw_auth_token');
+    if (!token) {
+      return { sucesso: false, mensagem: 'Você precisa estar logado para vincular seu Nick.' };
     }
 
-    // Fallback local imediato
-    const emailLimpo = email.toLowerCase();
-    const contaExistente = usuarios.find((u) => u.email.toLowerCase() === emailLimpo);
-    if (contaExistente) {
-      setUsuario(contaExistente);
-      setProgresso(obterProgressoJogador(contaExistente.nick));
-      return { sucesso: true, usuario: contaExistente, novo: false };
+    try {
+      const res = await fetch('/api/auth/vincular-nick', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ novoNick })
+      });
+
+      const dados = await res.json();
+      if (res.ok && dados.sucesso && dados.usuario) {
+        if (dados.token) {
+          localStorage.setItem('tw_auth_token', dados.token);
+        }
+        setUsuario(dados.usuario);
+        setProgresso(obterProgressoJogador(dados.usuario.nick));
+        return { sucesso: true, usuario: dados.usuario, mensagem: dados.mensagem };
+      }
+      return { sucesso: false, mensagem: dados.mensagem || 'Falha ao vincular o nick.' };
+    } catch {
+      return { sucesso: false, mensagem: 'Erro de conexão com o servidor ao vincular o nick.' };
     }
-
-    const agora = new Date().toLocaleDateString('pt-BR');
-    const novoUsuario = {
-      id: `user_google_${Date.now()}`,
-      nick: nickEscolhido,
-      email: emailLimpo,
-      tipoConta: 'pirata', // Todos como pirata conforme solicitado
-      cargo: 'Membro',
-      patenteVip: 'Nenhum',
-      dataRegistro: agora,
-      saldoCash: '0 Cash',
-      metodoAuth: 'google'
-    };
-
-    setUsuarios((prev) => [...prev, novoUsuario]);
-    setUsuario(novoUsuario);
-    setProgresso(obterProgressoJogador(novoUsuario.nick));
-    return { sucesso: true, usuario: novoUsuario, novo: true };
   };
 
   // Validação de Conta de Minecraft (Modo Pirata/Offline por Padrão)
@@ -271,6 +303,8 @@ export function AuthProvider({ children }) {
 
   // Logout
   const logout = () => {
+    localStorage.removeItem('tw_auth_token');
+    localStorage.removeItem('tw_usuario_logado');
     setUsuario(null);
     setProgresso(null);
   };
@@ -405,6 +439,11 @@ export function AuthProvider({ children }) {
         loginDemo,
         logout,
         loginComGoogle,
+        recarregarUsuario,
+        modalVincularAberto,
+        abrirModalVincular,
+        fecharModalVincular,
+        vincularNickMinecraft,
         validarNickMinecraft,
         progresso,
         resgatarDiaCalendario,

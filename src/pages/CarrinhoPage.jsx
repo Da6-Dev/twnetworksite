@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Minus, Plus, Trash2, ArrowRight, ArrowLeft, ShoppingBag, ShieldCheck, ChevronRight } from 'lucide-react';
 import { useCart } from '../context/useCart';
 import McIcon from '../components/McIcon';
 import CupomDesconto from '../components/CupomDesconto';
@@ -27,26 +28,26 @@ export default function CarrinhoPage() {
   return (
     <div className="carrinho-page-container">
       {/* Breadcrumbs */}
-      <div className="carrinho-breadcrumbs">
+      <nav className="carrinho-breadcrumbs" aria-label="Navegação estrutural">
         <Link to="/">Início</Link>
-        <span>/</span>
+        <ChevronRight size={14} className="breadcrumb-divisor" />
         <Link to="/loja">Loja</Link>
-        <span>/</span>
-        <span style={{ color: 'var(--text-primary)', fontWeight: 700 }}>Meu Carrinho</span>
-      </div>
+        <ChevronRight size={14} className="breadcrumb-divisor" />
+        <span className="breadcrumb-atual">Meu Carrinho</span>
+      </nav>
 
-      <h1 className="carrinho-titulo-topo">
-        Meu <span className="highlight">Carrinho de Compras</span>
-      </h1>
+      <h1 className="carrinho-titulo-topo">Meu Carrinho de Compras</h1>
 
       {carrinho.length === 0 ? (
         <div className="carrinho-itens-panel carrinho-vazio-box">
-          <McIcon name="Chest" size={64} />
-          <h3>Seu carrinho está vazio!</h3>
+          <div className="carrinho-vazio-icone">
+            <ShoppingBag size={54} className="text-slate-400" />
+          </div>
+          <h3>Seu carrinho está vazio</h3>
           <p>Você ainda não adicionou nenhum plano VIP, pacote de Cash ou chaves misteriosas.</p>
           <Link to="/loja" className="btn-explorar-loja">
-            <McIcon name="Diamond" size={18} />
-            Explorar Loja de VIPs
+            <span>Explorar Loja de VIPs</span>
+            <ArrowRight size={16} />
           </Link>
         </div>
       ) : (
@@ -54,7 +55,7 @@ export default function CarrinhoPage() {
           {/* Painel Esquerdo: Itens */}
           <div className="carrinho-itens-panel">
             <div className="carrinho-header-tabela">
-              <span>Item & Descrição</span>
+              <span>Item &amp; Descrição</span>
               <span>Subtotal</span>
             </div>
 
@@ -86,7 +87,7 @@ export default function CarrinhoPage() {
                         onClick={() => atualizarQuantidade(item.id, -1)}
                         title="Diminuir quantidade"
                       >
-                        −
+                        <Minus size={14} />
                       </button>
                       <span className="item-qtd-num">{qtd}</span>
                       <button
@@ -95,7 +96,7 @@ export default function CarrinhoPage() {
                         onClick={() => atualizarQuantidade(item.id, 1)}
                         title="Aumentar quantidade"
                       >
-                        +
+                        <Plus size={14} />
                       </button>
                     </div>
 
@@ -109,7 +110,7 @@ export default function CarrinhoPage() {
                       onClick={() => removerDoCarrinho(item.id)}
                       title="Remover do carrinho"
                     >
-                      ×
+                      <Trash2 size={16} />
                     </button>
                   </div>
                 );
@@ -117,22 +118,15 @@ export default function CarrinhoPage() {
             </div>
 
             {/* Cupom de Desconto */}
-            <div style={{ marginTop: '28px', paddingTop: '20px', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
+            <div className="carrinho-cupom-area">
               <CupomDesconto onAplicarCupom={setCupomAtivo} cupomAtivo={cupomAtivo} />
             </div>
 
-            <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'flex-end' }}>
+            <div className="carrinho-limpar-area">
               <button
                 type="button"
                 onClick={limparCarrinho}
-                style={{
-                  background: 'transparent',
-                  border: 'none',
-                  color: '#94a3b8',
-                  fontSize: '0.85rem',
-                  cursor: 'pointer',
-                  textDecoration: 'underline'
-                }}
+                className="btn-limpar-carrinho"
               >
                 Esvaziar todo o carrinho
               </button>
@@ -141,7 +135,7 @@ export default function CarrinhoPage() {
 
           {/* Painel Direito: Resumo */}
           <div className="carrinho-resumo-card">
-            <h3>Resumo da Encomenda</h3>
+            <h3>Resumo do Pedido</h3>
 
             <div className="resumo-linha-item">
               <span>Subtotal dos itens:</span>
@@ -155,7 +149,7 @@ export default function CarrinhoPage() {
               </div>
             )}
 
-            <div className="resumo-divisor"></div>
+            <div className="resumo-divisor" />
 
             <div className="resumo-total-final">
               <span>Total a Pagar:</span>
@@ -165,22 +159,19 @@ export default function CarrinhoPage() {
             </div>
 
             <Link to="/checkout" className="btn-ir-checkout">
-              Avançar para Pagamento
-              <McIcon name="Redstone" size={18} />
+              <span>Avançar para Pagamento</span>
+              <ArrowRight size={18} />
             </Link>
 
             <Link to="/loja" className="btn-continuar-comprando">
-              ← Continuar Comprando
+              <ArrowLeft size={16} />
+              <span>Continuar Comprando</span>
             </Link>
 
             <div className="carrinho-seguranca-selos">
               <div>
-                <McIcon name="Totem_Of_Undying" size={16} />
-                Entrega instantânea in-game via Pix
-              </div>
-              <div>
-                <McIcon name="Emerald" size={16} />
-                Garantia de ativação TW Network
+                <ShieldCheck size={16} className="text-emerald-400" />
+                <span>Ativação automatizada imediata via Pix</span>
               </div>
             </div>
           </div>

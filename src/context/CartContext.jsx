@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { toast } from 'sonner';
 import { CartContext } from './CartContextInstance';
 
 export function CartProvider({ children }) {
@@ -30,8 +31,6 @@ export function CartProvider({ children }) {
     }
   });
 
-  const [toastInfo, setToastInfo] = useState(null);
-
   // Sincronização automática com localStorage
   useEffect(() => {
     localStorage.setItem('twnetwork_carrinho', JSON.stringify(carrinho));
@@ -52,7 +51,10 @@ export function CartProvider({ children }) {
   }, [ultimoPedido]);
 
   const exibirNotificacao = (mensagem, tipo = 'sucesso') => {
-    setToastInfo({ mensagem, tipo });
+    if (tipo === 'erro') toast.error(mensagem);
+    else if (tipo === 'aviso') toast.warning(mensagem);
+    else if (tipo === 'info') toast.info(mensagem);
+    else toast.success(mensagem);
   };
 
   const parsePreco = (precoStr) => {
@@ -63,7 +65,6 @@ export function CartProvider({ children }) {
 
   const adicionarAoCarrinho = (item) => {
     setCarrinho((prev) => {
-      // Verifica se o item já existe para aumentar a quantidade
       const indiceExistente = prev.findIndex((i) => i.id === item.id);
       if (indiceExistente > -1) {
         const novo = [...prev];
@@ -120,11 +121,11 @@ export function CartProvider({ children }) {
   const totalFinal = Math.max(0, subtotal - descontoValor);
   const totalItens = carrinho.reduce((acc, item) => acc + (item.quantidade || 1), 0);
 
-  const concluirPedido = (dadosPedido) => {
+  const concluirPedido = (dadosCliente = {}) => {
     const pedidoCompleto = {
-      ...dadosPedido,
       id: `TW-${Math.floor(100000 + Math.random() * 900000)}`,
-      data: new Date().toLocaleString('pt-BR'),
+      data: new Date().toISOString(),
+      cliente: dadosCliente,
       itens: [...carrinho],
       subtotal,
       descontoValor,
@@ -152,8 +153,8 @@ export function CartProvider({ children }) {
         limparCarrinho,
         concluirPedido,
         ultimoPedido,
-        toastInfo,
-        setToastInfo,
+        toastInfo: null,
+        setToastInfo: () => {},
         exibirNotificacao
       }}
     >
