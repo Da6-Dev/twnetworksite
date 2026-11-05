@@ -4,13 +4,19 @@
 
 ---
 
-## 🧠 1. Memória Central do Projeto (Obsidian Vault)
+## 🧠 1. Memória Central do Projeto (Super-Vault Unificado)
 
-O repositório utiliza um **Obsidian Vault (Segundo Cérebro)** localizado na pasta **`vault/`**.
-Toda a inteligência histórica, decisões de engenharia, arquitetura, credenciais e tabelas do banco de dados estão documentadas lá usando **Links Bidirecionais (`[[wikilinks]]`)**.
+O repositório utiliza o **Super-Vault Unificado (Segundo Cérebro)** conectado como **Git Submodule** na pasta **`vault/`** (Repositório mestre: [`Da6-Dev/tw-vault`](https://github.com/Da6-Dev/tw-vault)).
+Ele centraliza toda a inteligência do ecossistema dividida em 4 pilares:
+1. `01 - Web e Loja`: Banco Neon, Mercado Pago, JWT, deploy no Render.
+2. `02 - Plugins Java`: Arquitetura dos 9 módulos (`tw-core`, `tw-ranks`, `tw-minas`, etc.), concorrência e PDC.
+3. `03 - Servidor e Game Loop`: Economia in-game, tabela de preços, menus, hologramas e comandos.
+4. `04 - Diario de Bordo`: Registro histórico de decisões unificado da rede.
+
+Toda a inteligência está documentada usando **Links Bidirecionais (`[[wikilinks]]`)**.
 
 ### Regras Obrigatórias de Leitura:
-1. **Antes de planejar ou codificar:** Sempre consulte o índice geral em `vault/00 - MOC (Map of Content).md` e as notas técnicas relacionadas à tarefa (ex: `[[Neon PostgreSQL]]`, `[[Seguranca e Hardening]]`, `[[Mercado Pago SDK]]`, etc.).
+1. **Antes de planejar ou codificar:** Sempre consulte o índice geral em `vault/00 - MOC (Map of Content).md` e as notas técnicas relacionadas à tarefa (ex: `[[Neon PostgreSQL]]`, `[[Seguranca e Hardening]]`, `[[Mercado Pago SDK]]`, `[[02-CORE-MODULE]]`, `[[tabela_precos]]`, etc.).
 2. **Respeite as Decisões Passadas:** Não altere padrões já decididos (ex: uso do pooler do Neon, porta 3000, `--include=dev` no build do Render) sem justificativa técnica e alinhamento com o usuário.
 
 ---
