@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Mail, Send, CheckCircle2, MessageSquare, Video } from 'lucide-react';
+import { MessageSquare, Video } from 'lucide-react';
 import { toast } from 'sonner';
 import { useSound } from '../context/SoundContext';
+import McIcon from './McIcon';
 import './Newsletter.css';
 
 export default function Newsletter() {
@@ -36,7 +37,7 @@ export default function Newsletter() {
             <div>
               <form onSubmit={lidarInscricao} className="newsletter-form">
                 <div className="newsletter-input-wrapper">
-                  <Mail size={18} className="newsletter-icon" />
+                  <McIcon name="Paper" size={18} className="newsletter-icon" />
                   <input
                     type="email"
                     placeholder="Digite seu melhor e-mail..."
@@ -49,7 +50,7 @@ export default function Newsletter() {
                   />
                 </div>
                 <button type="submit" className="btn-inscrever">
-                  <Send size={16} />
+                  <McIcon name="Fire_Charge" size={16} />
                   <span>Inscrever-se</span>
                 </button>
               </form>
@@ -57,7 +58,7 @@ export default function Newsletter() {
             </div>
           ) : (
             <div className="newsletter-sucesso">
-              <CheckCircle2 size={36} className="text-emerald-400" />
+              <McIcon name="Emerald" size={36} />
               <strong>Inscrição Confirmada com Sucesso!</strong>
               <p>Obrigado por se juntar à comunidade TW Network. Fique de olho na sua caixa de entrada.</p>
             </div>

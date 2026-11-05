@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Trophy, Radio, Clock, Crown, ArrowRight, RefreshCw } from 'lucide-react';
+import { ArrowRight, RefreshCw } from 'lucide-react';
 import AnimatedTabs from './ui/AnimatedTabs';
 import McIcon from './McIcon';
 import { useServerPing } from '../hooks/useServerPing';
@@ -56,8 +56,8 @@ export default function PlayerHub() {
   ];
 
   const tabsHub = [
-    { id: 'ranking', label: 'Ranking da Temporada (Pix)', icon: <Trophy size={16} /> },
-    { id: 'status', label: 'Status dos Servidores', icon: <Radio size={16} /> }
+    { id: 'ranking', label: 'Ranking da Temporada (Pix)', icon: <McIcon name="Totem_Of_Undying" size={18} /> },
+    { id: 'status', label: 'Status dos Servidores', icon: <McIcon name="Redstone" size={18} /> }
   ];
 
   const podiumOrder = [topJogadores[1], topJogadores[0], topJogadores[2]];
@@ -98,11 +98,11 @@ export default function PlayerHub() {
           <div className="hub-ranking-box">
             <div className="hub-ranking-topo">
               <div className="hub-ranking-alerta">
-                <Clock size={16} />
+                <McIcon name="Clock" size={16} />
                 <span>Encerramento: <strong>Domingo às 23h59</strong></span>
               </div>
               <div className="hub-ranking-total">
-                <Trophy size={16} className="text-amber-400" />
+                <McIcon name="Gold_Ingot" size={16} />
                 <span>Premiação Semanal: <strong>R$ 400,00+ via Pix</strong></span>
               </div>
             </div>
@@ -111,6 +111,8 @@ export default function PlayerHub() {
             <div className="podium-container">
               {podiumOrder.map((jogador) => {
                 const isPrimeiro = jogador.posicao === 1;
+                const medalIcon = jogador.posicao === 1 ? 'Gold_Ingot' : (jogador.posicao === 2 ? 'Iron_Ingot' : 'Copper_Ingot');
+
                 return (
                   <div
                     key={jogador.posicao}
@@ -118,10 +120,13 @@ export default function PlayerHub() {
                   >
                     {isPrimeiro && (
                       <div className="podium-crown">
-                        <Crown size={26} className="text-amber-300" />
+                        <McIcon name="Golden_Apple" size={26} />
                       </div>
                     )}
-                    <span className="podium-rank-badge">#{jogador.posicao}</span>
+                    <span className="podium-rank-badge flex items-center gap-1">
+                      <McIcon name={medalIcon} size={14} />
+                      <span>#{jogador.posicao}</span>
+                    </span>
                     <img
                       src={`https://mc-heads.net/avatar/${jogador.nick}/${isPrimeiro ? 64 : 48}`}
                       alt={jogador.nick}

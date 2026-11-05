@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, Check, AlertCircle, ArrowRight, User } from 'lucide-react';
+import { Eye, EyeOff, Check, AlertCircle, ArrowRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useSound } from '../context/SoundContext';
+import McIcon from '../components/McIcon';
 import './CadastroPage.css';
 
 export default function CadastroPage() {
@@ -315,7 +316,7 @@ export default function CadastroPage() {
         <div className="cadastro-skin-preview-col">
           <div className="skin-preview-box">
             <span className="skin-preview-label">
-              <User size={14} />
+              <McIcon name="Compass" size={16} />
               <span>Personagem In-Game</span>
             </span>
 

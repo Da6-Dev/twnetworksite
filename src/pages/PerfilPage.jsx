@@ -1,25 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
-  Trophy,
-  Gift,
-  ShoppingBag,
-  ShieldCheck,
-  Settings,
   ChevronLeft,
   ChevronRight,
   Copy,
   Check,
-  Lock,
-  Crown,
-  Sun,
-  Moon,
-  Volume2,
-  VolumeX,
-  LogOut,
-  RefreshCw,
-  Sparkles,
-  Award
+  RefreshCw
 } from 'lucide-react';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
@@ -257,11 +243,11 @@ export default function PerfilPage() {
   const percentualXp = Math.min(100, Math.round((passe.xp / passe.xpMaxNivel) * 100));
 
   const abasDisponiveis = [
-    { id: 'passe', label: 'Passe de Batalha', icon: <Trophy size={16} /> },
-    { id: 'recompensas', label: 'Recompensas Diárias', icon: <Gift size={16} /> },
-    { id: 'pedidos', label: 'Meus Pedidos', icon: <ShoppingBag size={16} />, badge: pedidosDoUsuario.length > 0 ? pedidosDoUsuario.length : null },
-    { id: 'conta', label: 'Minha Conta In-Game', icon: <ShieldCheck size={16} /> },
-    { id: 'configuracoes', label: 'Configurações', icon: <Settings size={16} /> },
+    { id: 'passe', label: 'Passe de Batalha', icon: <McIcon name="Nether_Star" size={18} /> },
+    { id: 'recompensas', label: 'Recompensas Diárias', icon: <McIcon name="Chest" size={18} /> },
+    { id: 'pedidos', label: 'Meus Pedidos', icon: <McIcon name="Gold_Ingot" size={18} />, badge: pedidosDoUsuario.length > 0 ? pedidosDoUsuario.length : null },
+    { id: 'conta', label: 'Minha Conta In-Game', icon: <McIcon name="Compass" size={18} /> },
+    { id: 'configuracoes', label: 'Configurações', icon: <McIcon name="Redstone" size={18} /> },
   ];
 
   return (
@@ -313,7 +299,7 @@ export default function PerfilPage() {
               </span>
               {(usuario.patenteVip && usuario.patenteVip !== 'Nenhum') || passe.temVipPasse ? (
                 <span className="badge-vip-ativa">
-                  <Crown size={14} className="text-amber-400" />
+                  <McIcon name="Gold_Ingot" size={14} />
                   {usuario.patenteVip !== 'Nenhum' ? usuario.patenteVip : 'Passe VIP Ativo'}
                 </span>
               ) : (
@@ -437,7 +423,7 @@ export default function PerfilPage() {
                 {passe.temVipPasse ? (
                   <div className="status-vip-ativo">
                     <div className="vip-ativo-header">
-                      <Crown size={22} className="text-amber-400" />
+                      <McIcon name="Gold_Ingot" size={22} />
                       <strong>Passe Premium VIP Ativo</strong>
                     </div>
                     <p>Sua conta tem acesso liberado para coletar todos os itens da trilha dourada VIP até o Nível 10!</p>
@@ -445,7 +431,7 @@ export default function PerfilPage() {
                 ) : (
                   <div className="status-vip-bloqueado">
                     <div className="vip-bloqueado-header">
-                      <Lock size={20} className="text-red-400" />
+                      <McIcon name="Barrier" size={20} />
                       <strong>Trilha VIP Bloqueada</strong>
                     </div>
                     <p>Você está na trilha gratuita. Ative o Passe VIP para desbloquear Chaves Supremas, Cash e Cosméticos.</p>
@@ -454,7 +440,7 @@ export default function PerfilPage() {
                       className="btn-desbloquear-passe-vip"
                       onClick={handleAtivarVipPasse}
                     >
-                      <Sparkles size={16} />
+                      <McIcon name="Gold_Ingot" size={16} />
                       <span>Ativar Passe VIP Instantâneo</span>
                     </button>
                   </div>
@@ -489,7 +475,7 @@ export default function PerfilPage() {
               <div className="trilha-secao-cabecalho">
                 <div className="trilha-secao-titulos">
                   <span className="trilha-badge-topo">
-                    <Trophy size={14} className="text-amber-400 inline mr-1.5" />
+                    <McIcon name="Nether_Star" size={14} className="inline mr-1.5" />
                     Passe de Batalha
                   </span>
                   <h3>Trilha da Temporada (Níveis 1 ao 10)</h3>
@@ -541,12 +527,12 @@ export default function PerfilPage() {
                     </div>
 
                     <div className="rotulo-bloco rotulo-nivel">
-                      <Award size={16} className="text-emerald-400" />
+                      <McIcon name="Nether_Star" size={16} />
                       <span>Nível</span>
                     </div>
 
                     <div className="rotulo-bloco rotulo-vip">
-                      <Crown size={20} className="text-amber-400" />
+                      <McIcon name="Gold_Ingot" size={20} />
                       <div>
                         <strong>VIP</strong>
                         <small>Em Baixo</small>
@@ -611,7 +597,7 @@ export default function PerfilPage() {
                           {/* 3. EM BAIXO: TRILHA VIP */}
                           <div className={`trilha-slot-card vip ${vipColetado ? 'coletado' : ''}`}>
                             <div className="slot-tipo-tag vip">
-                              <Crown size={11} className="inline mr-1" />
+                              <McIcon name="Gold_Ingot" size={11} className="inline mr-1" />
                               <span>VIP</span>
                             </div>
                             <div className="slot-item-icon-box vip">
@@ -630,7 +616,7 @@ export default function PerfilPage() {
                                   className="btn-coletar-trilha-btn vip"
                                   onClick={() => handleColetarPasse(item.nivel, 'vip')}
                                 >
-                                  <Sparkles size={13} />
+                                  <McIcon name="Gold_Ingot" size={13} />
                                   <span>Coletar VIP</span>
                                 </button>
                               ) : nivelAlcancado && !passe.temVipPasse ? (
@@ -640,12 +626,12 @@ export default function PerfilPage() {
                                   onClick={handleAtivarVipPasse}
                                   title="Ativar Passe VIP para coletar"
                                 >
-                                  <Lock size={13} />
+                                  <McIcon name="Barrier" size={13} />
                                   <span>Requer VIP</span>
                                 </button>
                               ) : (
                                 <span className="badge-bloqueado-trilha-mini vip">
-                                  <Lock size={12} /> Nível {item.nivel}
+                                  <McIcon name="Barrier" size={12} /> Nível {item.nivel}
                                 </span>
                               )}
                             </div>
@@ -707,7 +693,7 @@ export default function PerfilPage() {
                             className="btn-completar-missao"
                             onClick={() => handleCompletarMissao(missao.id, missao.xp)}
                           >
-                            <Sparkles size={14} />
+                            <McIcon name="Emerald" size={14} />
                             <span>Completar</span>
                           </button>
                         )}
@@ -729,7 +715,7 @@ export default function PerfilPage() {
             <div className="calendario-hero-topo">
               <div className="calendario-info-bloco">
                 <div className="calendario-tag">
-                  <Gift size={15} className="text-emerald-400" />
+                  <McIcon name="Chest" size={16} />
                   <span>Sequência de Login Contínuo</span>
                 </div>
                 <h2>Calendário Diário de 7 Dias</h2>
@@ -829,7 +815,7 @@ export default function PerfilPage() {
                           className="btn-dia-resgatar-hoje"
                           onClick={() => handleResgatarCalendario(item.dia)}
                         >
-                          <Gift size={16} />
+                          <McIcon name="Chest" size={16} />
                           <span>Resgatar Hoje!</span>
                         </button>
                       ) : (
@@ -870,7 +856,7 @@ export default function PerfilPage() {
                   <span>{carregandoPedidos ? 'Sincronizando...' : 'Atualizar Status'}</span>
                 </button>
                 <Link to="/loja" className="btn-comprar-mais" onClick={() => tocarClique()}>
-                  <ShoppingBag size={16} />
+                  <McIcon name="Emerald" size={16} />
                   <span>Explorar Loja VIP</span>
                 </Link>
               </div>
@@ -967,7 +953,7 @@ export default function PerfilPage() {
                 <h3>Nenhum pedido efetuado ainda</h3>
                 <p>Você ainda não realizou compras na loja com o Nick <strong>{usuario.nick}</strong>.</p>
                 <Link to="/loja" className="btn-ir-loja-vazio" onClick={() => tocarClique()}>
-                  <ShoppingBag size={16} />
+                  <McIcon name="Emerald" size={16} />
                   <span>Ver Pacotes VIP Disponíveis</span>
                 </Link>
               </div>
@@ -1060,7 +1046,7 @@ export default function PerfilPage() {
               <div className="config-card">
                 <div className="config-card-header">
                   <div className="w-9 h-9 rounded-lg bg-[var(--mc-gold)]/10 border border-[var(--mc-gold)]/20 flex items-center justify-center">
-                    <Sun size={20} className="text-amber-400" />
+                    <McIcon name="Clock" size={20} />
                   </div>
                   <div>
                     <h3>Tema da Interface</h3>
@@ -1078,7 +1064,7 @@ export default function PerfilPage() {
                     }}
                   >
                     <div className="tema-preview escuro">
-                      <Moon size={20} className="text-indigo-300" />
+                      <McIcon name="Clock" size={20} />
                     </div>
                     <div className="tema-texto">
                       <strong>Noite Polar (Escuro)</strong>
@@ -1100,7 +1086,7 @@ export default function PerfilPage() {
                     }}
                   >
                     <div className="tema-preview claro">
-                      <Sun size={20} className="text-amber-500" />
+                      <McIcon name="Compass" size={20} />
                     </div>
                     <div className="tema-texto">
                       <strong>Dia de Neve (Claro)</strong>
@@ -1119,7 +1105,7 @@ export default function PerfilPage() {
               <div className="config-card">
                 <div className="config-card-header">
                   <div className="w-9 h-9 rounded-lg bg-[var(--mc-redstone)]/10 border border-[var(--mc-redstone)]/20 flex items-center justify-center">
-                    <Volume2 size={20} className="text-emerald-400" />
+                    <McIcon name="Jukebox" size={20} />
                   </div>
                   <div>
                     <h3>Efeitos Sonoros de Minecraft</h3>
@@ -1143,7 +1129,7 @@ export default function PerfilPage() {
                       className={`btn-toggle-audio ${somHabilitado ? 'ativo' : 'mudo'}`}
                       onClick={() => alternarSom()}
                     >
-                      {somHabilitado ? <Volume2 size={18} /> : <VolumeX size={18} />}
+                      <McIcon name={somHabilitado ? 'Jukebox' : 'Barrier'} size={18} />
                       <span>{somHabilitado ? 'Som Ligado' : 'Mudo'}</span>
                     </button>
 
@@ -1156,7 +1142,7 @@ export default function PerfilPage() {
                         }}
                         title="Tocar som de teste"
                       >
-                        <Sparkles size={14} />
+                        <McIcon name="Jukebox" size={14} />
                         <span>Testar Som de XP</span>
                       </button>
                     )}
@@ -1168,7 +1154,7 @@ export default function PerfilPage() {
               <div className="config-card zona-logout">
                 <div className="config-card-header">
                   <div className="w-9 h-9 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center">
-                    <LogOut size={20} className="text-red-400" />
+                    <McIcon name="Barrier" size={20} />
                   </div>
                   <div>
                     <h3>Encerrar Sessão</h3>
@@ -1185,7 +1171,7 @@ export default function PerfilPage() {
                     className="btn-logout-conta"
                     onClick={handleLogout}
                   >
-                    <LogOut size={16} />
+                    <McIcon name="Barrier" size={16} />
                     <span>Sair da Minha Conta</span>
                   </button>
                 </div>

@@ -17,8 +17,22 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+app.set('trust proxy', 1);
+
 const PORT = Number(process.env.PORT) || 3000;
-const JWT_SECRET = process.env.JWT_SECRET || 'twnetwork_jwt_secret_dev_2026_rankup_natal';
+const DEV_JWT_SECRET = 'twnetwork_jwt_secret_dev_2026_rankup_natal';
+const isProduction = process.env.NODE_ENV === 'production';
+
+if (isProduction) {
+  const secret = process.env.JWT_SECRET?.trim();
+  if (!secret || secret === DEV_JWT_SECRET || secret === 'undefined' || secret === 'null') {
+    throw new Error(
+      'Configuração inválida para produção: JWT_SECRET não foi definido ou está utilizando a chave padrão insegura de desenvolvimento.'
+    );
+  }
+}
+
+const JWT_SECRET = process.env.JWT_SECRET?.trim() || DEV_JWT_SECRET;
 
 const googleOAuthClient = new OAuth2Client();
 
@@ -47,7 +61,18 @@ app.use(
   })
 );
 
-app.use(cors());
+const defaultAllowedOrigins = ['https://twnetwork.com.br', 'https://www.twnetwork.com.br'];
+const parsedAllowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',').map((o) => o.trim().replace(/^['"]|['"]$/g, '').replace(/\/+$/, '')).filter(Boolean)
+  : [];
+const allowedOrigins = parsedAllowedOrigins.length > 0 ? parsedAllowedOrigins : defaultAllowedOrigins;
+
+app.use(
+  cors({
+    origin: isProduction ? allowedOrigins : true,
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 // Rate Limiter Global para a API (proteção contra DoS e abuso)
@@ -56,6 +81,7 @@ const apiLimiter = rateLimit({
   max: 300,
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req) => req.path.replace(/\/+$/, '') === '/health' || req.originalUrl.split('?')[0].replace(/\/+$/, '') === '/api/health',
   message: { sucesso: false, mensagem: 'Muitas requisições deste IP. Tente novamente mais tarde.' }
 });
 
@@ -607,7 +633,7 @@ async function entregarPedidoNoSite(pedidoId: number) {
           cashItem = 50000;
         } else {
           // Extração inteligente de números (ex: "100.000 Cash" -> 100000)
-          const nums = nome.match(/(\d+[\.\d]*)/g);
+          const nums = nome.match(/(\d+[.\d]*)/g);
           if (nums) {
             for (const n of nums) {
               const val = parseInt(n.replace(/\./g, ''), 10);
@@ -1082,7 +1108,7 @@ app.get('/api/pedidos/status/:id', async (req, res) => {
           pedido.pago_em = new Date();
           console.log(`⚡ [POLLING MERCADO PAGO] Pedido #${pedido.id} aprovado e entregue instantaneamente!`);
         }
-      } catch (mpErr) {
+      } catch {
         // Ignora erro passageiro de consulta
       }
     }
@@ -1240,14 +1266,23 @@ app.post('/api/webhooks/mercadopago', async (req, res) => {
 });
 
 // 9. Status do Sistema / Health
-app.get('/api/health', (_req, res) => {
-  res.json({
-    status: 'ok',
-    rede: 'TW Network',
-    modo: 'full-stack',
-    banco: 'PostgreSQL 18 Conectado',
-    mercadoPago: Boolean(getMpClient())
-  });
+app.get('/api/health', async (_req, res) => {
+  try {
+    await query('SELECT 1');
+    return res.json({
+      status: 'ok',
+      rede: 'TW Network',
+      modo: 'full-stack',
+      banco: 'PostgreSQL Conectado',
+      mercadoPago: Boolean(getMpClient())
+    });
+  } catch (err: any) {
+    console.error('❌ [HEALTHCHECK] Falha na conexão com o banco de dados:', err?.message || err);
+    return res.status(500).json({
+      status: 'error',
+      mensagem: 'Banco de dados inacessível'
+    });
+  }
 });
 
 /* ==========================================================================
@@ -1256,9 +1291,7 @@ app.get('/api/health', (_req, res) => {
 async function iniciarServidor() {
   await inicializarBanco();
 
-  const isProd = process.env.NODE_ENV === 'production';
-
-  if (!isProd) {
+  if (!isProduction) {
     const { createServer } = await import('vite');
     const vite = await createServer({
       server: { middlewareMode: true },
@@ -1267,7 +1300,7 @@ async function iniciarServidor() {
     app.use(vite.middlewares);
   } else {
     app.use(express.static(path.join(__dirname, 'dist')));
-    app.get('*', (_req, res) => {
+    app.get('{*splat}', (_req, res) => {
       res.sendFile(path.join(__dirname, 'dist', 'index.html'));
     });
   }

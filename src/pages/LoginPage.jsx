@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Eye, EyeOff, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Eye, EyeOff, ArrowRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useSound } from '../context/SoundContext';
+import McIcon from '../components/McIcon';
 import './LoginPage.css';
 
 export default function LoginPage() {
@@ -127,7 +128,7 @@ export default function LoginPage() {
           <p>Acesse seu perfil para recolher recompensas, evoluir no passe e gerenciar suas compras.</p>
 
           <div className="auth-modo-pirata-badge">
-            <ShieldCheck size={14} className="text-emerald-400" />
+            <McIcon name="Compass" size={16} />
             <span>Suporta contas Originais &amp; Piratas (Modo Livre)</span>
           </div>
         </div>

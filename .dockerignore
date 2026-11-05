@@ -1,0 +1,36 @@
+# Dependências locais e builds
+node_modules
+dist
+dist-ssr
+
+# Variáveis de ambiente e segredos locais (preserva apenas arquivos de exemplo)
+.env
+.env.*
+!.env.example*
+
+# Controle de versão e metadados Git
+.git
+.gitignore
+
+# Metadados de agentes, IA e workspaces auxiliares
+.agents
+.aider-desk
+.aistudio
+
+# Arquivos de log
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Arquivos temporários e de configuração de IDEs/Editores
+.DS_Store
+.vscode
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+bun.lock

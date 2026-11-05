@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import McIcon from './McIcon';
 import './VipShowcase.css';
 
@@ -57,12 +57,12 @@ export default function VipShowcase() {
 
         <div className="vip-showcase-footer">
           <Link to="/loja" className="btn-showcase-loja">
-            <Sparkles size={18} />
+            <McIcon name="Nether_Star" size={20} />
             <span>Ver Todos os Planos &amp; Comparativo</span>
             <ArrowRight size={18} />
           </Link>
           <span className="showcase-aviso-seguro">
-            <ShieldCheck size={18} className="text-emerald-400" />
+            <McIcon name="Emerald" size={18} />
             <span>Ativação automatizada em menos de 1 minuto via Pix e Cartão</span>
           </span>
         </div>

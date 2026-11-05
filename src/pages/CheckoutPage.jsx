@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { QrCode, CreditCard, FileText, ChevronRight, Loader2, ShieldCheck, AlertCircle, ShoppingBag } from 'lucide-react';
+import { QrCode, CreditCard, FileText, ChevronRight, Loader2, AlertCircle } from 'lucide-react';
 import { useCart } from '../context/useCart';
 import { useOrders } from '../context/OrderContext';
 import { useSound } from '../context/SoundContext';
 import { useAuth } from '../context/AuthContext';
+import McIcon from '../components/McIcon';
 import './CheckoutPage.css';
 
 export default function CheckoutPage() {
@@ -55,7 +56,7 @@ export default function CheckoutPage() {
   if (carrinho.length === 0) {
     return (
       <div className="checkout-page-container" style={{ textAlign: 'center', padding: '120px 20px' }}>
-        <ShoppingBag size={64} className="text-slate-400 mx-auto mb-4" />
+        <McIcon name="Chest" size={64} style={{ display: 'inline-flex', marginBottom: '16px' }} />
         <h2 style={{ color: 'var(--text-primary)', margin: '20px 0 10px', fontWeight: 800 }}>Nenhum item no carrinho</h2>
         <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
           Adicione primeiro um VIP, Cash ou Chaves na loja antes de finalizar o pagamento.
@@ -307,7 +308,7 @@ export default function CheckoutPage() {
 
           {estaLogado && usuario && (
             <div className="checkout-auth-info">
-              <ShieldCheck size={16} className="text-emerald-400" />
+              <McIcon name="Compass" size={16} />
               <span>Conectado como <strong>{usuario.nick}</strong> — Os benefícios serão entregues nesta conta.</span>
             </div>
           )}

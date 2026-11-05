@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingBag, Zap, Check, ArrowRight, Sparkles, KeyRound, Coins, Layers, ShieldCheck } from 'lucide-react';
+import { Check, ArrowRight } from 'lucide-react';
 import { useCart } from '../context/useCart';
 import { useSound } from '../context/SoundContext';
 import AnimatedTabs from '../components/ui/AnimatedTabs';
@@ -157,11 +157,11 @@ export default function LojaPage() {
   };
 
   const tabsLoja = [
-    { id: 'todos', label: 'Todos os Produtos', icon: <Layers size={16} /> },
-    { id: 'vips', label: 'Planos VIP', icon: <Sparkles size={16} /> },
-    { id: 'comparativo', label: 'Comparativo de Benefícios', icon: <ShieldCheck size={16} /> },
-    { id: 'cash', label: 'Pacotes de Cash', icon: <Coins size={16} /> },
-    { id: 'chaves', label: 'Chaves & Caixas', icon: <KeyRound size={16} /> }
+    { id: 'todos', label: 'Todos os Produtos', icon: <McIcon name="Chest" size={18} /> },
+    { id: 'vips', label: 'Planos VIP', icon: <McIcon name="Nether_Star" size={18} /> },
+    { id: 'comparativo', label: 'Comparativo de Benefícios', icon: <McIcon name="Enchanted_Book" size={18} /> },
+    { id: 'cash', label: 'Pacotes de Cash', icon: <McIcon name="Gold_Ingot" size={18} /> },
+    { id: 'chaves', label: 'Chaves & Caixas', icon: <McIcon name="Tripwire_Hook" size={18} /> }
   ];
 
   return (
@@ -176,15 +176,15 @@ export default function LojaPage() {
 
         <div className="loja-vantagens-rapidas">
           <div className="vantagem-chip">
-            <Zap size={16} className="text-amber-400" />
+            <McIcon name="Emerald" size={18} />
             <span>Ativação Imediata via Pix</span>
           </div>
           <div className="vantagem-chip">
-            <ShieldCheck size={16} className="text-emerald-400" />
+            <McIcon name="Totem_Of_Undying" size={18} />
             <span>Garantia &amp; Suporte Dedicado</span>
           </div>
           <div className="vantagem-chip">
-            <Coins size={16} className="text-sky-400" />
+            <McIcon name="Gold_Nugget" size={18} />
             <span>Bônus Cumulativos de Economia</span>
           </div>
         </div>
@@ -245,7 +245,7 @@ export default function LojaPage() {
                     className="btn-comprar-agora"
                     onClick={() => comprarDireto(vip)}
                   >
-                    <Zap size={16} />
+                    <McIcon name="Emerald" size={16} />
                     <span>Comprar Agora</span>
                   </button>
                   <button
@@ -253,7 +253,7 @@ export default function LojaPage() {
                     className="btn-add-carrinho"
                     onClick={() => handleAdicionar(vip)}
                   >
-                    <ShoppingBag size={16} />
+                    <McIcon name="Chest" size={16} />
                     <span>Adicionar</span>
                   </button>
                 </div>
@@ -329,7 +329,7 @@ export default function LojaPage() {
                     className="btn-comprar-agora"
                     onClick={() => comprarDireto(item)}
                   >
-                    <Zap size={16} />
+                    <McIcon name="Emerald" size={16} />
                     <span>Comprar Direto</span>
                   </button>
                   <button
@@ -337,7 +337,7 @@ export default function LojaPage() {
                     className="btn-add-carrinho"
                     onClick={() => handleAdicionar(item)}
                   >
-                    <ShoppingBag size={16} />
+                    <McIcon name="Chest" size={16} />
                     <span>Carrinho</span>
                   </button>
                 </div>
@@ -374,7 +374,7 @@ export default function LojaPage() {
                     className="btn-comprar-agora"
                     onClick={() => comprarDireto(item)}
                   >
-                    <Zap size={16} />
+                    <McIcon name="Emerald" size={16} />
                     <span>Comprar Direto</span>
                   </button>
                   <button
@@ -382,7 +382,7 @@ export default function LojaPage() {
                     className="btn-add-carrinho"
                     onClick={() => handleAdicionar(item)}
                   >
-                    <ShoppingBag size={16} />
+                    <McIcon name="Chest" size={16} />
                     <span>Carrinho</span>
                   </button>
                 </div>
@@ -396,7 +396,7 @@ export default function LojaPage() {
       {totalItens > 0 && (
         <div className="barra-carrinho-flutuante">
           <div className="barra-carrinho-info">
-            <ShoppingBag size={22} className="text-emerald-400" />
+            <McIcon name="Chest" size={22} />
             <span>
               <strong>{totalItens} {totalItens === 1 ? 'item' : 'itens'}</strong> no carrinho • Total: <strong>R$ {totalFinal.toFixed(2).replace('.', ',')}</strong>
             </span>

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { Copy, Check, CheckCircle2, Clock, ExternalLink, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Copy, Check, ExternalLink, ArrowRight } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { toast } from 'sonner';
 import { useCart } from '../context/useCart';
 import { useAuth } from '../context/AuthContext';
 import { useSound } from '../context/SoundContext';
+import McIcon from '../components/McIcon';
 import './ConclusaoPage.css';
 
 export default function ConclusaoPage() {
@@ -114,7 +115,7 @@ export default function ConclusaoPage() {
     <div className="conclusao-page-container">
       <div className="conclusao-card">
         <div className="conclusao-icone-topo">
-          <CheckCircle2 size={48} className="text-emerald-400" />
+          <McIcon name="Emerald" size={48} />
         </div>
 
         <h1>Pedido Registrado com Sucesso</h1>
@@ -205,7 +206,7 @@ export default function ConclusaoPage() {
                 <span>{statusPix}</span>
               </div>
               <div className="pix-status-badge" style={{ borderColor: 'rgba(56, 189, 248, 0.4)', color: '#38bdf8' }}>
-                <Clock size={14} />
+                <McIcon name="Clock" size={16} />
                 <span>Expira em: {formatarTempo(segundosRestantes)}</span>
               </div>
             </div>
@@ -230,7 +231,7 @@ export default function ConclusaoPage() {
         {pedido.metodoPagamento === 'cartao' && (
           <div className="detalhes-metodo-box" style={{ textAlign: 'left', marginBottom: '32px' }}>
             <h3 style={{ color: 'var(--mc-emerald)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <ShieldCheck size={20} />
+              <McIcon name="Emerald" size={20} />
               Transação Aprovada pela Operadora de Cartão!
             </h3>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginTop: '6px' }}>

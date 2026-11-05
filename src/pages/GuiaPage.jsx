@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Terminal, ShieldAlert, HelpCircle, Users, MessageSquare } from 'lucide-react';
+import { MessageSquare } from 'lucide-react';
 import AnimatedTabs from '../components/ui/AnimatedTabs';
 import GuiaComandos from '../components/GuiaComandos';
 import RegrasSection from '../components/RegrasSection';
 import FaqSection from '../components/FaqSection';
 import StaffSection from '../components/StaffSection';
 import { useSound } from '../context/SoundContext';
+import McIcon from '../components/McIcon';
 import './GuiaPage.css';
 
 export default function GuiaPage() {
@@ -13,10 +14,10 @@ export default function GuiaPage() {
   const { tocarClique } = useSound();
 
   const tabsGuia = [
-    { id: 'comandos', label: 'Comandos do Jogo', icon: <Terminal size={16} /> },
-    { id: 'regras', label: 'Regras & Diretrizes', icon: <ShieldAlert size={16} /> },
-    { id: 'suporte', label: 'Suporte & Dúvidas (FAQ)', icon: <HelpCircle size={16} /> },
-    { id: 'equipe', label: 'Equipe da Rede', icon: <Users size={16} /> }
+    { id: 'comandos', label: 'Comandos do Jogo', icon: <McIcon name="Command_Block" size={18} /> },
+    { id: 'regras', label: 'Regras & Diretrizes', icon: <McIcon name="Barrier" size={18} /> },
+    { id: 'suporte', label: 'Suporte & Dúvidas (FAQ)', icon: <McIcon name="Enchanted_Book" size={18} /> },
+    { id: 'equipe', label: 'Equipe da Rede', icon: <McIcon name="Totem_Of_Undying" size={18} /> }
   ];
 
   return (

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Tag, Check, X, Loader2 } from 'lucide-react';
+import { Check, X, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useSound } from '../context/SoundContext';
+import McIcon from './McIcon';
 import './CupomDesconto.css';
 
 export default function CupomDesconto({ onAplicarCupom, cupomAtivo }) {
@@ -51,7 +52,7 @@ export default function CupomDesconto({ onAplicarCupom, cupomAtivo }) {
       {!cupomAtivo ? (
         <form onSubmit={aplicarCodigo} className="cupom-form">
           <div className="cupom-input-box">
-            <Tag size={16} className="cupom-input-icon" />
+            <McIcon name="Name_Tag" size={18} className="cupom-input-icon" />
             <input
               type="text"
               placeholder="Cupom de desconto (Ex: NATAL20)"

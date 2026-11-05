@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Users, ChevronDown, CheckCircle2, HelpCircle } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import McIcon from './McIcon';
 import './StaffSection.css';
 
@@ -70,7 +70,7 @@ export default function StaffSection() {
       <div className="recrutamento-banner">
         <div className="recrutamento-info">
           <div className="recrutamento-titulo-box">
-            <Users size={22} className="text-emerald-400" />
+            <McIcon name="Totem_Of_Undying" size={22} />
             <h3>Quer fazer parte da equipe da TW Network?</h3>
           </div>
           <p>
@@ -79,11 +79,11 @@ export default function StaffSection() {
           {avisoCandidatura && (
             <div className="aviso-candidatura-card">
               <div className="aviso-candidatura-linha">
-                <CheckCircle2 size={16} className="text-emerald-400 flex-shrink-0" />
+                <McIcon name="Emerald" size={16} />
                 <span><strong>Requisitos:</strong> Idade mínima de 15 anos, microfone funcional, tempo diário disponível e bom histórico na rede.</span>
               </div>
               <div className="aviso-candidatura-linha">
-                <HelpCircle size={16} className="text-sky-400 flex-shrink-0" />
+                <McIcon name="Compass" size={16} />
                 <span><strong>Inscrições:</strong> Fichas abertas periodicamente no canal <code>#formularios</code> do nosso Discord oficial.</span>
               </div>
             </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingBag, Sparkles, BookOpen, Radio, Menu, X, User } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useCart } from '../context/useCart';
 import { useAuth } from '../context/AuthContext';
 import { useSound } from '../context/SoundContext';
@@ -59,7 +59,7 @@ export default function Navbar() {
             }}
             className={`nav-link-flex ${location.pathname === '/atividades' ? 'link-ativo' : ''}`}
           >
-            <Radio size={16} />
+            <McIcon name="Nether_Star" size={18} />
             <span>Atividades</span>
           </Link>
         </li>
@@ -72,7 +72,7 @@ export default function Navbar() {
               fecharMenu();
             }}
           >
-            <Sparkles size={16} />
+            <McIcon name="Gold_Ingot" size={18} />
             <span>Loja VIP</span>
           </Link>
         </li>
@@ -85,7 +85,7 @@ export default function Navbar() {
             }}
             className={`nav-link-flex ${location.pathname === '/guia' ? 'link-ativo' : ''}`}
           >
-            <BookOpen size={16} />
+            <McIcon name="Enchanted_Book" size={18} />
             <span>Guia &amp; Suporte</span>
           </Link>
         </li>
@@ -100,7 +100,7 @@ export default function Navbar() {
               fecharMenu();
             }}
           >
-            <ShoppingBag size={18} />
+            <McIcon name="Chest" size={18} />
             <span>Carrinho</span>
             {totalItens > 0 && <span className="badge-carrinho">{totalItens}</span>}
           </Link>
@@ -134,7 +134,7 @@ export default function Navbar() {
                 fecharMenu();
               }}
             >
-              <User size={16} />
+              <McIcon name="Compass" size={18} />
               <span>Entrar</span>
             </Link>
           )}

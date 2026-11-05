@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Minus, Plus, Trash2, ArrowRight, ArrowLeft, ShoppingBag, ShieldCheck, ChevronRight } from 'lucide-react';
+import { Minus, Plus, Trash2, ArrowRight, ArrowLeft, ChevronRight } from 'lucide-react';
 import { useCart } from '../context/useCart';
 import McIcon from '../components/McIcon';
 import CupomDesconto from '../components/CupomDesconto';
@@ -41,7 +41,7 @@ export default function CarrinhoPage() {
       {carrinho.length === 0 ? (
         <div className="carrinho-itens-panel carrinho-vazio-box">
           <div className="carrinho-vazio-icone">
-            <ShoppingBag size={54} className="text-slate-400" />
+            <McIcon name="Chest" size={64} />
           </div>
           <h3>Seu carrinho está vazio</h3>
           <p>Você ainda não adicionou nenhum plano VIP, pacote de Cash ou chaves misteriosas.</p>
@@ -170,7 +170,7 @@ export default function CarrinhoPage() {
 
             <div className="carrinho-seguranca-selos">
               <div>
-                <ShieldCheck size={16} className="text-emerald-400" />
+                <McIcon name="Emerald" size={18} />
                 <span>Ativação automatizada imediata via Pix</span>
               </div>
             </div>

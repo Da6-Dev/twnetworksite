@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Copy, Check, Sparkles, BookOpen, ShieldCheck, Users, Trophy } from 'lucide-react';
+import { Copy, Check } from 'lucide-react';
 import { toast } from 'sonner';
 import { useServerPing } from '../hooks/useServerPing';
 import { serverInfo } from '../data/serverData';
 import { useSound } from '../context/SoundContext';
+import McIcon from './McIcon';
 import './Hero.css';
 
 export default function Hero() {
@@ -56,12 +57,12 @@ export default function Hero() {
           
           <div className="hero-secondary-actions">
             <Link to="/loja" className="btn-loja-hero" onClick={() => tocarClique()}>
-              <Sparkles size={18} />
+              <McIcon name="Gold_Ingot" size={20} />
               <span>Conhecer Loja VIP</span>
             </Link>
 
             <Link to="/guia" className="btn-guia-hero" onClick={() => tocarClique()}>
-              <BookOpen size={18} />
+              <McIcon name="Enchanted_Book" size={20} />
               <span>Guia do Servidor</span>
             </Link>
           </div>
@@ -71,7 +72,7 @@ export default function Hero() {
         <div className="hero-stats-dock">
           <div className="dock-stat-item">
             <div className="dock-stat-icon">
-              <Users size={20} className="text-emerald-400" />
+              <McIcon name="Compass" size={22} />
             </div>
             <div className="dock-stat-text">
               <span className="dock-stat-valor">
@@ -85,7 +86,7 @@ export default function Hero() {
 
           <div className="dock-stat-item">
             <div className="dock-stat-icon">
-              <Trophy size={20} className="text-amber-400" />
+              <McIcon name="Totem_Of_Undying" size={22} />
             </div>
             <div className="dock-stat-text">
               <span className="dock-stat-valor" style={{ color: 'var(--mc-star-gold)' }}>
@@ -99,7 +100,7 @@ export default function Hero() {
 
           <div className="dock-stat-item">
             <div className="dock-stat-icon">
-              <ShieldCheck size={20} className="text-sky-400" />
+              <McIcon name="Grass_Block" size={22} />
             </div>
             <div className="dock-stat-text">
               <span className="dock-stat-valor" style={{ color: 'var(--mc-frost-ice)' }}>

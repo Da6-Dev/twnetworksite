@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Trophy, Gift, Clock, ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import PlayerHub from '../components/PlayerHub';
+import McIcon from '../components/McIcon';
 import './AtividadesPage.css';
 
 export default function AtividadesPage() {
@@ -20,7 +21,7 @@ export default function AtividadesPage() {
 
           <div className="atividades-quick-stats">
             <div className="stat-pill">
-              <Trophy size={20} className="text-amber-400" />
+              <McIcon name="Totem_Of_Undying" size={22} />
               <div>
                 <strong>R$ 400,00+</strong>
                 <small>Prêmio Semanal em Pix</small>
@@ -28,7 +29,7 @@ export default function AtividadesPage() {
             </div>
 
             <Link to="/perfil" className="stat-pill stat-link-pill">
-              <Gift size={20} className="text-emerald-400" />
+              <McIcon name="Chest" size={22} />
               <div>
                 <strong>Passe &amp; Calendário</strong>
                 <small>Resgatar no Perfil</small>
@@ -36,7 +37,7 @@ export default function AtividadesPage() {
             </Link>
 
             <div className="stat-pill">
-              <Clock size={20} className="text-sky-400" />
+              <McIcon name="Clock" size={22} />
               <div>
                 <strong>Domingos às 23h59</strong>
                 <small>Fechamento do Ranking</small>
@@ -55,7 +56,7 @@ export default function AtividadesPage() {
       <section className="atividades-info-cards">
         <div className="info-card">
           <div className="info-card-header">
-            <Trophy size={24} className="text-amber-400" />
+            <McIcon name="Totem_Of_Undying" size={24} />
             <h3>Como Funciona o Ranking Pix?</h3>
           </div>
           <p>
@@ -69,7 +70,7 @@ export default function AtividadesPage() {
 
         <div className="info-card">
           <div className="info-card-header">
-            <Gift size={24} className="text-emerald-400" />
+            <McIcon name="Chest" size={24} />
             <h3>Passe &amp; Recompensas Diárias</h3>
           </div>
           <p>
@@ -83,7 +84,7 @@ export default function AtividadesPage() {
 
         <div className="info-card">
           <div className="info-card-header">
-            <Sparkles size={24} className="text-emerald-400" />
+            <McIcon name="Gold_Ingot" size={24} />
             <h3>Multiplicadores de Venda VIP</h3>
           </div>
           <p>
