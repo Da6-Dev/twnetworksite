@@ -1,0 +1,32 @@
+# ==============================================================================
+# Render Blueprint Specification — TW Network
+# Documentation: https://render.com/docs/blueprint-spec
+# ==============================================================================
+
+services:
+  - type: web
+    name: twnetwork
+    runtime: node
+    region: ohio
+    plan: free
+    branch: main
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: DB_SSL
+        value: "true"
+      - key: DATABASE_URL
+        sync: false # Cole a string de conexão do Neon PostgreSQL
+      - key: JWT_SECRET
+        generateValue: true # O Render gera automaticamente uma chave criptográfica forte
+      - key: ALLOWED_ORIGINS
+        value: https://twnetwork.onrender.com
+      - key: MERCADOPAGO_ACCESS_TOKEN
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
