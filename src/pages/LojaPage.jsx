@@ -5,6 +5,7 @@ import { useCart } from '../context/useCart';
 import { useSound } from '../context/SoundContext';
 import AnimatedTabs from '../components/ui/AnimatedTabs';
 import McIcon from '../components/McIcon';
+import { planosVipOficiais, pacotesChavesOficiais } from '../data/serverData';
 import './LojaPage.css';
 
 export default function LojaPage() {
@@ -13,82 +14,19 @@ export default function LojaPage() {
   const navigate = useNavigate();
   const [abaAtiva, setAbaAtiva] = useState('todos');
 
-  const planosVip = [
-    {
-      id: 1,
-      nome: 'VIP Ouro',
-      tag: '[Ouro]',
-      preco: 'R$ 19,90',
-      valor: 19.9,
-      destaque: false,
-      mcIcon: 'Gold_Ingot',
-      descricao: 'Ideal para quem está começando e quer acelerar a mineração e a economia inicial.',
-      beneficios: [
-        'Tag Exclusiva [Ouro] no chat e tab',
-        'Kit Semanal VIP Ouro com armadura completa',
-        'Acesso à Mina VIP Básica (minérios rápidos)',
-        'Sem fila de espera para login no servidor',
-        '+10% de Bônus em todas as vendas no /loja',
-        'Comando /reparar básico (1x a cada 6h)',
-        '3 Lotes de terrenos adicionais protegidos',
-        'Canal VIP exclusivo na nossa comunidade'
-      ]
-    },
-    {
-      id: 2,
-      nome: 'VIP Esmeralda',
-      tag: '[Esmeralda]',
-      preco: 'R$ 39,90',
-      valor: 39.9,
-      destaque: true,
-      mcIcon: 'Emerald',
-      descricao: 'O plano mais equilibrado e popular, com comando /fly liberado e boost expressivo de vendas.',
-      beneficios: [
-        'Tag Exclusiva [Esmeralda] com cor diferenciada',
-        'Kit Diário e Semanal VIP+ com ferramentas P4',
-        'Acesso à Mina VIP Épica (diamantes e esmeraldas)',
-        'Comando /fly liberado nos lobbys e terrenos',
-        'Prioridade alta na fila de espera do servidor',
-        '+25% de Bônus na economia in-game',
-        'Comando /reparar ilimitado (sem custo)',
-        '5 Lotes de terrenos com proteção anti-griefing',
-        'Acesso à sala VIP exclusiva com eventos privados'
-      ]
-    },
-    {
-      id: 3,
-      nome: 'VIP Supremo',
-      tag: '[Supremo]',
-      preco: 'R$ 69,90',
-      valor: 69.9,
-      destaque: false,
-      mcIcon: 'Nether_Star',
-      descricao: 'Poder máximo na TW Network. Todos os kits liberados, minas exclusivas e maior multiplicador.',
-      beneficios: [
-        'Tag Exclusiva [Supremo] com efeito de brilho',
-        'Todos os Kits do servidor liberados permanentemente',
-        'Acesso irrestrito a todas as Minas VIPs',
-        'Comando /fly liberado em todas as áreas permitidas',
-        'Entrada garantida mesmo com o servidor 100% lotado',
-        '+50% de Bônus máximo em todas as vendas',
-        'Comandos /reparar e /craft ilimitados no chat',
-        '10 Lotes de terrenos para construir megabases',
-        '1x Chave Suprema bônus por semana no correio'
-      ]
-    }
-  ];
+  const planosVip = planosVipOficiais;
 
   const comparativoRecursos = [
-    { recurso: 'Tag Exclusiva no Chat & Tab', ouro: 'Ouro', esmeralda: 'Esmeralda', supremo: 'Supremo ✨' },
-    { recurso: 'Kits Periódicos', ouro: 'Semanal', esmeralda: 'Diário + Semanal', supremo: 'Todos Liberados' },
-    { recurso: 'Acesso às Minas VIPs', ouro: 'Mina Básica', esmeralda: 'Mina Básica & Épica', supremo: 'Todas (Suprema Inclusa)' },
-    { recurso: 'Comando /fly (Voar)', ouro: 'Não', esmeralda: 'Lobbys e Terrenos', supremo: 'Global Permitido' },
-    { recurso: 'Bônus de Venda na Economia', ouro: '+10%', esmeralda: '+25%', supremo: '+50% (Máximo)' },
-    { recurso: 'Comando /reparar Grátis', ouro: 'A cada 6 horas', esmeralda: 'Ilimitado', supremo: 'Ilimitado (/reparar tudo)' },
-    { recurso: 'Entrada com Servidor Lotado', ouro: 'Fila Rápida', esmeralda: 'Prioridade Alta', supremo: 'Acesso Imediato 100%' },
-    { recurso: 'Terrenos Protegidos', ouro: '3 Lotes', esmeralda: '5 Lotes', supremo: '10 Lotes' },
-    { recurso: 'Slots de Leilão no /ah', ouro: '3 Slots', esmeralda: '6 Slots', supremo: '12 Slots' },
-    { recurso: 'Chave Suprema Bônus', ouro: 'Não', esmeralda: '1x Inicial', supremo: '1x Toda Semana' }
+    { recurso: 'Tag Exclusiva no Chat & Tab', festivo: 'Festivo', nevasca: 'Nevasca', polar: 'Polar ✨' },
+    { recurso: 'Canal Exclusivo (/vc)', festivo: 'Liberado', nevasca: 'Liberado', polar: 'Liberado com Destaque' },
+    { recurso: 'Acesso às Minas VIPs', festivo: 'Mina Festivo (Nether Gold)', nevasca: 'Festivo & Nevasca (Quartz)', polar: 'Todas + Polar (Ancient Debris)' },
+    { recurso: 'Comando /fly (Voar)', festivo: 'Terrenos', nevasca: 'Lobbys e Terrenos', polar: 'Global Autorizado' },
+    { recurso: 'Multiplicador de Venda (/sell)', festivo: '+25% (1.25x)', nevasca: '+50% (1.50x)', polar: '+100% (2.0x Dobro)' },
+    { recurso: 'Comando /reparar Grátis', festivo: 'A cada 4 horas', nevasca: 'Ilimitado', polar: 'Ilimitado (/reparar tudo)' },
+    { recurso: 'Comandos /feed e /hat', festivo: 'Não', nevasca: '/feed', polar: '/feed & /hat' },
+    { recurso: 'Entrada com Servidor Lotado', festivo: 'Fila Rápida', nevasca: 'Prioridade Alta', polar: 'Acesso Imediato 100%' },
+    { recurso: 'Lotes de Terrenos (PlotSquared)', festivo: '3 Lotes', nevasca: '5 Lotes', polar: '10 Lotes (Megabase)' },
+    { recurso: 'Chave Misteriosa Semanal (/correio)', festivo: '1x Chave Festiva', nevasca: '2x Chaves Nevadas', polar: '1x Chave Divina Semanal' }
   ];
 
   const pacotesCash = [
@@ -96,6 +34,7 @@ export default function LojaPage() {
       id: 101,
       nome: '5.000 Cash',
       preco: 'R$ 10,00',
+      valor: 10.0,
       mcIcon: 'Gold_Ingot',
       bonus: null,
       descricao: 'Saldo essencial para pequenas compras, encantamentos rápidos e trocas in-game.'
@@ -104,6 +43,7 @@ export default function LojaPage() {
       id: 102,
       nome: '15.000 Cash (+2.000 Bônus)',
       preco: 'R$ 25,00',
+      valor: 25.0,
       mcIcon: 'Diamond',
       bonus: '+15% Bônus',
       descricao: 'Pacote mais vendido. Ideal para impulsionar suas construções e maquinários.'
@@ -112,38 +52,14 @@ export default function LojaPage() {
       id: 103,
       nome: '40.000 Cash (+10.000 Bônus)',
       preco: 'R$ 50,00',
+      valor: 50.0,
       mcIcon: 'Nether_Star',
       bonus: '+25% Bônus',
       descricao: 'Quantidade colossal para dominar o topo do ranking de fortuna da temporada.'
     }
   ];
 
-  const pacotesChaves = [
-    {
-      id: 201,
-      nome: '3x Chaves Épicas',
-      preco: 'R$ 12,00',
-      mcIcon: 'Tripwire_Hook',
-      bonus: null,
-      descricao: 'Abra a Caixa Épica no spawn para obter armaduras reforçadas e ferramentas P4.'
-    },
-    {
-      id: 202,
-      nome: '5x Chaves Supremas',
-      preco: 'R$ 22,00',
-      mcIcon: 'Amethyst_Shard',
-      bonus: 'Mais Procurado',
-      descricao: 'Possibilidade elevada de obter itens lendários, espadas com sharpness especial e boosters.'
-    },
-    {
-      id: 203,
-      nome: 'Combo Caixa Misteriosa (10 Chaves)',
-      preco: 'R$ 39,90',
-      mcIcon: 'Ender_Chest',
-      bonus: 'Melhor Valor',
-      descricao: 'Pacote completo com 5 Chaves Épicas + 5 Chaves Supremas para acelerar seu clã.'
-    }
-  ];
+  const pacotesChaves = pacotesChavesOficiais;
 
   const comprarDireto = (item) => {
     tocarClique();
@@ -276,22 +192,22 @@ export default function LojaPage() {
               <thead>
                 <tr>
                   <th>Vantagem / Recurso</th>
-                  <th>VIP Ouro</th>
-                  <th className="col-vip-destaque">VIP Esmeralda (Recomendado)</th>
-                  <th>VIP Supremo</th>
+                  <th>VIP Festivo</th>
+                  <th className="col-vip-destaque">VIP Nevasca (Recomendado)</th>
+                  <th>VIP Polar ✨</th>
                 </tr>
               </thead>
               <tbody>
                 {comparativoRecursos.map((item, index) => (
                   <tr key={index}>
                     <td className="col-recurso">{item.recurso}</td>
-                    <td>{item.ouro}</td>
+                    <td>{item.festivo}</td>
                     <td className="destaque-col">
-                      <strong>{item.esmeralda}</strong>
+                      <strong>{item.nevasca}</strong>
                     </td>
                     <td>
                       <span className="font-bold text-amber-400">
-                        {item.supremo}
+                        {item.polar}
                       </span>
                     </td>
                   </tr>

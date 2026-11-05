@@ -7,26 +7,26 @@ import './VipShowcase.css';
 export default function VipShowcase() {
   const destaques = [
     {
-      nome: 'VIP Ouro',
+      nome: 'VIP Festivo',
       preco: 'R$ 19,90',
       icone: 'Gold_Ingot',
-      vantagem: 'Mina Básica & Tag [Ouro]',
-      bonus: '+10% em Vendas'
+      vantagem: 'Mina Festivo & Chat /vc',
+      bonus: '+25% Multiplicador'
     },
     {
-      nome: 'VIP Esmeralda',
+      nome: 'VIP Nevasca',
       preco: 'R$ 39,90',
       icone: 'Emerald',
-      vantagem: 'Comando /fly & Kit P4',
-      bonus: '+25% em Vendas',
+      vantagem: 'Mina Nevasca, /fly & /reparar',
+      bonus: '+50% Multiplicador',
       maisEscolhido: true
     },
     {
-      nome: 'VIP Supremo',
+      nome: 'VIP Polar',
       preco: 'R$ 69,90',
       icone: 'Nether_Star',
-      vantagem: 'Todos os Kits & Minas',
-      bonus: '+50% Máximo'
+      vantagem: 'Mina Polar (Ancient Debris)',
+      bonus: '+100% (2.0x Dobro)'
     }
   ];
 
@@ -36,7 +36,7 @@ export default function VipShowcase() {
         <div className="vip-showcase-header">
           <h2>Planos VIP &amp; Impulso Econômico</h2>
           <p>
-            Voe livremente com <code>/fly</code>, ative multiplicadores permanentes de venda e garanta acesso a minas de regeneração instantânea.
+            Voe livremente com <code>/fly</code>, acerte negociações no canal <code>/vc</code>, ative multiplicadores de venda até <strong>2.0x</strong> e acesse as 3 Minas VIPs exclusivas.
           </p>
         </div>
 

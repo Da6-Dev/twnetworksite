@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MessageSquare } from 'lucide-react';
 import AnimatedTabs from '../components/ui/AnimatedTabs';
 import GuiaComandos from '../components/GuiaComandos';
+import RanksSection from '../components/RanksSection';
 import RegrasSection from '../components/RegrasSection';
 import FaqSection from '../components/FaqSection';
 import StaffSection from '../components/StaffSection';
@@ -15,9 +16,10 @@ export default function GuiaPage() {
 
   const tabsGuia = [
     { id: 'comandos', label: 'Comandos do Jogo', icon: <McIcon name="Command_Block" size={18} /> },
+    { id: 'ranks', label: 'Ranks & Prestígios', icon: <McIcon name="Totem_Of_Undying" size={18} /> },
     { id: 'regras', label: 'Regras & Diretrizes', icon: <McIcon name="Barrier" size={18} /> },
     { id: 'suporte', label: 'Suporte & Dúvidas (FAQ)', icon: <McIcon name="Enchanted_Book" size={18} /> },
-    { id: 'equipe', label: 'Equipe da Rede', icon: <McIcon name="Totem_Of_Undying" size={18} /> }
+    { id: 'equipe', label: 'Equipe da Rede', icon: <McIcon name="Diamond_Helmet" size={18} /> }
   ];
 
   return (
@@ -53,6 +55,12 @@ export default function GuiaPage() {
         {secaoAtiva === 'comandos' && (
           <div className="guia-bloco-conteudo">
             <GuiaComandos />
+          </div>
+        )}
+
+        {secaoAtiva === 'ranks' && (
+          <div className="guia-bloco-conteudo">
+            <RanksSection />
           </div>
         )}
 

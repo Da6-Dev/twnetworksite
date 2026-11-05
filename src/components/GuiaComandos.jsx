@@ -12,37 +12,50 @@ export default function GuiaComandos() {
   const { tocarXP } = useSound();
 
   const categorias = [
-    { id: 'geral', nome: 'Geral & Progresso', mcIcon: 'Compass' },
-    { id: 'economia', nome: 'Economia & Vendas', mcIcon: 'Gold_Ingot' },
-    { id: 'terrenos', nome: 'Terrenos & Proteção', mcIcon: 'Grass_Block' },
-    { id: 'vips', nome: 'Vantagens VIP', mcIcon: 'Nether_Star' }
+    { id: 'progresso', nome: 'Ranks & Prestígios', mcIcon: 'Totem_Of_Undying' },
+    { id: 'mineracao', nome: 'Minas & PvP', mcIcon: 'Diamond_Pickaxe' },
+    { id: 'industria', nome: 'Indústria & Plots', mcIcon: 'Grass_Block' },
+    { id: 'economia', nome: 'Economia & Correio', mcIcon: 'Gold_Ingot' },
+    { id: 'vips', nome: 'Comandos VIP', mcIcon: 'Nether_Star' }
   ];
 
   const comandosPorCategoria = {
-    geral: [
-      { comando: '/rankup', descricao: 'Avança para o próximo nível assim que você atingir os requisitos.' },
-      { comando: '/ranks', descricao: 'Exibe a lista de todos os níveis disponíveis e seus respectivos custos.' },
-      { comando: '/mina', descricao: 'Teletransporta você para a área de mineração adequada ao seu rank atual.' },
-      { comando: '/spawn', descricao: 'Retorna ao ponto central seguro da rede TW Network.' },
-      { comando: '/regras', descricao: 'Exibe as normas e diretrizes de conduta do servidor.' }
+    progresso: [
+      { comando: '/rankup', descricao: 'Avança para o próximo rank natalino assim que você acumular o saldo necessário.' },
+      { comando: '/rankupmax', descricao: 'Consome todo o seu saldo disponível para subir o maior número possível de ranks de uma só vez.' },
+      { comando: '/ranks', descricao: 'Exibe a lista com os 11 Ranks Natalinos, custos de evolução e vantagens.' },
+      { comando: '/prestigio', descricao: 'Abre o menu de prestígios (Grinch, Yeti e Krampus) para reiniciar o progresso com multiplicadores.' },
+      { comando: '/menu', descricao: 'Abre o menu central de navegação rápida com todas as áreas e funcionalidades.' },
+      { comando: '/spawn', descricao: 'Retorna ao lobby central seguro do servidor no mundo world.' }
+    ],
+    mineracao: [
+      { comando: '/mina', descricao: 'Abre a interface ou teletransporta você para a área de mineração correspondente ao seu rank.' },
+      { comando: '/minaslista', descricao: 'Lista todas as minas do servidor, incluindo minas públicas e minas VIPs.' },
+      { comando: '/minapvp', descricao: 'Teleporta para a zona segura da mina PvP com minérios valiosos e extração arriscada.' },
+      { comando: '/pvpsair', descricao: 'Sai com segurança da arena da mina PvP caso você não esteja marcado em combate.' }
+    ],
+    industria: [
+      { comando: '/terreno', descricao: 'Gerencia seus lotes industriais de 42x42 no mundo terrenos (novo plot por R$ 50.000).' },
+      { comando: '/maquinas', descricao: 'Abre o painel de máquinas industriais de Carvão a Noel para abastecimento e coleta.' },
+      { comando: '/maquinas status', descricao: 'Exibe estatísticas de rendimento monetário por segundo e nível de combustível.' },
+      { comando: '/spawners', descricao: 'Painel de controle e melhorias de velocidade/loot dos geradores de monstros.' },
+      { comando: '/farms', descricao: 'Acessa o painel de silos agrícolas, colheitas automáticas e fertilizantes alquímicos.' },
+      { comando: '/caixas', descricao: 'Central de Caixas Misteriosas: visualize suas chaves, forja e progresso do Pity System.' }
     ],
     economia: [
       { comando: '/money', descricao: 'Consulta o saldo atual da sua carteira in-game.' },
-      { comando: '/pay [jogador] [quantia]', descricao: 'Transfere moedas para a conta de outro jogador.' },
-      { comando: '/loja', descricao: 'Abre o mercado global in-game para compra e venda de recursos.' },
-      { comando: '/leilao', descricao: 'Permite participar ou abrir licitações de itens raros (/ah).' }
-    ],
-    terrenos: [
-      { comando: '/terreno comprar', descricao: 'Adquire o lote de terreno onde você se encontra.' },
-      { comando: '/terreno convidar [jogador]', descricao: 'Concede permissão para um amigo construir no seu lote.' },
-      { comando: '/terreno kick [jogador]', descricao: 'Remove um jogador indesejado do seu terreno.' },
-      { comando: '/terreno info', descricao: 'Exibe as dimensões, limites e membros autorizados no lote.' }
+      { comando: '/pay [jogador] [quantia]', descricao: 'Transfere moedas com segurança para outro jogador online.' },
+      { comando: '/baltop', descricao: 'Exibe os jogadores mais ricos do servidor disputando a premiação da temporada.' },
+      { comando: '/cheque [quantia]', descricao: 'Converte seu saldo em um cheque físico que pode ser guardado ou negociado.' },
+      { comando: '/correio', descricao: 'Abre sua caixa postal virtual para resgatar diamantes, esmeraldas de ranks e compras da loja.' }
     ],
     vips: [
-      { comando: '/fly', descricao: 'Ativa ou desativa a habilidade de voar nas áreas permitidas.' },
-      { comando: '/reparar', descricao: 'Restaura a durabilidade de armaduras e ferramentas sem custos.' },
-      { comando: '/minavip', descricao: 'Acesso imediato às minas exclusivas com taxas de minério ampliadas.' },
-      { comando: '/kit vip', descricao: 'Resgata o kit periódico de recompensas do seu plano ativo.' }
+      { comando: '/vc [mensagem]', descricao: 'Canal de comunicação exclusivo e privado para jogadores com plano VIP ativo.' },
+      { comando: '/fly', descricao: 'Ativa ou desativa a habilidade de voar nas regiões e mundos autorizados.' },
+      { comando: '/reparar [all]', descricao: 'Restaura a durabilidade de armaduras e picaretas instantaneamente sem custos.' },
+      { comando: '/feed', descricao: 'Restaura a barra de saturação e fome imediatamente sem necessidade de alimentos.' },
+      { comando: '/hat', descricao: 'Equipa qualquer bloco decorativo na cabeça como acessório estético exclusivo.' },
+      { comando: '/kit vip', descricao: 'Resgata o kit periódico com armaduras reforçadas e ferramentas da sua categoria VIP.' }
     ]
   };
 

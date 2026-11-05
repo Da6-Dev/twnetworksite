@@ -18,40 +18,40 @@ export default function PlayerHub() {
     {
       posicao: 1,
       nick: 'TeDabliukkkkk',
-      nivelRank: 'Deus Supremo',
-      saldo: 'R$ 150.000.000',
+      nivelRank: 'Krampus [P3]',
+      saldo: 'R$ 920.000.000.000.000.000',
       premio: 'R$ 250,00 via Pix',
       tier: 'ouro'
     },
     {
       posicao: 2,
       nick: 'Minerador_Pro',
-      nivelRank: 'Titã III',
-      saldo: 'R$ 112.450.000',
+      nivelRank: 'Yeti [P2]',
+      saldo: 'R$ 340.000.000.000.000.000',
       premio: 'R$ 100,00 via Pix',
       tier: 'prata'
     },
     {
       posicao: 3,
       nick: 'ShadowCrafter',
-      nivelRank: 'Campeão I',
-      saldo: 'R$ 88.900.000',
+      nivelRank: 'Grinch [P1]',
+      saldo: 'R$ 75.000.000.000.000.000',
       premio: 'R$ 50,00 via Pix',
       tier: 'bronze'
     },
     {
       posicao: 4,
       nick: 'Alex_Master',
-      nivelRank: 'Lorde II',
-      saldo: 'R$ 64.200.000',
-      premio: 'VIP Supremo + 50k Cash'
+      nivelRank: 'Rank Noel',
+      saldo: 'R$ 22.000.000.000.000.000',
+      premio: 'VIP Polar + 50k Cash'
     },
     {
       posicao: 5,
       nick: 'ValkyriePvP',
-      nivelRank: 'Lorde I',
-      saldo: 'R$ 51.700.000',
-      premio: 'VIP Esmeralda + 25k Cash'
+      nivelRank: 'Rank Estrela',
+      saldo: 'R$ 950.000.000.000.000',
+      premio: 'VIP Nevasca + 25k Cash'
     }
   ];
 
