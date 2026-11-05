@@ -41,6 +41,12 @@ Voltar para o [[00 - MOC (Map of Content)]].
 * Atualização do `README.md` para o padrão de produção moderno Full-Stack (React 19, Vite 8, Express 5, Tailwind CSS v4, Neon PostgreSQL e Mercado Pago v3).
 * Inclusão de badges dinâmicos, diagrama de arquitetura em Mermaid, tabela de stack técnica, árvore de diretórios, guia local com variáveis de ambiente e diretrizes de hardening OWASP.
 
+### 5. Integração com GitHub CLI e Configuração do Repositório Remoto
+* Autenticação via GitHub CLI (`gh auth login`) associada à conta `Da6-Dev`.
+* Criação de templates de issues (bug report e feature request), template de PR, `CONTRIBUTING.md`, `SECURITY.md` e `LICENSE` MIT.
+* Criação de pipeline de CI via GitHub Actions (`ci.yml`) com execução de lint e build automático (Status: **Sucesso**).
+* Configuração remota dos metadados do repositório no GitHub: descrição oficial, homepage (`https://twnetwork.onrender.com`), 13 tópicos de busca e ativação de issues.
+
 ---
 
 ## 🔗 Notas Relacionadas
