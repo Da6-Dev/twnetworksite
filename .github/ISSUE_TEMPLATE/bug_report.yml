@@ -1,0 +1,56 @@
+name: 🐛 Reporte de Bug
+description: Encontrou um problema ou comportamento incorreto no site ou na loja?
+title: "[BUG]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por ajudar a manter o site da **TW Network** sempre estável e seguro! Por favor, preencha as informações abaixo com o máximo de detalhes possível.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Descrição do Bug
+      description: Uma explicação clara e concisa sobre o que aconteceu.
+      placeholder: Ex: Ao aplicar o cupom "NATAL10" no checkout, o valor total não atualizou no resumo...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Passos para Reproduzir
+      description: Como reproduzir o problema passo a passo.
+      placeholder: |
+        1. Acessar a página '/loja'
+        2. Adicionar o item 'VIP MVP' ao carrinho
+        3. Ir para '/carrinho' e clicar em 'Finalizar Compra'
+        4. Notar que o erro acontece...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Comportamento Esperado
+      description: O que deveria ter acontecido normalmente.
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Ambiente / Navegador
+      description: Em qual navegador ou dispositivo ocorreu o erro?
+      placeholder: Ex: Google Chrome 124 no Windows 11 / Safari no iPhone
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots ou Logs
+      description: Se tiver capturas de tela ou logs do console (F12), cole-os aqui.
+    validations:
+      required: false

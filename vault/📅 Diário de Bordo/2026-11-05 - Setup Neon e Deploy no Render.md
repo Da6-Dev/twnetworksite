@@ -37,6 +37,10 @@ Voltar para o [[00 - MOC (Map of Content)]].
 * Estruturação do cofre de conhecimento em `vault/` com nós bidirecionais e MOC interligado.
 * Criação do protocolo de memória no `AGENTS.md`.
 
+### 4. Reformulação Completa do README.md
+* Atualização do `README.md` para o padrão de produção moderno Full-Stack (React 19, Vite 8, Express 5, Tailwind CSS v4, Neon PostgreSQL e Mercado Pago v3).
+* Inclusão de badges dinâmicos, diagrama de arquitetura em Mermaid, tabela de stack técnica, árvore de diretórios, guia local com variáveis de ambiente e diretrizes de hardening OWASP.
+
 ---
 
 ## 🔗 Notas Relacionadas

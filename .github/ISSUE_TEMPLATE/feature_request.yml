@@ -1,0 +1,34 @@
+name: 💡 Sugestão de Funcionalidade
+description: Tem uma ideia para melhorar o site, loja ou integrações da TW Network?
+title: "[FEATURE]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Adoramos ouvir ideias da comunidade e da equipe para tornar a plataforma ainda mais imersiva!
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Qual problema essa sugestão resolve ou qual valor ela adiciona?
+      placeholder: Ex: Atualmente os jogadores precisam digitar o comando manualmente no servidor, seria incrível se...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Descrição da Solução Proposta
+      description: Como você imagina essa funcionalidade funcionando no site?
+      placeholder: Ex: Adicionar uma nova seção no Perfil com histórico de premiações de minigames...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternativas Consideradas
+      description: Você pensou em alguma outra forma de resolver isso?
+    validations:
+      required: false
