@@ -121,10 +121,48 @@ function validarFormatoNick(nick: string) {
   return { valido: true, nick: limpo };
 }
 
-// Criação e Seed inicial de contas no PostgreSQL (se a tabela estiver vazia)
+// Criação e Seed inicial de tabelas e contas no PostgreSQL (se a tabela estiver vazia)
 async function inicializarBanco() {
   try {
     await query(`
+      CREATE TABLE IF NOT EXISTS usuarios (
+        id SERIAL PRIMARY KEY,
+        nick VARCHAR(100) UNIQUE NOT NULL,
+        email VARCHAR(255) UNIQUE NOT NULL,
+        senha_hash VARCHAR(255),
+        tipo_conta VARCHAR(50) DEFAULT 'pirata',
+        cargo VARCHAR(100) DEFAULT 'Membro',
+        patente_vip VARCHAR(100) DEFAULT 'Nenhum',
+        saldo_cash NUMERIC(12, 2) DEFAULT 0,
+        nick_vinculado BOOLEAN DEFAULT false,
+        criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+
+      CREATE TABLE IF NOT EXISTS cupons (
+        id SERIAL PRIMARY KEY,
+        codigo VARCHAR(50) UNIQUE NOT NULL,
+        desconto_percentual NUMERIC(5, 2) NOT NULL,
+        ativo BOOLEAN DEFAULT true,
+        criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+
+      CREATE TABLE IF NOT EXISTS pedidos (
+        id SERIAL PRIMARY KEY,
+        usuario_id INTEGER REFERENCES usuarios(id) ON DELETE SET NULL,
+        nick VARCHAR(100),
+        email VARCHAR(255),
+        discord VARCHAR(100),
+        metodo VARCHAR(50),
+        status VARCHAR(50) DEFAULT 'pendente',
+        valor_total NUMERIC(12, 2) NOT NULL,
+        mp_payment_id VARCHAR(100),
+        pix_copia_cola TEXT,
+        pix_qr_code_base64 TEXT,
+        itens JSONB,
+        pago_em TIMESTAMP,
+        criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+
       ALTER TABLE usuarios 
       ADD COLUMN IF NOT EXISTS nick_vinculado BOOLEAN DEFAULT false;
     `);
