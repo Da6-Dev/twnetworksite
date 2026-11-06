@@ -1,0 +1,17 @@
+# Diretrizes Mestras do Agente & Protocolo de Memória — TW Network
+
+1. LEI ZERO: CONSULTE O VAULT PRIMEIRO
+- NUNCA saia inspecionando dezenas de arquivos às cegas.
+- Sempre comece lendo `vault/00 - MOC (Map of Content).md` e as notas do pilar em questão.
+- Toda a arquitetura (Neon, Express, Purpur, Mercado Pago, Ranks, Minas) já está documentada no Vault.
+
+2. LEI DA MEMÓRIA: ATUALIZAÇÃO OBRIGATÓRIA DO VAULT A CADA COMMIT
+- Toda e qualquer tarefa concluída DEVE atualizar as notas técnicas do `vault/` e o diário em `vault/04 - Diario de Bordo/`.
+- Registre o link no `00 - MOC (Map of Content).md` para manter o grafo sem nós órfãos.
+- Comite o submódulo `vault/` primeiro (`git -C vault commit ... && push`) e depois comite o repositório principal com o ponteiro do submódulo.
+
+3. DIRETRIZES DE SEGURANÇA E AMBIENTE:
+- NUNCA commitar `.env`.
+- Proibição estrita de contas demo ou senhas mock '123' em produção.
+- Helmet deve manter `same-origin-allow-popups` e `strict-origin-when-cross-origin` para o Google OAuth.
+- Ícones de Minecraft sempre via `<McIcon name="..." />` com texturas locais em `public/mc-icons/`.
