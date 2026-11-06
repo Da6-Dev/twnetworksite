@@ -2,27 +2,6 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 
 const AuthContext = createContext();
 
-const CONTAS_PADRAO = [
-  {
-    nick: 'TeDabliukkkkk',
-    email: 'tedabliu@twnetwork.com.br',
-    senha: '123',
-    cargo: 'Fundador & Desenvolvedor',
-    patenteVip: 'VIP Deus Supremo',
-    dataRegistro: '15/01/2026',
-    saldoCash: '150.000 Cash'
-  },
-  {
-    nick: 'Minerador_Pro',
-    email: 'minerador@twnetwork.com.br',
-    senha: '123',
-    cargo: 'Membro Veterano',
-    patenteVip: 'VIP Titã III',
-    dataRegistro: '02/02/2026',
-    saldoCash: '45.000 Cash'
-  }
-];
-
 export function AuthProvider({ children }) {
   const [usuarios, setUsuarios] = useState(() => {
     try {
@@ -33,7 +12,7 @@ export function AuthProvider({ children }) {
     } catch {
       // Ignora erro de JSON
     }
-    return CONTAS_PADRAO;
+    return [];
   });
 
   const [modalVincularAberto, setModalVincularAberto] = useState(false);
@@ -289,18 +268,6 @@ export function AuthProvider({ children }) {
   }, []);
 
   // Login Rápido com Contas Demo
-  const loginDemo = (nickDemo) => {
-    const conta = usuarios.find(
-      (u) => u.nick.toLowerCase() === nickDemo.toLowerCase()
-    );
-    if (conta) {
-      setUsuario(conta);
-      setProgresso(obterProgressoJogador(conta.nick));
-      return true;
-    }
-    return false;
-  };
-
   // Logout
   const logout = () => {
     localStorage.removeItem('tw_auth_token');
@@ -436,7 +403,6 @@ export function AuthProvider({ children }) {
         estaLogado: !!usuario,
         login,
         cadastrar,
-        loginDemo,
         logout,
         loginComGoogle,
         recarregarUsuario,

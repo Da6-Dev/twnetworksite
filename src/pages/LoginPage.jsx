@@ -7,7 +7,7 @@ import McIcon from '../components/McIcon';
 import './LoginPage.css';
 
 export default function LoginPage() {
-  const { login, loginDemo, loginComGoogle, estaLogado } = useAuth();
+  const { login, loginComGoogle, estaLogado } = useAuth();
   const { tocarClique, tocarSucesso } = useSound();
   const navigate = useNavigate();
   const location = useLocation();
@@ -110,15 +110,6 @@ export default function LoginPage() {
     }
   };
 
-  const handleDemo = (nickDemo) => {
-    tocarClique();
-    const ok = loginDemo(nickDemo);
-    if (ok) {
-      tocarSucesso();
-      navigate(deOndeVeio);
-    }
-  };
-
   return (
     <div className="auth-page-container">
       <div className="auth-card">
@@ -217,38 +208,6 @@ export default function LoginPage() {
             {carregando ? 'Verificando...' : 'Entrar na Conta'}
           </button>
         </form>
-
-        {/* Divisor */}
-        <div className="auth-divider">
-          <span>ou teste rápido com contas demo</span>
-        </div>
-
-        {/* Contas Demo */}
-        <div className="auth-demo-grid">
-          <button
-            type="button"
-            className="btn-demo-chip"
-            onClick={() => handleDemo('TeDabliukkkkk')}
-          >
-            <img src="https://mc-heads.net/avatar/TeDabliukkkkk/20" alt="Avatar" className="demo-avatar" />
-            <div className="demo-texto">
-              <strong>TeDabliukkkkk</strong>
-              <small>Fundador &bull; VIP Deus</small>
-            </div>
-          </button>
-
-          <button
-            type="button"
-            className="btn-demo-chip"
-            onClick={() => handleDemo('Minerador_Pro')}
-          >
-            <img src="https://mc-heads.net/avatar/Minerador_Pro/20" alt="Avatar" className="demo-avatar" />
-            <div className="demo-texto">
-              <strong>Minerador_Pro</strong>
-              <small>Veterano &bull; VIP Titã</small>
-            </div>
-          </button>
-        </div>
 
         <div className="auth-footer-link">
           <span>Ainda não possui uma conta?</span>

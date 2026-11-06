@@ -124,7 +124,6 @@ function validarFormatoNick(nick: string) {
 // Criação e Seed inicial de tabelas e contas no PostgreSQL (se a tabela estiver vazia)
 async function inicializarBanco() {
   try {
-    await query(`
       CREATE TABLE IF NOT EXISTS usuarios (
         id SERIAL PRIMARY KEY,
         nick VARCHAR(100) UNIQUE NOT NULL,
@@ -166,23 +165,6 @@ async function inicializarBanco() {
       ALTER TABLE usuarios 
       ADD COLUMN IF NOT EXISTS nick_vinculado BOOLEAN DEFAULT false;
     `);
-    await query(`
-      UPDATE usuarios 
-      SET nick_vinculado = true 
-      WHERE nick IN ('TeDabliukkkkk', 'Minerador_Pro') AND nick_vinculado IS NOT TRUE;
-    `);
-    const check = await query('SELECT COUNT(*) FROM usuarios');
-    if (parseInt(check.rows[0].count) === 0) {
-      const senhaPadraoHash = await bcrypt.hash('123', 10);
-      await query(`
-        INSERT INTO usuarios (nick, email, senha_hash, tipo_conta, cargo, patente_vip, saldo_cash, nick_vinculado)
-        VALUES 
-          ('TeDabliukkkkk', 'tedabliu@twnetwork.com.br', $1, 'pirata', 'Fundador & Desenvolvedor', 'VIP Deus Supremo', 150000, true),
-          ('Minerador_Pro', 'minerador@twnetwork.com.br', $1, 'pirata', 'Membro Veterano', 'VIP Titã III', 45000, true)
-      `, [senhaPadraoHash]);
-      console.log('✅ Banco PostgreSQL semeado com as contas padrão da Staff!');
-    }
-
     const checkCupons = await query('SELECT COUNT(*) FROM cupons');
     if (parseInt(checkCupons.rows[0].count) === 0) {
       await query(`
@@ -532,7 +514,6 @@ app.put('/api/auth/vincular-nick', async (req, res) => {
 
     // Atualiza o nickname do jogador e marca como vinculado
     const atualizado = await query(`
-      UPDATE usuarios 
       SET nick = $1, nick_vinculado = true 
       WHERE id = $2 
       RETURNING *
@@ -720,8 +701,6 @@ async function entregarPedidoNoSite(pedidoId: number) {
 
       if (updates.length > 0) {
         params.push(user.id);
-        await query(`
-          UPDATE usuarios 
           SET ${updates.join(', ')} 
           WHERE id = ${pIdx}
         `, params);
@@ -731,7 +710,6 @@ async function entregarPedidoNoSite(pedidoId: number) {
     }
 
     // Atualiza o pedido para 'ENTREGUE'
-    await query(`
       UPDATE pedidos 
       SET status = 'ENTREGUE', pago_em = COALESCE(pago_em, CURRENT_TIMESTAMP) 
       WHERE id = $1
