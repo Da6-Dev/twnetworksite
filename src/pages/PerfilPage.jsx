@@ -375,13 +375,6 @@ export default function PerfilPage() {
             tocarClique();
             setAbaAtiva(id);
           }}
-          mobileLabels={{
-            passe: 'Passe',
-            recompensas: 'Dias',
-            pedidos: 'Pedidos',
-            conta: 'Conta',
-            configuracoes: 'Config'
-          }}
         />
       </div>
 
@@ -1189,6 +1182,40 @@ export default function PerfilPage() {
           </div>
         )}
       </div>
+
+      {/* Navegação Rápida Mobile no Rodapé (Exclusiva para Celulares) */}
+      <nav className="perfil-tabs-mobile-nav" role="tablist" aria-label="Navegação rápida do perfil">
+        {abasDisponiveis.map((tab) => {
+          const isActive = abaAtiva === tab.id;
+          const labelsCurtos = {
+            passe: 'Passe',
+            recompensas: 'Dias',
+            pedidos: 'Pedidos',
+            conta: 'Conta',
+            configuracoes: 'Ajustes'
+          };
+          return (
+            <button
+              key={tab.id}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              onClick={() => {
+                tocarClique();
+                setAbaAtiva(tab.id);
+                window.scrollTo({ top: 120, behavior: 'smooth' });
+              }}
+              className={`perfil-tab-mobile-btn ${isActive ? 'ativo' : ''}`}
+            >
+              {tab.badge && (
+                <span className="tab-mobile-badge">{tab.badge}</span>
+              )}
+              <span className="tab-mobile-icon">{tab.icon}</span>
+              <span className="tab-mobile-label">{labelsCurtos[tab.id] || tab.label}</span>
+            </button>
+          );
+        })}
+      </nav>
     </div>
   );
 }

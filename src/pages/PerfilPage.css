@@ -2293,11 +2293,6 @@
    REDESIGN MOBILE-FIRST — BOTTOM NAV + SEÇÕES COMPACTAS
    ========================================================================== */
 
-/* ── Desktop tabs: visíveis acima de 641px ──────────────────────────────── */
-.perfil-tabs-desktop {
-  display: inline-flex;
-}
-
 /* ── Mobile Bottom Nav: escondida no desktop ─────────────────────────────── */
 .perfil-tabs-mobile-nav {
   display: none;
@@ -2313,25 +2308,38 @@
    ========================================= */
 @media (max-width: 640px) {
 
-  /* ── Esconde a tab strip desktop ─── */
+  /* ── Barra de Abas do Topo: visível e scrollável no mobile ─── */
   .perfil-abas-container {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 16px;
+    margin: 16px 0 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .perfil-abas-container::-webkit-scrollbar {
     display: none;
   }
 
-  /* ── Bottom Nav Fixo ─── */
+  /* ── Bottom Nav Fixo no Rodapé do Mobile ─── */
   .perfil-tabs-mobile-nav {
     display: flex;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 100;
+    z-index: 1000;
     background-color: var(--bg-surface-elevated);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-top: 1px solid var(--border-subtle);
-    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.3);
-    padding: 6px 4px env(safe-area-inset-bottom, 6px);
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
+    padding: 6px 4px calc(6px + env(safe-area-inset-bottom, 0px));
     justify-content: space-around;
-    align-items: stretch;
+    align-items: center;
   }
 
   .perfil-tab-mobile-btn {
@@ -2342,27 +2350,29 @@
     justify-content: center;
     gap: 3px;
     flex: 1;
-    padding: 6px 2px;
+    min-height: 48px;
+    padding: 4px 2px;
     background: none;
     border: none;
     cursor: pointer;
     color: var(--text-muted);
-    transition: color 0.18s ease;
-    border-top: 2px solid transparent;
+    transition: color 0.18s ease, background-color 0.18s ease;
+    border-radius: 8px;
     min-width: 0;
+    outline: none;
   }
 
   .perfil-tab-mobile-btn.ativo {
     color: var(--mc-emerald);
-    border-top-color: var(--mc-emerald);
+    background-color: rgba(16, 185, 129, 0.1);
   }
 
   .tab-mobile-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     flex-shrink: 0;
   }
 
@@ -2372,15 +2382,15 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 54px;
+    max-width: 58px;
     text-align: center;
-    line-height: 1;
+    line-height: 1.1;
   }
 
   .tab-mobile-badge {
     position: absolute;
-    top: 4px;
-    right: calc(50% - 18px);
+    top: 2px;
+    right: calc(50% - 16px);
     min-width: 16px;
     height: 16px;
     padding: 0 4px;
@@ -2393,6 +2403,7 @@
     align-items: center;
     justify-content: center;
     line-height: 1;
+    box-shadow: 0 0 6px rgba(16, 185, 129, 0.5);
   }
 
   /* ── Padding para não cobrir conteúdo com a bottom nav ─── */
