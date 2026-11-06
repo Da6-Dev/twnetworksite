@@ -11,7 +11,7 @@ export default function AnimatedTabs({
   return (
     <div
       role="tablist"
-      className={`inline-flex flex-wrap items-center justify-center gap-1.5 p-1.5 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-subtle)] shadow-[var(--card-shadow)] ${className}`}
+      className={`inline-flex items-center gap-1.5 p-1.5 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-subtle)] shadow-[var(--card-shadow)] min-w-max ${className}`}
     >
       {tabs.map((tab) => {
         const isActive = activeTab === tab.id;

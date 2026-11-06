@@ -1,5 +1,5 @@
-/* ==========================================================================
-   PAINEL DO PERFIL — TW NETWORK (MÉTRICA 60-30-10)
+﻿/* ==========================================================================
+   PAINEL DO PERFIL â€” TW NETWORK (MÃ‰TRICA 60-30-10)
    ========================================================================== */
 
 .perfil-page-container {
@@ -9,7 +9,7 @@
   padding-bottom: 70px;
 }
 
-/* Estado Não Logado */
+/* Estado NÃ£o Logado */
 .perfil-nao-logado-container {
   min-height: calc(100vh - 80px);
   display: flex;
@@ -83,7 +83,7 @@
   color: var(--mc-emerald);
 }
 
-/* Cabeçalho do Perfil */
+/* CabeÃ§alho do Perfil */
 .perfil-hero-header {
   background: linear-gradient(180deg, var(--bg-canvas-subtle) 0%, var(--bg-canvas) 100%);
   border-bottom: 1px solid var(--border-subtle);
@@ -204,9 +204,17 @@
   max-width: 1100px;
   margin: 25px auto 0;
   padding: 0 20px;
-  display: flex;
-  justify-content: center;
+  /* Scroll horizontal em mobile: as tabs nao quebram de linha
+     (preserva a animacao layoutId do Framer Motion) */
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+
+.perfil-abas-container::-webkit-scrollbar {
+  display: none;
+}
+
 
 .perfil-abas-nav {
   display: flex;
@@ -245,7 +253,7 @@
   box-shadow: 0 4px 14px var(--mc-emerald-glow);
 }
 
-/* Conteúdo */
+/* ConteÃºdo */
 .perfil-conteudo-wrapper {
   max-width: 1100px;
   margin: 30px auto 0;
@@ -593,7 +601,7 @@
   color: var(--mc-gold);
 }
 
-/* Aba Configurações */
+/* Aba ConfiguraÃ§Ãµes */
 .configs-secoes-grid {
   display: flex;
   flex-direction: column;
@@ -1041,8 +1049,8 @@
   font-weight: 700;
 }
 
-/* Seção da Trilha de Níveis */
-/* Seção da Trilha do Passe de Batalha com Scroll Horizontal */
+/* SeÃ§Ã£o da Trilha de NÃ­veis */
+/* SeÃ§Ã£o da Trilha do Passe de Batalha com Scroll Horizontal */
 .passe-trilha-secao {
   background-color: var(--bg-surface);
   border: 1px solid var(--border-subtle);
@@ -1182,7 +1190,7 @@
   min-width: max-content;
 }
 
-/* Coluna Fixa de Rótulos das Trilhas */
+/* Coluna Fixa de RÃ³tulos das Trilhas */
 .trilha-rotulos-coluna {
   width: 170px;
   flex-shrink: 0;
@@ -1252,7 +1260,7 @@
   color: var(--text-muted);
 }
 
-/* Track Horizontal com as Colunas de Nível */
+/* Track Horizontal com as Colunas de NÃ­vel */
 .passe-niveis-horizontal-track {
   display: flex;
   gap: 14px;
@@ -1268,7 +1276,7 @@
   transition: all 0.2s ease;
 }
 
-/* 1. Slot Grátis (Em Cima) */
+/* 1. Slot GrÃ¡tis (Em Cima) */
 .trilha-slot-card.gratis {
   height: 180px;
   background-color: var(--bg-surface-elevated);
@@ -1353,7 +1361,7 @@
   padding: 5px 0;
 }
 
-/* 2. Marcador do Nível (No Meio) */
+/* 2. Marcador do NÃ­vel (No Meio) */
 .trilha-marcador-divisor {
   display: flex;
   align-items: center;
@@ -1494,7 +1502,7 @@
   color: rgba(245, 158, 11, 0.6);
 }
 
-/* Seção de Missões de XP */
+/* SeÃ§Ã£o de MissÃµes de XP */
 .passe-missoes-secao {
   background-color: var(--bg-surface);
   border: 1px solid var(--border-subtle);
@@ -1643,7 +1651,7 @@
 }
 
 /* ========================================================
-   ABA 2: RECOMPENSAS DIÁRIAS (CALENDÁRIO 7 DIAS)
+   ABA 2: RECOMPENSAS DIÃRIAS (CALENDÃRIO 7 DIAS)
    ======================================================== */
 .perfil-calendario-box {
   display: flex;
@@ -1739,7 +1747,7 @@
   transition: width 0.3s ease;
 }
 
-/* Grid do Calendário de 7 Dias */
+/* Grid do CalendÃ¡rio de 7 Dias */
 .calendario-dias-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -1918,7 +1926,7 @@
 
 
 /* ==========================================================================
-   ALERTA E BOTÃO DE VINCULAR NICK DO MINECRAFT
+   ALERTA E BOTÃƒO DE VINCULAR NICK DO MINECRAFT
    ========================================================================== */
 
 .perfil-alerta-vincular-container {
@@ -1959,7 +1967,7 @@
 .perfil-alerta-conteudo strong {
   display: block;
   font-size: 1.05rem;
-  color: #f39c12;
+  color: var(--mc-gold);
   margin-bottom: 4px;
   font-weight: 800;
 }
@@ -1975,22 +1983,22 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
-  border: 1px solid #2ecc71;
+  background: linear-gradient(135deg, var(--mc-emerald) 0%, var(--mc-emerald-hover) 100%);
+  border: 1px solid var(--mc-emerald);
   color: #ffffff;
   padding: 10px 18px;
   border-radius: 8px;
   font-weight: 800;
   font-size: 0.9rem;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+  box-shadow: 0 4px 12px var(--mc-emerald-glow);
   transition: all 0.2s ease;
   white-space: nowrap;
 }
 
 .btn-perfil-alerta-acao:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(46, 204, 113, 0.45);
+  box-shadow: 0 6px 18px var(--mc-emerald-glow);
 }
 
 .badge-nick-status {
@@ -2006,21 +2014,21 @@
 }
 
 .badge-nick-status.vinculado {
-  background: rgba(46, 204, 113, 0.15);
-  border: 1px solid rgba(46, 204, 113, 0.35);
-  color: #2ecc71;
+  background-color: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.30);
+  color: var(--mc-emerald);
 }
 
 .badge-nick-status.pendente {
-  background: rgba(243, 156, 18, 0.15);
-  border: 1px solid rgba(243, 156, 18, 0.35);
-  color: #f39c12;
+  background-color: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.30);
+  color: var(--mc-gold);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .badge-nick-status.pendente:hover {
-  background: rgba(243, 156, 18, 0.25);
+  background-color: rgba(245, 158, 11, 0.20);
   transform: scale(1.02);
 }
 
@@ -2047,9 +2055,9 @@
 }
 
 .btn-acao-alterar-nick:hover {
-  background: rgba(46, 204, 113, 0.15);
-  border-color: rgba(46, 204, 113, 0.4);
-  color: #2ecc71;
+  background-color: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.35);
+  color: var(--mc-emerald);
   transform: translateY(-1px);
 }
 
@@ -2057,33 +2065,33 @@
 /* Status dos Pedidos Reais */
 .pedido-status-badge.pendente {
   background-color: rgba(243, 156, 18, 0.15);
-  color: #f39c12;
-  border: 1px solid rgba(243, 156, 18, 0.35);
+  color: var(--mc-gold);
+  border: 1px solid rgba(245, 158, 11, 0.30);
 }
 
 .pedido-status-badge.aprovado {
   background-color: rgba(46, 204, 113, 0.15);
-  color: #2ecc71;
-  border: 1px solid rgba(46, 204, 113, 0.35);
+  color: var(--mc-emerald);
+  border: 1px solid rgba(16, 185, 129, 0.30);
 }
 
 .pedido-status-badge.recusado {
   background-color: rgba(231, 76, 60, 0.15);
-  color: #e74c3c;
-  border: 1px solid rgba(231, 76, 60, 0.35);
+  color: var(--mc-redstone);
+  border: 1px solid rgba(225, 29, 72, 0.30);
 }
 
 .perfil-pedido-card.pendente {
-  border-left: 3px solid #f39c12;
+  border-left: 3px solid var(--mc-gold);
 }
 
 .perfil-pedido-card.aprovado,
 .perfil-pedido-card.entregue {
-  border-left: 3px solid #2ecc71;
+  border-left: 3px solid var(--mc-emerald);
 }
 
 .perfil-pedido-card.recusado {
-  border-left: 3px solid #e74c3c;
+  border-left: 3px solid var(--mc-redstone);
 }
 
 .btn-atualizar-pedidos {
@@ -2112,8 +2120,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-  background: rgba(243, 156, 18, 0.08);
-  border: 1px solid rgba(243, 156, 18, 0.25);
+  background-color: rgba(245, 158, 11, 0.07);
+  border: 1px solid rgba(245, 158, 11, 0.25);
   border-radius: 10px;
   padding: 12px 16px;
   margin-top: 14px;
@@ -2131,7 +2139,7 @@
 .pedido-pendente-info strong {
   display: block;
   font-size: 0.88rem;
-  color: #f39c12;
+  color: var(--mc-gold);
 }
 
 .pedido-pendente-info p {
@@ -2144,7 +2152,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+  background: linear-gradient(135deg, var(--mc-gold) 0%, #c2690e 100%);
   color: #ffffff;
   border: none;
   padding: 8px 14px;
@@ -2159,5 +2167,123 @@
 .btn-copiar-pix-pedido:hover {
   transform: translateY(-1px);
   filter: brightness(1.1);
-  box-shadow: 0 4px 12px rgba(243, 156, 18, 0.35);
+  box-shadow: 0 4px 12px var(--mc-gold-glow);
+}
+
+/* =========================================
+   RESPONSIVIDADE MOBILE ADICIONAL
+   ========================================= */
+
+/* Calendário: 2 colunas no mobile para aproveitar melhor a tela */
+@media (max-width: 540px) {
+  .calendario-dias-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .calendario-dia-card {
+    padding: 14px 10px;
+  }
+  .calendario-hero-topo {
+    flex-direction: column;
+  }
+  .calendario-streak-counter {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* KPI strip: divisores somem, layout compacto */
+@media (max-width: 480px) {
+  .perfil-kpi-strip {
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .kpi-divisor {
+    display: none;
+  }
+  .perfil-nick-titulo {
+    font-size: 1.6rem;
+  }
+  .perfil-nick-linha {
+    justify-content: center;
+  }
+  .perfil-email-sub {
+    text-align: center;
+  }
+  .perfil-hero-header {
+    padding: 32px 16px 24px;
+  }
+  /* Passe: topo-info em coluna */
+  .passe-progresso-bloco {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  /* Missões: grid de 1 coluna no mobile */
+  .missoes-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  /* Conta cards: 1 coluna (já tem media query em 768px, adicionar 480px) */
+  .conta-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .conta-avatar-destaque {
+    flex-direction: column;
+    text-align: center;
+  }
+  /* Configurações: opções de tema em 1 coluna */
+  .tema-opcoes-grid {
+    grid-template-columns: 1fr;
+  }
+  /* Configurações: audio controls em coluna */
+  .audio-controle-linha {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  /* Logout area em coluna */
+  .logout-area {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Perfil hero: conteúdo em coluna no mobile */
+@media (max-width: 600px) {
+  .perfil-hero-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+  .perfil-tag-row {
+    justify-content: center;
+  }
+  .perfil-kpi-strip {
+    justify-content: center;
+  }
+  .secao-titulo-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  /* Pedidos: botões de ação em coluna */
+  .pedido-topo-linha {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .pedido-meta-row {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .pedido-meta-row span:is(:nth-child(2), :nth-child(4)) {
+    display: none; /* esconder os dots separadores */
+  }
+  .pedido-pendente-box {
+    flex-direction: column;
+  }
+  .pedido-comando-area {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

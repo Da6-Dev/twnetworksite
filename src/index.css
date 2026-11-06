@@ -62,6 +62,14 @@
   --bg-surface-solid: var(--bg-surface);
   --nav-bg: var(--bg-nav);
   --mc-spruce-green: var(--mc-emerald-hover);
+
+  /* ========================================================
+     VARIÁVEIS FALTANTES — corrigindo referências quebradas
+     ======================================================== */
+  --badge-bg: rgba(16, 185, 129, 0.08);     /* Fundo de badges de destaque */
+  --mc-gold: #f59e0b;                        /* Alias de --mc-star-gold */
+  --mc-ice: #38bdf8;                         /* Alias de --mc-frost-ice */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3); /* Sombra sutil para elementos pequenos */
 }
 
 [data-theme="light"], .light {
@@ -117,6 +125,14 @@
   --bg-surface-solid: var(--bg-surface);
   --nav-bg: var(--bg-nav);
   --mc-spruce-green: var(--mc-emerald-hover);
+
+  /* ========================================================
+     VARIÁVEIS FALTANTES — corrigindo referências quebradas (modo claro)
+     ======================================================== */
+  --badge-bg: rgba(5, 150, 105, 0.08);
+  --mc-gold: #d97706;
+  --mc-ice: #0284c7;
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.08);
 }
 
 @layer base {
@@ -226,3 +242,127 @@
     display: none;
   }
 }
+
+/* ==========================================================================
+   COMPONENTES COMPARTILHADOS DE AUTH (Login & Cadastro)
+   ========================================================================== */
+
+/* Divisor com linha horizontal — usado em ambas as telas de auth */
+.auth-divider {
+  position: relative;
+  text-align: center;
+  margin: 24px 0 20px;
+}
+
+.auth-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: var(--border-subtle);
+}
+
+.auth-divider span {
+  position: relative;
+  background-color: var(--bg-surface);
+  padding: 0 12px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* Toggle de senha (olho) — botão dentro do input de senha */
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  padding-right: 44px;
+}
+
+.btn-toggle-eye {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  transition: color 0.2s ease;
+  line-height: 1;
+}
+
+.btn-toggle-eye:hover {
+  color: var(--text-primary);
+}
+
+.btn-toggle-eye:focus-visible {
+  outline: 2px solid var(--mc-emerald);
+  outline-offset: 2px;
+}
+
+/* Botão de login/cadastro com Google (compartilhado) */
+.btn-google-login {
+  width: 100%;
+  padding: 12px 18px;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.btn-google-login:hover {
+  background-color: var(--bg-surface-hover);
+  border-color: var(--border-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.btn-google-login:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-google-login:focus-visible {
+  outline: 2px solid var(--mc-emerald);
+  outline-offset: 2px;
+}
+
+.google-icon-svg {
+  flex-shrink: 0;
+}
+
+/* Wrapper do botão Google renderizado pelo SDK */
+.auth-google-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.auth-google-sdk-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 44px;
+  overflow: hidden; /* evita que iframe do SDK estoure */
+}
+

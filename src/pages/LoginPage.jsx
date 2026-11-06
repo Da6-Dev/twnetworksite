@@ -115,6 +115,9 @@ export default function LoginPage() {
       <div className="auth-card">
         {/* Cabeçalho do Card */}
         <div className="auth-header">
+          <div className="auth-icon-badge">
+            <McIcon name="Grass_Block" size={28} />
+          </div>
           <h1>Entrar na sua Conta</h1>
           <p>Acesse seu perfil para recolher recompensas, evoluir no passe e gerenciar suas compras.</p>
 
@@ -126,14 +129,18 @@ export default function LoginPage() {
 
         {/* Mensagem de Erro */}
         {erro && (
-          <div className="auth-alert-erro">
+          <div className="auth-alert-erro" role="alert" aria-live="polite">
             <span>{erro}</span>
           </div>
         )}
 
         {/* Botão Oficial de Login com Google */}
-        <div className="auth-google-wrapper" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-          <div id="google-btn-rendered" style={{ display: googleClientId ? 'flex' : 'none', justifyContent: 'center', width: '100%', minHeight: '44px' }} />
+        <div className="auth-google-wrapper">
+          <div
+            id="google-btn-rendered"
+            className="auth-google-sdk-container"
+            style={{ display: googleClientId ? 'flex' : 'none' }}
+          />
           {!googleClientId && (
             <button
               type="button"

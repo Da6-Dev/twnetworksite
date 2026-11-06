@@ -162,24 +162,28 @@ export default function CadastroPage() {
 
   return (
     <div className="cadastro-page-container">
-      <div className="cadastro-grid">
+      <div className="cadastro-card">
         {/* Lado Esquerdo: Formulário */}
-        <div className="cadastro-form-card">
+        <div className="cadastro-form-col">
           <div className="cadastro-header">
             <h1>Criar Conta Gratuita</h1>
             <p>Vincule seu Nick de Minecraft para resgatar prêmios diários e acompanhar seus pedidos.</p>
           </div>
 
           {erro && (
-            <div className="cadastro-alert-erro">
+            <div className="cadastro-alert-erro" role="alert" aria-live="polite">
               <AlertCircle size={16} />
               <span>{erro}</span>
             </div>
           )}
 
           {/* Botão Oficial de Cadastro com Google */}
-          <div className="auth-google-wrapper" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
-            <div id="google-btn-rendered-cadastro" style={{ display: googleClientId ? 'flex' : 'none', justifyContent: 'center', width: '100%', minHeight: '44px' }} />
+          <div className="auth-google-wrapper">
+            <div
+              id="google-btn-rendered-cadastro"
+              className="auth-google-sdk-container"
+              style={{ display: googleClientId ? 'flex' : 'none' }}
+            />
             {!googleClientId && (
               <button
                 type="button"
