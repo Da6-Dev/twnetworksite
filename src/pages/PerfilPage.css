@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    PAINEL DO PERFIL â€” TW NETWORK (MÃ‰TRICA 60-30-10)
    ========================================================================== */
 
@@ -2285,5 +2285,321 @@
   .pedido-comando-area {
     flex-direction: column;
     align-items: flex-start;
+  }
+}
+
+
+/* ==========================================================================
+   REDESIGN MOBILE-FIRST — BOTTOM NAV + SEÇÕES COMPACTAS
+   ========================================================================== */
+
+/* ── Desktop tabs: visíveis acima de 641px ──────────────────────────────── */
+.perfil-tabs-desktop {
+  display: inline-flex;
+}
+
+/* ── Mobile Bottom Nav: escondida no desktop ─────────────────────────────── */
+.perfil-tabs-mobile-nav {
+  display: none;
+}
+
+/* ── Padding extra para não esconder conteúdo atrás da bottom nav ─────────── */
+.perfil-conteudo-com-bottom-nav {
+  /* valor padrão — no mobile sobrescrito abaixo */
+}
+
+/* =========================================
+   BREAKPOINT MOBILE: ≤ 640px
+   ========================================= */
+@media (max-width: 640px) {
+
+  /* ── Esconde a tab strip desktop ─── */
+  .perfil-abas-container {
+    display: none;
+  }
+
+  /* ── Bottom Nav Fixo ─── */
+  .perfil-tabs-mobile-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background-color: var(--bg-surface-elevated);
+    border-top: 1px solid var(--border-subtle);
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.3);
+    padding: 6px 4px env(safe-area-inset-bottom, 6px);
+    justify-content: space-around;
+    align-items: stretch;
+  }
+
+  .perfil-tab-mobile-btn {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    flex: 1;
+    padding: 6px 2px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: color 0.18s ease;
+    border-top: 2px solid transparent;
+    min-width: 0;
+  }
+
+  .perfil-tab-mobile-btn.ativo {
+    color: var(--mc-emerald);
+    border-top-color: var(--mc-emerald);
+  }
+
+  .tab-mobile-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+
+  .tab-mobile-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 54px;
+    text-align: center;
+    line-height: 1;
+  }
+
+  .tab-mobile-badge {
+    position: absolute;
+    top: 4px;
+    right: calc(50% - 18px);
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background-color: var(--mc-emerald);
+    color: #ffffff;
+    font-size: 0.6rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  /* ── Padding para não cobrir conteúdo com a bottom nav ─── */
+  .perfil-conteudo-com-bottom-nav {
+    padding-bottom: 80px;
+  }
+
+  /* ── Page container sem overflow horizontal ─── */
+  .perfil-page-container {
+    overflow-x: hidden;
+  }
+
+  /* ── Passe Topo Card: compacto no mobile ─── */
+  .passe-topo-card {
+    padding: 20px 16px;
+    gap: 20px;
+    flex-direction: column;
+  }
+
+  .passe-topo-info {
+    gap: 16px;
+  }
+
+  .passe-topo-titulo h2 {
+    font-size: 1.4rem;
+  }
+
+  .passe-topo-titulo p {
+    font-size: 0.82rem;
+  }
+
+  /* ── Trilha: coluna de rótulos compacta (apenas ícone) ─── */
+  .trilha-rotulos-coluna {
+    width: 52px;
+    min-width: 52px;
+    flex-shrink: 0;
+  }
+
+  .rotulo-bloco > div {
+    display: none; /* esconde texto (Grátis / VIP / Em Cima / Em Baixo) */
+  }
+
+  .rotulo-bloco > span {
+    display: none; /* esconde o span "Nível" */
+  }
+
+  .rotulo-bloco {
+    padding: 8px 6px;
+    justify-content: center;
+  }
+
+  /* ── Trilha: cards de nível mais estreitos ─── */
+  .trilha-nivel-coluna {
+    width: 155px;
+    min-width: 155px;
+  }
+
+  .trilha-slot-card {
+    padding: 10px 8px;
+    min-height: 160px;
+  }
+
+  .slot-item-icon-box {
+    padding: 8px;
+  }
+
+  .slot-item-nome-txt {
+    font-size: 0.72rem;
+    line-height: 1.3;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ── Calendário: carrossel horizontal ─── */
+  .calendario-dias-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin: 0 -16px; /* sangra para a borda da tela */
+    padding: 0 16px;
+  }
+
+  .calendario-dias-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+  .calendario-dias-grid {
+    grid-template-columns: repeat(7, 160px);
+    width: max-content;
+    gap: 10px;
+  }
+
+  .calendario-dia-card {
+    padding: 14px 10px;
+  }
+
+  .dia-card-icone img,
+  .dia-card-icone .mc-icon {
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  .dia-card-premio strong {
+    font-size: 0.75rem;
+  }
+
+  .dia-card-premio p {
+    font-size: 0.7rem;
+    display: none; /* muito estreito — esconde descrição extra */
+  }
+
+  /* ── Missões: 1 coluna, botão full-width ─── */
+  .missoes-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .missao-card {
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .missao-botao-col {
+    width: 100%;
+    padding-left: 52px; /* alinha com o texto, após o ícone */
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .btn-completar-missao {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .badge-missao-feita {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .missao-info-col h4 {
+    font-size: 0.88rem;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  /* ── Seção de cabeçalho da trilha ─── */
+  .trilha-secao-cabecalho {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .trilha-topo-controles {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .trilha-secao-titulos h3 {
+    font-size: 1rem;
+  }
+
+  /* ── Missões: cabeçalho de seção em coluna ─── */
+  .missoes-secao-cabecalho {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  /* ── Passe VIP status card compacto ─── */
+  .passe-vip-status-card {
+    padding: 16px;
+  }
+
+  .status-vip-bloqueado p,
+  .status-vip-ativo p {
+    font-size: 0.82rem;
+  }
+}
+
+/* =========================================
+   BREAKPOINT MUITO PEQUENO: ≤ 375px
+   ========================================= */
+@media (max-width: 375px) {
+  .tab-mobile-label {
+    font-size: 0.6rem;
+    max-width: 46px;
+  }
+
+  .trilha-nivel-coluna {
+    width: 140px;
+    min-width: 140px;
+  }
+
+  .trilha-slot-card {
+    min-height: 150px;
+  }
+
+  .slot-item-nome-txt {
+    font-size: 0.68rem;
+  }
+
+  .passe-topo-titulo h2 {
+    font-size: 1.25rem;
   }
 }

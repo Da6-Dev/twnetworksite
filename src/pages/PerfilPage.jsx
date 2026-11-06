@@ -375,11 +375,18 @@ export default function PerfilPage() {
             tocarClique();
             setAbaAtiva(id);
           }}
+          mobileLabels={{
+            passe: 'Passe',
+            recompensas: 'Dias',
+            pedidos: 'Pedidos',
+            conta: 'Conta',
+            configuracoes: 'Config'
+          }}
         />
       </div>
 
       {/* Conteúdo Dinâmico das Abas */}
-      <div className="perfil-conteudo-wrapper">
+      <div className="perfil-conteudo-wrapper perfil-conteudo-com-bottom-nav">
         {/* ========================================================
             ABA 1: PASSE DE BATALHA (FREE VS VIP + MISSÕES)
             ======================================================== */}
@@ -759,7 +766,8 @@ export default function PerfilPage() {
             )}
 
             {/* Grid dos 7 Dias */}
-            <div className="calendario-dias-grid">
+            <div className="calendario-dias-wrapper">
+              <div className="calendario-dias-grid">
               {diasCalendario.map((item) => {
                 const jaColetado = streak.diasColetados.includes(item.dia);
                 const prontoParaColetar = item.dia === proximoDiaParaColetar;
@@ -828,6 +836,7 @@ export default function PerfilPage() {
                 );
               })}
             </div>
+            </div>{/* fim: calendario-dias-wrapper */}
           </div>
         )}
 
