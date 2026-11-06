@@ -49,15 +49,17 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://accounts.google.com"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://accounts.google.com", "https://*.google.com"],
         styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
         imgSrc: ["'self'", "data:", "blob:", "https://mc-heads.net", "https://*.googleusercontent.com"],
-        connectSrc: ["'self'", "https://accounts.google.com", "https://api.mercadopago.com", "ws:", "wss:"],
+        connectSrc: ["'self'", "https://accounts.google.com", "https://*.googleapis.com", "https://api.mercadopago.com", "ws:", "wss:"],
         frameSrc: ["'self'", "https://accounts.google.com"],
         fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
       },
     },
     crossOriginEmbedderPolicy: false,
+    crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' },
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
   })
 );
 
